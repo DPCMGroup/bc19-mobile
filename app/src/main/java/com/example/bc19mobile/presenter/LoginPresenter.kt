@@ -12,5 +12,8 @@ import com.example.bc19mobile.model.LoginModel
 class LoginPresenter : BaseMvpPresenter<LoginContract.IView, LoginContract.IModel>(), LoginContract.IPresenter{
 
     override fun registerModel() = LoginModel::class.java
+    override fun makeLogin(username: String, password: String) {
+        getModel().sendLogin(username, password)
+    }
 
 }

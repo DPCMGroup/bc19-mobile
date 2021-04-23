@@ -17,7 +17,9 @@ package="com.example.bc19mobile">
     android:supportsRtl="true"
     android:theme="@style/Theme.TagNFCKotlin">
 
-    <activity android:name=".MainActivity">
+    <activity android:name=".MainActivity"></activity>
+
+    <activity android:name=".view.act.LoginActivity">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 

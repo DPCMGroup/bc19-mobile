@@ -11,9 +11,14 @@ import mvp.ljb.kt.contract.IModelContract
  **/
 interface LoginContract {
 
-    interface IView : IViewContract
+    interface IView : IViewContract {
+    }
 
-    interface IPresenter : IPresenterContract
+    interface IPresenter : IPresenterContract {
+        fun makeLogin(username:String, password:String)
+    }
 
-    interface IModel : IModelContract
+    interface IModel : IModelContract {
+        fun sendLogin(username: String, password: String)
+    }
 }
