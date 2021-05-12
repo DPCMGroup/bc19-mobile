@@ -43,10 +43,10 @@ class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract
         errore?.setVisibility(View.INVISIBLE)
 
         username?.doOnTextChanged { charSequence: CharSequence?, i: Int, i1: Int, i2: Int ->
-            enableLogin()
+            enableBtnLogin()
         }
         password?.doOnTextChanged { charSequence: CharSequence?, i: Int, i1: Int, i2: Int ->
-            enableLogin()
+            enableBtnLogin()
         }
 
         loginBtn?.setOnClickListener {
@@ -54,7 +54,7 @@ class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract
         }
     }
 
-    private fun enableLogin() {
+    private fun enableBtnLogin() {
         val a = isUserNameValid(username?.text.toString())
         val b = isPasswordValid(password?.text.toString())
         loginBtn?.isEnabled = a && b
