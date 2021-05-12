@@ -11,34 +11,44 @@ class Service {
     private val client = OkHttpClient()
 
 
-    fun request(json: JSONObject, path: String, isPost: Boolean, then: (String) -> Unit) {
+    fun request(
+        json: JSONObject,
+        path: String,
+        isPost: Boolean,
+        okThen: (String) -> Unit,
+        notOkThen: (IOException) -> Unit
+    ) {
         val JSON = MediaType.parse("application/json; charset=utf-8")
         val request: Request
-        if(isPost){
+        if (isPost) {
             val body: RequestBody = RequestBody.create(JSON, json.toString())
             request = Request.Builder()
                 .url(url + path)
                 .post(body)
                 .build()
-        }
-        else {
+        } else {
             request = Request.Builder()
                 .url(url + path)
                 .get()
                 .build()
         }
-        return sendRequest(request, then)
+        return sendRequest(request, okThen, notOkThen)
     }
 
     //General method to send a request and set the function (then) to be called when there is a response
-    fun sendRequest(request: Request, then: (String) -> Unit) {
+    fun sendRequest(
+        request: Request,
+        okThen: (String) -> Unit,
+        notOkThen: (IOException) -> Unit
+    ) {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
+                notOkThen(e)
             }
 
             override fun onResponse(call: Call, response: Response): Unit =
-                then(response.body()!!.string())
+                okThen(response.body()!!.string())
         })
     }
 
