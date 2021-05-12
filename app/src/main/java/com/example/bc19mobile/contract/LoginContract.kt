@@ -1,5 +1,6 @@
 package com.example.bc19mobile.contract
 
+import com.example.bc19mobile.model.LoginModel
 import mvp.ljb.kt.contract.IPresenterContract
 import mvp.ljb.kt.contract.IViewContract
 import mvp.ljb.kt.contract.IModelContract
@@ -20,5 +21,6 @@ interface LoginContract {
 
     interface IModel : IModelContract {
         fun sendLogin(username: String, password: String)
+        fun setLoginListener(listener: LoginModel.LoginListener?)
     }
 }

@@ -1,14 +1,13 @@
 package  com.example.bc19mobile.model
 
-import android.content.Intent
-import android.view.View
-import android.widget.EditText
-import android.widget.TextView
-import com.example.bc19mobile.model.service.Service
+import android.os.Handler
+import android.os.Looper
 import com.example.bc19mobile.contract.LoginContract
 import com.example.bc19mobile.data.User
+import com.example.bc19mobile.model.service.Service
 import mvp.ljb.kt.model.BaseModel
 import org.json.JSONObject
+
 
 /**
  * @Author Kotlin MVP Plugin
@@ -17,8 +16,17 @@ import org.json.JSONObject
  **/
 class LoginModel : BaseModel(), LoginContract.IModel {
 
+    interface LoginListener {
+        fun onLoginSuccess(): Void
+    }
+
+    private var listener: LoginListener? = null
     private val service = Service()
     private var user: User? = null
+
+    override fun setLoginListener(listener: LoginListener?) {
+        this.listener = listener
+    }
 
     override fun sendLogin(username: String, password: String) {
 
@@ -43,9 +51,8 @@ class LoginModel : BaseModel(), LoginContract.IModel {
                 restJson.getInt("type")
             )
 
-
+            val mainHandler = Handler(Looper.getMainLooper())
+            mainHandler.post(Runnable { listener?.onLoginSuccess() })
         }
-
-
     }
 }
