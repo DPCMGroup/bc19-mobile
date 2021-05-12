@@ -1,10 +1,7 @@
 package com.example.bc19mobile.contract
 
-<<<<<<< HEAD
 import com.example.bc19mobile.model.LoginModel
-=======
 import com.example.bc19mobile.data.User
->>>>>>> 363dd35cdd397dd233f12d82ad6f23cc262c6ede
 import mvp.ljb.kt.contract.IPresenterContract
 import mvp.ljb.kt.contract.IViewContract
 import mvp.ljb.kt.contract.IModelContract
