@@ -33,7 +33,11 @@ class LoginModel : BaseModel(), LoginContract.IModel {
         val jsonObject = JSONObject()
         jsonObject.put("username", username)
         jsonObject.put("password", password)
-        service.request(jsonObject, "login", true, ::loginHandle)
+        service.request(jsonObject, "user/login", true, ::loginHandle)
+    }
+
+    override fun getUser(): User? {
+        return user
     }
 
     fun loginHandle(response: String) {

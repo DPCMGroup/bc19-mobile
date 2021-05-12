@@ -13,4 +13,21 @@ class User {
         this.type = type
     }
 
+    fun getId(): Int {
+        return id
+    }
+
+    fun getUsername(): String {
+        return username
+    }
+
+    fun getPassword(): String {
+        return password
+    }
+
+    fun getType(): Int {
+        return type
+    }
+
+
 }
