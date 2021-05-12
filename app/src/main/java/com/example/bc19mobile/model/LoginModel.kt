@@ -7,6 +7,8 @@ import com.example.bc19mobile.data.User
 import com.example.bc19mobile.model.service.Service
 import mvp.ljb.kt.model.BaseModel
 import org.json.JSONObject
+import java.io.IOException
+import kotlin.coroutines.coroutineContext
 
 
 /**
@@ -33,16 +35,18 @@ class LoginModel : BaseModel(), LoginContract.IModel {
         val jsonObject = JSONObject()
         jsonObject.put("username", username)
         jsonObject.put("password", password)
-        service.request(jsonObject, "user/login", true, ::loginHandle)
+        service.request(jsonObject, "user/login", true, ::loginHandle, ::connectionError)
     }
 
     override fun getUser(): User? {
         return user
     }
 
-    fun loginHandle(response: String) {
+    fun connectionError(e: IOException) {
+        //gestisto gli errori con connessione
+    }
 
-//TO DO sistemare
+    fun loginHandle(response: String) {
         if (response == "\"No user found\"") {
 
         } else {
