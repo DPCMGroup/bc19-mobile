@@ -1,5 +1,7 @@
 package com.example.bc19mobile.model.service
 
+import android.os.Handler
+import android.os.Looper
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
@@ -41,14 +43,16 @@ class Service {
         okThen: (String) -> Unit,
         notOkThen: (IOException) -> Unit
     ) {
-
+        val mainHandler = Handler(Looper.getMainLooper())
         client.newCall(request).enqueue(object : Callback {
+
             override fun onFailure(call: Call, e: IOException) {
-                notOkThen(e)
+                mainHandler.post(Runnable { notOkThen(e) })
             }
 
-            override fun onResponse(call: Call, response: Response): Unit =
-                okThen(response.body()!!.string())
+            override fun onResponse(call: Call, response: Response): Unit {
+                mainHandler.post(Runnable { okThen(response.body()!!.string()) })
+            }
         })
     }
 

@@ -1,14 +1,11 @@
 package  com.example.bc19mobile.model
 
-import android.os.Handler
-import android.os.Looper
 import com.example.bc19mobile.contract.LoginContract
 import com.example.bc19mobile.data.User
 import com.example.bc19mobile.model.service.Service
 import mvp.ljb.kt.model.BaseModel
 import org.json.JSONObject
 import java.io.IOException
-import kotlin.coroutines.coroutineContext
 
 
 /**
@@ -59,8 +56,7 @@ class LoginModel : BaseModel(), LoginContract.IModel {
                 restJson.getInt("type")
             )
 
-            val mainHandler = Handler(Looper.getMainLooper())
-            mainHandler.post(Runnable { listener?.onLoginSuccess() })
+            listener?.onLoginSuccess()
         }
     }
 }
