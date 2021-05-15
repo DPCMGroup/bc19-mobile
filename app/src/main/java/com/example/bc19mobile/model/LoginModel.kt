@@ -16,7 +16,7 @@ import java.io.IOException
 class LoginModel : BaseModel(), LoginContract.IModel {
 
     interface LoginListener {
-        fun onLoginSuccess(): Void
+        fun onLoginSuccess()
     }
 
     private var listener: LoginListener? = null

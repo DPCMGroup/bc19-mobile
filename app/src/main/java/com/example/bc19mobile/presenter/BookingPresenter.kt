@@ -2,6 +2,7 @@ package com.example.bc19mobile.presenter
 
 import mvp.ljb.kt.presenter.BaseMvpPresenter
 import com.example.bc19mobile.contract.BookingContract
+import com.example.bc19mobile.data.User
 import com.example.bc19mobile.model.BookingModel
 
 /**
@@ -28,6 +29,10 @@ class BookingPresenter : BaseMvpPresenter<BookingContract.IView, BookingContract
     override fun showBookings() {
         getModel().getBookingList()
 
+    }
+
+    override fun saveUser(user: User?) {
+        getModel().setUser(user)
     }
 
 }

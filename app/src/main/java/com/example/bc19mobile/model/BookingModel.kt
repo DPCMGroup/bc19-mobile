@@ -46,6 +46,10 @@ class BookingModel : BaseModel(), BookingContract.IModel {
         )
     }
 
+    override fun setUser(user: User?) {
+        this.user = user
+    }
+
     private fun connectionError(ioException: IOException) {
         //gestisto gli errori con connessione
     }

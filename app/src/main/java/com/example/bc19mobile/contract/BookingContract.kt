@@ -1,6 +1,7 @@
 package com.example.bc19mobile.contract
 
 import com.example.bc19mobile.data.DataBooking
+import com.example.bc19mobile.data.User
 import com.example.bc19mobile.model.BookingModel
 import mvp.ljb.kt.contract.IPresenterContract
 import mvp.ljb.kt.contract.IViewContract
@@ -18,11 +19,13 @@ interface BookingContract {
 
     interface IPresenter : IPresenterContract {
         fun showBookings()
+        fun saveUser(user: User?)
     }
 
     interface IModel : IModelContract {
         fun getBookingList(): ArrayList<DataBooking>?
         fun setBookingListener(listener: BookingModel.BookingListener?)
         fun getUserBooking()
+        fun setUser(user: User?)
     }
 }

@@ -1,16 +1,19 @@
 package com.example.bc19mobile.view.act
 
+import android.os.Bundle
 import android.util.Patterns
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import com.example.bc19mobile.contract.LoginContract
 import com.example.bc19mobile.presenter.LoginPresenter
 import mvp.ljb.kt.act.BaseMvpActivity
 import com.example.bc19mobile.R
+import com.example.bc19mobile.data.User
 
 /**
  * @Author Kotlin MVP Plugin
@@ -73,6 +76,14 @@ class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract
     private fun isPasswordValid(password: String): Boolean {
         return password.length > 2
         // To do : da modificare
+    }
+
+    override fun callBooking(user: User?) {
+        goActivity(
+            BookingActivity::class.java, bundleOf(
+                "user" to user
+            )
+        )
     }
 
 

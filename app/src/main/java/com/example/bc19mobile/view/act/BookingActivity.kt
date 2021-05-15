@@ -1,9 +1,12 @@
 package com.example.bc19mobile.view.act
 
+import android.os.Bundle
+import android.os.PersistableBundle
 import com.example.bc19mobile.contract.BookingContract
 import com.example.bc19mobile.presenter.BookingPresenter
 import mvp.ljb.kt.act.BaseMvpActivity
 import com.example.bc19mobile.R
+import com.example.bc19mobile.data.User
 
 /**
  * @Author Kotlin MVP Plugin
@@ -11,6 +14,11 @@ import com.example.bc19mobile.R
  * @Description input description
  **/
 class BookingActivity : BaseMvpActivity<BookingContract.IPresenter>() , BookingContract.IView {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        getPresenter().saveUser(savedInstanceState?.get("user") as User)
+    }
 
     override fun registerPresenter() = BookingPresenter::class.java
 
