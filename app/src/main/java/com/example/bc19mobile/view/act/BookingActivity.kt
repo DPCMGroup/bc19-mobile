@@ -17,7 +17,7 @@ class BookingActivity : BaseMvpActivity<BookingContract.IPresenter>() , BookingC
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getPresenter().saveUser(savedInstanceState?.get("user") as User)
+        //getPresenter().saveUser(savedInstanceState?.get("user") as User)
     }
 
     override fun registerPresenter() = BookingPresenter::class.java
