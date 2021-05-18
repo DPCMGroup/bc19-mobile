@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.bc19mobile.MainActivity">
+    tools:context="com.example.bc19mobile.view.act.ScanActivity"
+    >
 
     <ImageView
         android:id="@+id/logo"
@@ -57,7 +58,7 @@
         android:textStyle="bold"
         android:visibility="invisible"
         tools:visibility="invisible"
-         />
+        />
 
     <LinearLayout
         android:layout_width="300dp"
@@ -177,7 +178,7 @@
         android:textStyle="bold"
         android:visibility="invisible"
         tools:visibility="invisible"
-         />
+        />
 
     <TextView
         android:id="@+id/message1_txt"
@@ -208,10 +209,5 @@
         android:visibility="invisible"
         tools:visibility="invisible">
     </androidx.recyclerview.widget.RecyclerView>
-
-
-
-
-
 
 </RelativeLayout>
