@@ -29,11 +29,7 @@ class BookingModel : BaseModel(), BookingContract.IModel {
         this.listener = listener
     }
 
-    override fun getBookingList(): ArrayList<DataBooking>? {
-        return bookingList
-    }
-
-    override fun getUserBooking() {
+    override fun getBookingList() {
         val jsonObject = JSONObject()
         val userId: Int = user?.getId() ?: -1
         jsonObject.put("id", userId)
@@ -41,7 +37,7 @@ class BookingModel : BaseModel(), BookingContract.IModel {
             jsonObject,
             "user/bookings/" + userId,
             false,
-            ::BokingHandle,
+            ::BookingHandle,
             ::connectionError
         )
     }
@@ -51,20 +47,21 @@ class BookingModel : BaseModel(), BookingContract.IModel {
     }
 
     private fun connectionError(ioException: IOException) {
-        //gestisto gli errori con connessione
+        //gestisco gli errori con connessione
     }
 
-    private fun BokingHandle(response: String) {
-
+    private fun BookingHandle(response: String) {
+        val deserialize = response.replace("\\\"", "'").replace("\"", "").replace("'", "\"")
         //TO DO gestire l'assenza di prenotazioni
-        if (response == "\"No Bookings\"") {
+        if (deserialize == "Prenotazioni non presenti") {
 
         } else {
-            val restJson = JSONArray(response)
+
+            val restJson = JSONArray(deserialize)
 
             for (i in 0 until restJson.length()) {
                 val jsonObject = restJson.getJSONObject(i)
-                bookingList?.add(
+                this.bookingList?.add(
                     DataBooking(
                         jsonObject.getInt("bookId"),
                         jsonObject.getString("workName"),

@@ -6,5 +6,6 @@ class DataBooking(int: Int, string: String, string1: String, string2: String, st
     var roomName = String
     var startTime = String
     var endTime = String
-    var date = String
+
+
 }

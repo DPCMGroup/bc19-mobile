@@ -23,9 +23,8 @@ interface BookingContract {
     }
 
     interface IModel : IModelContract {
-        fun getBookingList(): ArrayList<DataBooking>?
+        fun getBookingList()
         fun setBookingListener(listener: BookingModel.BookingListener?)
-        fun getUserBooking()
         fun setUser(user: User?)
     }
 }
