@@ -17,19 +17,24 @@ import java.io.IOException
 class BookingModel : BaseModel(), BookingContract.IModel {
 
     interface BookingListener {
-        fun onBookingSuccess(): Void
+        fun onBookingSuccess()
     }
 
     private var listener: BookingListener? = null
     private val service = Service()
     private var user: User? = null
-    private var bookingList: ArrayList<DataBooking>? = null
+    private var bookingList = ArrayList<DataBooking>()
 
     override fun setBookingListener(listener: BookingListener?) {
         this.listener = listener
     }
 
-    override fun getBookingList() {
+    override fun getBookingList(): ArrayList<DataBooking>? {
+        getUserBooking()
+        return bookingList
+    }
+
+    fun getUserBooking() {
         val jsonObject = JSONObject()
         val userId: Int = user?.getId() ?: -1
         jsonObject.put("id", userId)
@@ -58,10 +63,10 @@ class BookingModel : BaseModel(), BookingContract.IModel {
         } else {
 
             val restJson = JSONArray(deserialize)
-
             for (i in 0 until restJson.length()) {
                 val jsonObject = restJson.getJSONObject(i)
-                this.bookingList?.add(
+
+                this.bookingList.add(
                     DataBooking(
                         jsonObject.getInt("bookId"),
                         jsonObject.getString("workName"),

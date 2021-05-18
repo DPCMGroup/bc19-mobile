@@ -16,10 +16,10 @@ class BookingPresenter : BaseMvpPresenter<BookingContract.IView, BookingContract
     override fun onCreate() {
         super.onCreate()
         getModel().setBookingListener(object : BookingModel.BookingListener {
-            override fun onBookingSuccess(): Void {
+            override fun onBookingSuccess() {
                 //qui siamo nel mainThread
                 //chiamo la vista cambio pannello e faccio le cose che devo fare
-                TODO("Not yet implemented")
+                getMvpView().updateBookingView(getModel().getBookingList())
             }
         })
 

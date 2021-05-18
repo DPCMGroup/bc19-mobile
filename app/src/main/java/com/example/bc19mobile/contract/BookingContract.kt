@@ -15,6 +15,7 @@ import mvp.ljb.kt.contract.IModelContract
 interface BookingContract {
 
     interface IView : IViewContract {
+        fun updateBookingView(bookings: ArrayList<DataBooking>?)
     }
 
     interface IPresenter : IPresenterContract {
@@ -23,7 +24,7 @@ interface BookingContract {
     }
 
     interface IModel : IModelContract {
-        fun getBookingList()
+        fun getBookingList(): ArrayList<DataBooking>?
         fun setBookingListener(listener: BookingModel.BookingListener?)
         fun setUser(user: User?)
     }
