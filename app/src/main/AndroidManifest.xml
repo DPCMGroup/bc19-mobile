@@ -16,7 +16,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TagNFCKotlin">
-        <activity android:name=".MainActivity" />
         <activity android:name=".view.act.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,6 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.act.BookingActivity" />
+        <activity android:name=".view.act.ScanActivity" />
 
     </application>
 

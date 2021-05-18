@@ -1,7 +1,6 @@
 package com.example.bc19mobile.presenter
 
 import com.example.bc19mobile.contract.LoginContract
-import com.example.bc19mobile.data.User
 import com.example.bc19mobile.model.LoginModel
 import mvp.ljb.kt.presenter.BaseMvpPresenter
 
@@ -16,7 +15,7 @@ class LoginPresenter : BaseMvpPresenter<LoginContract.IView, LoginContract.IMode
         super.onCreate()
         getModel().setLoginListener(object : LoginModel.LoginListener {
             override fun onLoginSuccess() {
-                getMvpView().callBooking(getModel().getUser())
+                getMvpView().callScan(getModel().getUser())
             }
         })
     }
