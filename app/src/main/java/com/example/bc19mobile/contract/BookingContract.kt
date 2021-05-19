@@ -27,5 +27,6 @@ interface BookingContract {
         fun getBookingList(): ArrayList<DataBooking>?
         fun setBookingListener(listener: BookingModel.BookingListener?)
         fun setUser(user: User?)
+        fun retriveBookingList()
     }
 }

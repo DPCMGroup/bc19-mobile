@@ -31,11 +31,10 @@ class BookingModel : BaseModel(), BookingContract.IModel {
     }
 
     override fun getBookingList(): ArrayList<DataBooking>? {
-        getUserBooking()
         return bookingList
     }
 
-    fun getUserBooking() {
+    override fun retriveBookingList() {
         val jsonObject = JSONObject()
         val userId: Int = user?.getId() ?: -1
         jsonObject.put("id", userId)
@@ -58,54 +57,32 @@ class BookingModel : BaseModel(), BookingContract.IModel {
 
     private fun BookingHandle(response: String) {
         val deserialize = response.replace("\\\"", "'").replace("\"", "").replace("'", "\"")
-        val deserialize2= "{ \"visualizzaPrenotazioni\" : "+ deserialize +"}"
+        val deserialize2 = "{ \"visualizzaPrenotazioni\" : " + deserialize + "}"
         //TO DO gestire l'assenza di prenotazioni
         if (deserialize2 == "Prenotazioni non presenti") {
 
         } else {
             val jsonObject = JSONObject(deserialize2)
-            //val restJson = JSONArray("visualizzaPrenotazioni")
             val restJson = jsonObject.getJSONArray("visualizzaPrenotazioni")
-
-            //for (i in 0 until bookingList!!.size)
-              //  bookingList!!.removeAt(i)
-/*
-            for (i in 0 until restJson.length()) {
-
-                val jsonObject = restJson.getJSONObject(i)
-
-                this.bookingList.add(
-                    DataBooking(
-                        jsonObject.getInt("bookId"),
-                        jsonObject.getString("workName"),
-                        jsonObject.getString("roomName"),
-                        jsonObject.getString("start"),
-                        jsonObject.getString("end")
-                    )
-                )
-            }
-*/
-            try{
-
+            try {
                 val jsonObject = JSONObject(deserialize2)
                 val jsonArray = jsonObject.getJSONArray("visualizzaPrenotazioni")
                 for (i in 0 until bookingList!!.size)
-                  bookingList!!.removeAt(i)
-            for (i in 0 until jsonArray.length()) {
-                val jsonObject1 = jsonArray.getJSONObject(i)
-                val model = DataBooking()
-                model.bookId = jsonObject1.getInt("bookId")
-                model.workName = jsonObject1.getString("workName")
-                model.roomName = jsonObject1.getString("roomName")
-                model.start = jsonObject1.getString("start")
-                model.end = jsonObject1.getString("end")
+                    bookingList!!.removeAt(i)
+                for (i in 0 until jsonArray.length()) {
+                    val jsonObject1 = jsonArray.getJSONObject(i)
+                    val model = DataBooking()
+                    model.bookId = jsonObject1.getInt("bookId")
+                    model.workName = jsonObject1.getString("workName")
+                    model.roomName = jsonObject1.getString("roomName")
+                    model.start = jsonObject1.getString("start")
+                    model.end = jsonObject1.getString("end")
 
-                bookingList!!.add(model)
+                    bookingList!!.add(model)
+                }
+            } catch (e: JSONException) {
+                e.printStackTrace()
             }
-        }
-        catch (e: JSONException) {
-            e.printStackTrace()
-        }
 
             listener?.onBookingSuccess()
         }

@@ -54,7 +54,7 @@
         android:layout_marginTop="152dp"
         android:layout_marginEnd="24dp"
         android:drawableRight="@drawable/ic_username"
-        android:hint="Codice Utente"
+        android:hint="Username"
         android:inputType="textEmailAddress"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -102,7 +102,7 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="112dp"
-        android:text="Credenzaili sbagliate!!!"
+        android:text="Credenziali sbagliate!!!"
         android:textAlignment="center"
         android:textColor="#F11A0A"
 

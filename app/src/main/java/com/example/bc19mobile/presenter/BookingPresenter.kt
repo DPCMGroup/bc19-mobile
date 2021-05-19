@@ -29,7 +29,7 @@ class BookingPresenter : BaseMvpPresenter<BookingContract.IView, BookingContract
 
     override fun registerModel() = BookingModel::class.java
     override fun showBookings() {
-        getModel().getBookingList()
+        getModel().retriveBookingList()
 
     }
 

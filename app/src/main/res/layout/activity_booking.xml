@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.act.BookingActivity">
+    tools:context="com.example.bc19mobile.view.act.BookingActivity">
 
     <TextView
         android:id="@+id/Prenotazioniid"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="invisible"
         tools:visibility="invisible"
-         />
+        />
 
     <ListView
         android:id="@+id/prenotalist"
