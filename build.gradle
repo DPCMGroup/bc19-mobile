@@ -20,6 +20,7 @@ buildscript {
 
 plugins {
     id "com.github.nbaztec.coveralls-jacoco" version "1.2.12"
+    id 'jacoco'
 }
 
 allprojects {
@@ -34,7 +35,7 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-apply plugin: Jacoco
+apply plugin: "jacoco"
 apply plugin: "com.github.nbaztec.coveralls-jacoco"
 
 jacocoTestReport {
@@ -42,5 +43,6 @@ jacocoTestReport {
         xml.enabled = true
         html.enabled = true
         html.destination "${buildDir}/reports/coverage"
+        csv.enabled = true
     }
 }
