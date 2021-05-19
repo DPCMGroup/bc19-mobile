@@ -30,6 +30,6 @@ jobs:
       run: ./gradlew build
       
     - name: Unit tests
-      run: ./gradlew test jacocoTestReport coverallsJacoco
+      run: ./gradlew test jacocoFullReport coverallsJacoco
 
       
