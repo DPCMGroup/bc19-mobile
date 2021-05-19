@@ -34,6 +34,7 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+apply plugin: Jacoco
 apply plugin: "com.github.nbaztec.coveralls-jacoco"
 
 jacocoTestReport {
