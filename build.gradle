@@ -40,11 +40,6 @@ task clean(type: Delete) {
 apply plugin: "com.github.nbaztec.coveralls-jacoco"
 apply plugin: "com.vanniktech.android.junit.jacoco"
 
-jacoco {
-    toolVersion = "0.7.6.201602180812"
-    reportsDir = file("$buildDir/reports/jacoco")
-}
-
 jacocoTestReport {
     reports {
         xml.enabled = true
