@@ -22,13 +22,6 @@ plugins {
     id "com.github.nbaztec.coveralls-jacoco" version "1.2.12"
 }
 
-jacocoTestReport {
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-}
-
 allprojects {
     repositories {
         google()
@@ -42,3 +35,17 @@ task clean(type: Delete) {
 }
 
 apply plugin: "com.github.nbaztec.coveralls-jacoco"
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.7.6.201602180812"
+    reportsDir = file("$buildDir/reports/jacoco")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+        html.destination "${buildDir}/reports/coverage"
+    }
+}
