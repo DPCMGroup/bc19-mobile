@@ -86,5 +86,10 @@ class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract
         )
     }
 
+    override fun callError() {
+        errore?.setVisibility(View.VISIBLE)
+    }
+
+
 
 }

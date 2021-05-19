@@ -17,6 +17,7 @@ class LoginModel : BaseModel(), LoginContract.IModel {
 
     interface LoginListener {
         fun onLoginSuccess()
+        fun onLoginFailure()
     }
 
     private var listener: LoginListener? = null
@@ -45,7 +46,7 @@ class LoginModel : BaseModel(), LoginContract.IModel {
 
     fun loginHandle(response: String) {
         if (response == "\"No user found\"") {
-
+            listener?.onLoginFailure()
         } else {
             val restJson = JSONObject(response)
 

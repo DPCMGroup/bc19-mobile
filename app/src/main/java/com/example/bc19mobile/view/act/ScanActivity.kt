@@ -39,6 +39,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>() , ScanContract.I
     override fun getLayoutId() = R.layout.activity_scan
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.menu_item, menu)
         return true
     }

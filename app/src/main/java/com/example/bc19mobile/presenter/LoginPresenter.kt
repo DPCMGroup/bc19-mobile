@@ -17,6 +17,9 @@ class LoginPresenter : BaseMvpPresenter<LoginContract.IView, LoginContract.IMode
             override fun onLoginSuccess() {
                 getMvpView().callScan(getModel().getUser())
             }
+            override fun onLoginFailure() {
+                getMvpView().callError()
+            }
         })
     }
 
