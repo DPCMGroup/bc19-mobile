@@ -82,7 +82,7 @@ class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract
         println("ciao")
         println(user)
         goActivity(
-            ScanActivity::class.java, bundleOf(
+            BookingActivity::class.java, bundleOf(
                 "user" to user
             )
         )

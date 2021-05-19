@@ -19,7 +19,9 @@ class BookingPresenter : BaseMvpPresenter<BookingContract.IView, BookingContract
             override fun onBookingSuccess() {
                 //qui siamo nel mainThread
                 //chiamo la vista cambio pannello e faccio le cose che devo fare
+
                 getMvpView().updateBookingView(getModel().getBookingList())
+
             }
         })
 

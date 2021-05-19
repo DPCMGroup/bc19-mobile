@@ -6,6 +6,7 @@ import com.example.bc19mobile.data.User
 import com.example.bc19mobile.model.service.Service
 import mvp.ljb.kt.model.BaseModel
 import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
 
@@ -57,13 +58,20 @@ class BookingModel : BaseModel(), BookingContract.IModel {
 
     private fun BookingHandle(response: String) {
         val deserialize = response.replace("\\\"", "'").replace("\"", "").replace("'", "\"")
+        val deserialize2= "{ \"visualizzaPrenotazioni\" : "+ deserialize +"}"
         //TO DO gestire l'assenza di prenotazioni
-        if (deserialize == "Prenotazioni non presenti") {
+        if (deserialize2 == "Prenotazioni non presenti") {
 
         } else {
+            val jsonObject = JSONObject(deserialize2)
+            //val restJson = JSONArray("visualizzaPrenotazioni")
+            val restJson = jsonObject.getJSONArray("visualizzaPrenotazioni")
 
-            val restJson = JSONArray(deserialize)
+            //for (i in 0 until bookingList!!.size)
+              //  bookingList!!.removeAt(i)
+/*
             for (i in 0 until restJson.length()) {
+
                 val jsonObject = restJson.getJSONObject(i)
 
                 this.bookingList.add(
@@ -76,9 +84,32 @@ class BookingModel : BaseModel(), BookingContract.IModel {
                     )
                 )
             }
+*/
+            try{
+
+                val jsonObject = JSONObject(deserialize2)
+                val jsonArray = jsonObject.getJSONArray("visualizzaPrenotazioni")
+                for (i in 0 until bookingList!!.size)
+                  bookingList!!.removeAt(i)
+            for (i in 0 until jsonArray.length()) {
+                val jsonObject1 = jsonArray.getJSONObject(i)
+                val model = DataBooking()
+                model.bookId = jsonObject1.getInt("bookId")
+                model.workName = jsonObject1.getString("workName")
+                model.roomName = jsonObject1.getString("roomName")
+                model.start = jsonObject1.getString("start")
+                model.end = jsonObject1.getString("end")
+
+                bookingList!!.add(model)
+            }
+        }
+        catch (e: JSONException) {
+            e.printStackTrace()
+        }
 
             listener?.onBookingSuccess()
         }
+
     }
 
 
