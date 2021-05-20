@@ -25,6 +25,7 @@
         </activity>
         <activity android:name=".view.act.BookingActivity" />
         <activity android:name=".view.act.ScanActivity" />
+        <activity android:name=".view.act.BookingFormActivity" />
 
     </application>
 

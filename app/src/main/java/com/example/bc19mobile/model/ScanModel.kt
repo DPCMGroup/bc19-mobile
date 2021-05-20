@@ -1,12 +1,9 @@
 package  com.example.bc19mobile.model
 
 import com.example.bc19mobile.contract.ScanContract
-import com.example.bc19mobile.data.DataBooking
-import com.example.bc19mobile.data.DataWorkstation
 import com.example.bc19mobile.data.User
 import com.example.bc19mobile.model.service.Service
 import mvp.ljb.kt.model.BaseModel
-import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
 
@@ -27,25 +24,25 @@ class ScanModel : BaseModel(), ScanContract.IModel {
         return user
     }
 
-    override fun getStatus(tag: String): DataWorkstation {
+    override fun getStatus(tag: String) {
         val jsonObject = JSONObject()
         jsonObject.put("tag", tag)
         service.request(
             jsonObject,
             "workstation/getInfo",
             true,
-            ::ScanHandle,
+            ::scanHandle,
             ::connectionError
         )
-        return DataWorkstation()
     }
 
-    private fun connectionError(ioException: IOException) {
+    fun connectionError(ioException: IOException) {
         //gestisco gli errori con connessione
+        println(ioException.message)
     }
 
-    private fun ScanHandle(response: String) {
-        val l: String= response
+    fun scanHandle(response: String) {
+        val l: String = response
         val deserialize = response.replace("\\\"", "'").replace("\"", "").replace("'", "\"")
 
 
