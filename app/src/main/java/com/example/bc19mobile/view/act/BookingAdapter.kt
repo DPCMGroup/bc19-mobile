@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.TextView
 import com.example.bc19mobile.R
 import com.example.bc19mobile.data.DataBooking
@@ -19,7 +20,7 @@ class BookingAdapter(var mCtx: Context, var resources: Int, var items: List<Data
 
         var mItem: DataBooking = items[position]
         testolista.text =
-            mItem.bookId.toString() + " - " + mItem.workName.toString()+ " - " + mItem.roomName.toString()+ " - " + mItem.start.toString() + " - " + mItem.end.toString()
+            mItem.bookId.toString() + " - " + mItem.workName.toString() + " - " + mItem.roomName.toString() + " - " + mItem.start.toString() + " - " + mItem.end.toString()
         return view
     }
 }

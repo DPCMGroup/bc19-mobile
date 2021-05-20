@@ -80,7 +80,7 @@ class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract
 
     override fun callScan(user: User?) {
         goActivity(
-            BookingFormActivity::class.java, bundleOf(
+            BookingActivity::class.java, bundleOf(
                 "user" to user
             )
         )

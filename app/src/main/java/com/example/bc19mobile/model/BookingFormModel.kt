@@ -21,4 +21,14 @@ class BookingFormModel : BaseModel(), BookingFormContract.IModel{
     override fun getUser(): User? {
         return user
     }
+
+    override fun getAvailability(
+        date: String,
+        startTime: String,
+        endTime: String,
+        room: String,
+        colleague: String
+    ) {
+
+    }
 }

@@ -23,5 +23,7 @@ interface BookingFormContract {
     interface IModel : IModelContract{
         fun setUser(user: User?)
         fun getUser(): User?
+        fun getAvailability(date: String, startTime: String, endTime: String, room: String, colleague: String)
+
     }
 }

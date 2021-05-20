@@ -34,6 +34,7 @@ class BookingActivity : BaseMvpActivity<BookingContract.IPresenter>(), BookingCo
 
         var listView = findViewById<ListView>(R.id.prenotalist)
 
+
         listView.adapter = BookingAdapter(this, R.layout.row, bookings!!)
     }
 }

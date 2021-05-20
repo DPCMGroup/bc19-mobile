@@ -29,7 +29,7 @@ class BookingFormPresenter : BaseMvpPresenter<BookingFormContract.IView, Booking
         room: String,
         colleague: String
     ) {
-        TODO("Not yet implemented")
+        getModel().getAvailability(date,startTime,endTime,room,colleague)
     }
 
 }
