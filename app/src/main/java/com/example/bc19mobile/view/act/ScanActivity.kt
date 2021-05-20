@@ -100,7 +100,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
                 val empty = ByteArray(0)
                 val id = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID)
                 val tag = intent.getParcelableExtra<Parcelable>(NfcAdapter.EXTRA_TAG) as Tag
-                val payload = dumpTagData(tag).toByteArray()
+                val payload = dumpTagData(tag)
                 val record = NdefRecord(NdefRecord.TNF_UNKNOWN, empty, id, payload)
                 val msg = NdefMessage(arrayOf(record))
                 msgs = arrayOf(msg)
@@ -115,11 +115,8 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         val builder = StringBuilder()
         val records: List<ParsedNdefRecord> =
             msgs[0]?.let { NdefMessageParser.parse(it) } as List<ParsedNdefRecord>
-        val size = records.size
-        for (i in 0 until size) {
-            val record = records[i]
-            val str = record.str()
-            builder.append(str).append("\n")
+        for (i in 0 until records.size) {
+            builder.append(records[i].str()).append("\n")
         }
         text!!.text = builder.toString()
     }
@@ -130,15 +127,9 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         startActivity(intent)
     }
 
-    private fun dumpTagData(tag: Tag): String {
-        val sb = StringBuilder()
-        val id = tag.id
-        val tag = toHex(id)
-
-        getPresenter().scanTagNFC(tag)
-
-
-        return sb.toString()
+    private fun dumpTagData(tag: Tag): ByteArray {
+        getPresenter().scanTagNFC(toHex(tag.id))
+        return tag.id
     }
 
     private fun toHex(bytes: ByteArray): String {
