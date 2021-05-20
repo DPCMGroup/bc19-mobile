@@ -18,4 +18,12 @@ class ScanPresenter : BaseMvpPresenter<ScanContract.IView, ScanContract.IModel>(
         getModel().setUser(user)
     }
 
+    override fun getUser(): User? {
+        return getModel().getUser()
+    }
+
+    override fun scanTagNFC(tag: String) {
+        getModel().getStatus(tag)
+    }
+
 }
