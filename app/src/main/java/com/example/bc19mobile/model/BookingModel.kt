@@ -56,34 +56,21 @@ class BookingModel : BaseModel(), BookingContract.IModel {
     }
 
     private fun BookingHandle(response: String) {
-        val deserialize = response.replace("\\\"", "'").replace("\"", "").replace("'", "\"")
-        val deserialize2 = "{ \"visualizzaPrenotazioni\" : " + deserialize + "}"
-        //TO DO gestire l'assenza di prenotazioni
-        if (deserialize2 == "Prenotazioni non presenti") {
+        if (response == "Prenotazioni non presenti") {
 
         } else {
-            val jsonObject = JSONObject(deserialize2)
-            val restJson = jsonObject.getJSONArray("visualizzaPrenotazioni")
-            try {
-                val jsonObject = JSONObject(deserialize2)
-                val jsonArray = jsonObject.getJSONArray("visualizzaPrenotazioni")
-                for (i in 0 until bookingList!!.size)
-                    bookingList!!.removeAt(i)
-                for (i in 0 until jsonArray.length()) {
-                    val jsonObject1 = jsonArray.getJSONObject(i)
-                    val model = DataBooking()
-                    model.bookId = jsonObject1.getInt("bookId")
-                    model.workName = jsonObject1.getString("workName")
-                    model.roomName = jsonObject1.getString("roomName")
-                    model.start = jsonObject1.getString("start")
-                    model.end = jsonObject1.getString("end")
-
-                    bookingList!!.add(model)
-                }
-            } catch (e: JSONException) {
-                e.printStackTrace()
+            val jsonArray = JSONArray(response)
+            bookingList = ArrayList<DataBooking>()
+            for (i in 0 until jsonArray.length()) {
+                val book = jsonArray.getJSONObject(i)
+                val model = DataBooking()
+                model.bookId = book.getInt("bookId")
+                model.workName = book.getString("workName")
+                model.roomName = book.getString("roomName")
+                model.start = book.getString("start")
+                model.end = book.getString("end")
+                bookingList.add(model)
             }
-
             listener?.onBookingSuccess()
         }
 

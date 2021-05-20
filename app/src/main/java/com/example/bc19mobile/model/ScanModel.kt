@@ -27,13 +27,7 @@ class ScanModel : BaseModel(), ScanContract.IModel {
     override fun getStatus(tag: String) {
         val jsonObject = JSONObject()
         jsonObject.put("tag", tag)
-        service.request(
-            jsonObject,
-            "workstation/getInfo",
-            true,
-            ::scanHandle,
-            ::connectionError
-        )
+        service.request(jsonObject, "workstation/getInfo", true, ::scanHandle, ::connectionError)
     }
 
     fun connectionError(ioException: IOException) {
