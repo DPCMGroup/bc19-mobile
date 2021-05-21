@@ -32,11 +32,9 @@ class ScanModel : BaseModel(), ScanContract.IModel {
 
     fun connectionError(ioException: IOException) {
         //gestisco gli errori con connessione
-        println(ioException.message)
     }
 
     fun scanHandle(response: String) {
-        val l: String = response
         val deserialize = response.replace("\\\"", "'").replace("\"", "").replace("'", "\"")
 
 

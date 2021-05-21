@@ -47,6 +47,8 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         Toast.makeText(applicationContext, "Benvenuto " + username + "!", Toast.LENGTH_SHORT).show()
 
 
+        text = findViewById<View>(R.id.text) as TextView
+
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
         if (nfcAdapter == null) {
             Toast.makeText(this, "No NFC", Toast.LENGTH_SHORT).show()
@@ -100,7 +102,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
                 val empty = ByteArray(0)
                 val id = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID)
                 val tag = intent.getParcelableExtra<Parcelable>(NfcAdapter.EXTRA_TAG) as Tag
-                val payload = dumpTagData(tag)
+                val payload = dumpTagData(tag).toByteArray()
                 val record = NdefRecord(NdefRecord.TNF_UNKNOWN, empty, id, payload)
                 val msg = NdefMessage(arrayOf(record))
                 msgs = arrayOf(msg)
@@ -127,9 +129,12 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         startActivity(intent)
     }
 
-    private fun dumpTagData(tag: Tag): ByteArray {
-        getPresenter().scanTagNFC(toHex(tag.id))
-        return tag.id
+    private fun dumpTagData(tag: Tag): String {
+        val sb = StringBuilder()
+        val id = tag.id
+        val tag = toHex(id)
+        getPresenter().scanTagNFC(tag)
+        return sb.toString()
     }
 
     private fun toHex(bytes: ByteArray): String {
