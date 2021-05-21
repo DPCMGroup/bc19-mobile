@@ -35,13 +35,10 @@ class ScanModel : BaseModel(), ScanContract.IModel {
     }
 
     fun scanHandle(response: String) {
-        val deserialize = response.replace("\\\"", "'").replace("\"", "").replace("'", "\"")
-
-
-        if (deserialize == "") {
-
+        if (response == "4098") {
+            //fare errore
         } else {
-
+            //risposta
         }
 
 

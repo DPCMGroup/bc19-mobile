@@ -45,7 +45,7 @@ class LoginModel : BaseModel(), LoginContract.IModel {
     }
 
     fun loginHandle(response: String) {
-        if (response == "\"No user found\"") {
+        if (response == "16386") {
             listener?.onLoginFailure()
         } else {
             val restJson = JSONObject(response)

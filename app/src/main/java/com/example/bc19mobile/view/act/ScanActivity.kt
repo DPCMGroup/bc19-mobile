@@ -19,7 +19,6 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
 import com.example.bc19mobile.NFC.NdefMessageParser
 import com.example.bc19mobile.NFC.ParsedNdefRecord
 import com.example.bc19mobile.R
@@ -27,15 +26,18 @@ import com.example.bc19mobile.contract.ScanContract
 import com.example.bc19mobile.data.User
 import com.example.bc19mobile.presenter.ScanPresenter
 import mvp.ljb.kt.act.BaseMvpActivity
-import org.json.JSONObject
+import mvp.ljb.kt.act.BaseMvpAppCompatActivity
+import mvp.ljb.kt.act.BaseMvpFragmentActivity
+import mvp.ljb.kt.fragment.BaseMvpFragment
+
 
 /**
  * @Author Kotlin MVP Plugin
  * @Date 2021/05/18
  * @Description input description
  **/
-@Suppress("UNREACHABLE_CODE")
-class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IView {
+
+class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IView{
     private var nfcAdapter: NfcAdapter? = null
     private var pendingIntent: PendingIntent? = null
     private var text: TextView? = null
@@ -60,6 +62,34 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             Intent(this, this.javaClass)
                 .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0
         )
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_item, menu)
+        return true
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_item, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.nav_prenota -> {
+                return true
+            }
+            R.id.nav_guida -> {
+                return true
+            }
+            R.id.nav_vis -> {
+                return true
+            }
+            R.id.logout -> {
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 
@@ -153,29 +183,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
 
     override fun getLayoutId() = R.layout.activity_scan
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        super.onCreateOptionsMenu(menu)
-        menuInflater.inflate(R.menu.menu_item, menu)
-        return true
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.nav_prenota -> {
-                return true
-            }
-            R.id.nav_guida -> {
-                return true
-            }
-            R.id.nav_vis -> {
-                return true
-            }
-            R.id.logout -> {
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
     override fun registerPresenter() = ScanPresenter::class.java
 }
