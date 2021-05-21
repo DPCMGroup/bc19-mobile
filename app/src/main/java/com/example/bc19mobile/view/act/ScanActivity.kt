@@ -18,6 +18,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bc19mobile.NFC.NdefMessageParser
 import com.example.bc19mobile.NFC.ParsedNdefRecord
@@ -37,7 +38,7 @@ import mvp.ljb.kt.fragment.BaseMvpFragment
  * @Description input description
  **/
 
-class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IView{
+class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IView {
     private var nfcAdapter: NfcAdapter? = null
     private var pendingIntent: PendingIntent? = null
     private var text: TextView? = null
@@ -69,7 +70,10 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         return true
     }
 
-
+    override fun initView() {
+        super.initView()
+        setActionBar(findViewById<Toolbar>(R.id.toolbar))
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -179,7 +183,6 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
 
 
     override fun getLayoutId() = R.layout.activity_scan
-
 
 
     override fun registerPresenter() = ScanPresenter::class.java

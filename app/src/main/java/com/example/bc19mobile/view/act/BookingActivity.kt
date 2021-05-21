@@ -2,6 +2,7 @@ package com.example.bc19mobile.view.act
 
 import android.os.Bundle
 import android.widget.ListView
+import android.widget.Toolbar
 import com.example.bc19mobile.contract.BookingContract
 import com.example.bc19mobile.presenter.BookingPresenter
 import mvp.ljb.kt.act.BaseMvpActivity
@@ -25,6 +26,11 @@ class BookingActivity : BaseMvpActivity<BookingContract.IPresenter>(), BookingCo
         getPresenter().saveUser(intent.extras?.get("user") as User)
         getPresenter().showBookings()
 
+    }
+
+    override fun initView() {
+        super.initView()
+        setActionBar(findViewById<Toolbar>(R.id.toolbar))
     }
 
     override fun registerPresenter() = BookingPresenter::class.java
