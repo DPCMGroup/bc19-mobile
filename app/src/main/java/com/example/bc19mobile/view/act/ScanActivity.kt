@@ -17,6 +17,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bc19mobile.NFC.NdefMessageParser
 import com.example.bc19mobile.NFC.ParsedNdefRecord
@@ -92,12 +93,25 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_bookingForm -> {
+                var user = getPresenter().getUser()
+                goActivity(
+                    BookingFormActivity::class.java, bundleOf(
+                        "user" to user
+                    )
+                )
                 return true
             }
             R.id.nav_guida -> {
+                var user = getPresenter().getUser()
                 return true
             }
             R.id.nav_booking -> {
+                var user = getPresenter().getUser()
+                goActivity(
+                    BookingActivity::class.java, bundleOf(
+                        "user" to user
+                    )
+                )
                 return true
             }
             R.id.logout -> {
