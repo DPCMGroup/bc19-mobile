@@ -3,6 +3,7 @@ package com.example.bc19mobile.contract
 import android.app.Activity
 import android.view.Menu
 import com.example.bc19mobile.data.DataBooking
+import com.example.bc19mobile.data.DataBookingToday
 import com.example.bc19mobile.data.DataWorkstation
 import com.example.bc19mobile.data.User
 import com.example.bc19mobile.model.BookingModel
@@ -20,7 +21,8 @@ interface ScanContract {
 
 
     interface IView : IViewContract{
-        fun updateScanView(workstation: DataWorkstation?)
+        fun updateScanView(workstation: DataWorkstation?, bookings: ArrayList<DataBookingToday>?)
+        fun callScanError()
     }
 
     interface IPresenter : IPresenterContract{
@@ -35,6 +37,8 @@ interface ScanContract {
         fun setUser(user: User?)
         fun getUser(): User?
         fun getStatus(tag:String)
+        fun getBookingListToday(): ArrayList<DataBookingToday>?
+        fun setBookingListener(listener: ScanModel.ScanListener?)
     }
 
 

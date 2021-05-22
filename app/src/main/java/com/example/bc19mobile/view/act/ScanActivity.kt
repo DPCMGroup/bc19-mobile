@@ -23,6 +23,7 @@ import com.example.bc19mobile.NFC.ParsedNdefRecord
 import com.example.bc19mobile.R
 import com.example.bc19mobile.contract.ScanContract
 import com.example.bc19mobile.data.DataBooking
+import com.example.bc19mobile.data.DataBookingToday
 import com.example.bc19mobile.data.DataWorkstation
 import com.example.bc19mobile.data.User
 import com.example.bc19mobile.presenter.ScanPresenter
@@ -196,7 +197,10 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
 
     override fun registerPresenter() = ScanPresenter::class.java
 
-    override fun updateScanView(workstation: DataWorkstation?) {
+    override fun updateScanView(
+        workstation: DataWorkstation?,
+        bookings: ArrayList<DataBookingToday>?
+    ) {
         val igienizza = findViewById<Button>(R.id.igienizza)
         val message = findViewById<TextView>(R.id.message_txt)
         val message1 = findViewById<TextView>(R.id.message1_txt)
@@ -218,7 +222,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
                 message1.setVisibility(View.VISIBLE)
             }
 
-        } else if (workstation?._workStatus == 0 && workstation?._workSanitize== 0) {
+        } else if (workstation?._workStatus == 0 && workstation?._workSanitize == 0) {
             runOnUiThread {
                 stato.text = "Libera e non Igienizzata"
             }
@@ -280,23 +284,52 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             }
         }
 
+        if (workstation?._bookedToday == 1) {
+            var username: String? = getPresenter().getUser()?.getUsername()
+            if (bookings?.get(0)?.bookerUsername == username) {
+                runOnUiThread {
+                    evprenotazioni.text =
+                        "Postazione prenotata da te dalle "+ bookings?.get(0)?.from+ " fino alle " + bookings?.get(0)?.to
+                }
+                if (bookings?.size!! > 1) {
+                    runOnUiThread {
+                        evprenotazioni.text =
+                            "Prenotata da te. Attenzione ci sono altre prenotazioni dalle " + bookings?.get(
+                                1
+                            )?.from
+                    }
+                }
+            } else {
+                evprenotazioni.text =
+                    "Prenotata da " + bookings?.get(0)?.bookerName + " " + bookings?.get(0)?.bookerSurname + " dalle " + bookings?.get(
+                        0
+                    )?.from + " alle " + bookings?.get(0)?.to
+            }
+        }
 
 
-         nomepostazione.setVisibility(View.VISIBLE)
-         stato.setVisibility(View.VISIBLE)
-         evprenotazioni.setVisibility(View.VISIBLE)
 
-        val intro =  findViewById<TextView>(R.id.intro_txt)
+        nomepostazione.setVisibility(View.VISIBLE)
+        stato.setVisibility(View.VISIBLE)
+        evprenotazioni.setVisibility(View.VISIBLE)
+
+        val intro = findViewById<TextView>(R.id.intro_txt)
         runOnUiThread {
             intro.setVisibility(View.VISIBLE)
         }
 
         // Rende visibile recycler view
-        val layout =  findViewById<RecyclerView>(R.id.recyclerView)
+        val layout = findViewById<RecyclerView>(R.id.recyclerView)
         runOnUiThread {
             layout.setVisibility(View.VISIBLE)
         }
     }
-}
 
+    override fun callScanError() {
+        Toast.makeText(applicationContext, "Tag non riconosciuto!", Toast.LENGTH_SHORT)
+            .show()
+
+
+    }
+}
 

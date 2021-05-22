@@ -17,7 +17,7 @@ import java.io.IOException
  **/
 class BookingModel : BaseModel(), BookingContract.IModel {
 
-    interface BookingListener {
+    interface BookingListener{
         fun onBookingSuccess()
     }
 

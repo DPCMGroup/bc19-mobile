@@ -20,7 +20,10 @@ class ScanPresenter : BaseMvpPresenter<ScanContract.IView, ScanContract.IModel>(
         getModel().setWorkstationListener(object : ScanModel.ScanListener {
             override fun onScanSuccess() {
 
-                getMvpView().updateScanView(getModel().getWorkstation())
+                getMvpView().updateScanView(getModel().getWorkstation(), getModel().getBookingListToday())
+            }
+            override fun onScanFailure() {
+                getMvpView().callScanError()
             }
         })
     }
