@@ -14,6 +14,8 @@ import mvp.ljb.kt.contract.IModelContract
 interface LoginContract {
 
     interface IView : IViewContract {
+        fun callScan(user: User?)
+        fun callError()
     }
 
     interface IPresenter : IPresenterContract {

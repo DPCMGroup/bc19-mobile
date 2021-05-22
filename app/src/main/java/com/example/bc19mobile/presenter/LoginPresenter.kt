@@ -14,10 +14,11 @@ class LoginPresenter : BaseMvpPresenter<LoginContract.IView, LoginContract.IMode
     override fun onCreate() {
         super.onCreate()
         getModel().setLoginListener(object : LoginModel.LoginListener {
-            override fun onLoginSuccess(): Void {
-                //qui siamo nel mainThread
-                //chiamo la vista cambio pannello e faccio le cose che devo fare
-                TODO("Not yet implemented")
+            override fun onLoginSuccess() {
+                getMvpView().callScan(getModel().getUser())
+            }
+            override fun onLoginFailure() {
+                getMvpView().callError()
             }
         })
     }
