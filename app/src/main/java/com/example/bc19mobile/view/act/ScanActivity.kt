@@ -77,16 +77,18 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_prenota -> {
+            R.id.nav_bookingForm -> {
                 return true
             }
             R.id.nav_guida -> {
                 return true
             }
-            R.id.nav_vis -> {
+            R.id.nav_booking -> {
                 return true
             }
             R.id.logout -> {
+                var moveIntent =Intent(this, LoginActivity::class.java)
+                startActivity(moveIntent)
                 return true
             }
         }

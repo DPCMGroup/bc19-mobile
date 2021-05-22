@@ -4,13 +4,13 @@
     app:popupTheme="@style/Theme.Bc19mobile.PopupOverlay">
 
     <item
-        android:id="@+id/nav_prenota"
+        android:id="@+id/nav_bookingForm"
         android:title="Prenota Postazione"
         app:showAsAction="never"/>
 
 
     <item
-        android:id="@+id/nav_vis"
+        android:id="@+id/nav_booking"
         android:title="Visualizza Prenotazioni"
         app:showAsAction="never"/>
     />
