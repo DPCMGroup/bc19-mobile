@@ -23,12 +23,15 @@ interface ScanContract {
     interface IView : IViewContract{
         fun updateScanView(workstation: DataWorkstation?, bookings: ArrayList<DataBookingToday>?)
         fun callScanError()
+        fun callSanitizeError()
+        fun callSanitizeOk()
     }
 
     interface IPresenter : IPresenterContract{
         fun saveUser(user: User?)
         fun getUser(): User?
         fun scanTagNFC(tag: String)
+        fun makeSanitize(tag: String)
     }
 
     interface IModel : IModelContract{
@@ -37,6 +40,7 @@ interface ScanContract {
         fun setUser(user: User?)
         fun getUser(): User?
         fun getStatus(tag:String)
+        fun getSanitize(tag: String)
         fun getBookingListToday(): ArrayList<DataBookingToday>?
         fun setBookingListener(listener: ScanModel.ScanListener?)
     }

@@ -52,11 +52,17 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         var username: String? = getPresenter().getUser()?.getUsername()
         Toast.makeText(applicationContext, "Benvenuto " + username + "!", Toast.LENGTH_SHORT).show()
 
-
+        val tagId = findViewById<TextView>(R.id.tagId_txt)
         val igienizza = findViewById<Button>(R.id.igienizza)
         runOnUiThread {
             igienizza.isEnabled = false
         }
+
+        igienizza.setOnClickListener {
+            tagId?.text?.toString()?.let { it1 -> getPresenter().makeSanitize(it1) }
+        }
+
+
 
         text = findViewById<View>(R.id.text) as TextView
 
@@ -174,6 +180,8 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         val sb = StringBuilder()
         val id = tag.id
         val tag = toHex(id)
+        val tagId = findViewById<TextView>(R.id.tagId_txt)
+        tagId.text = tag
         getPresenter().scanTagNFC(tag)
         return sb.toString()
     }
@@ -289,7 +297,9 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             if (bookings?.get(0)?.bookerUsername == username) {
                 runOnUiThread {
                     evprenotazioni.text =
-                        "Postazione prenotata da te dalle "+ bookings?.get(0)?.from+ " fino alle " + bookings?.get(0)?.to
+                        "Postazione prenotata da te dalle " + bookings?.get(0)?.from + " fino alle " + bookings?.get(
+                            0
+                        )?.to
                 }
                 if (bookings?.size!! > 1) {
                     runOnUiThread {
@@ -314,22 +324,91 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         evprenotazioni.setVisibility(View.VISIBLE)
 
         val intro = findViewById<TextView>(R.id.intro_txt)
-        runOnUiThread {
-            intro.setVisibility(View.VISIBLE)
-        }
+        intro.setVisibility(View.VISIBLE)
+
 
         // Rende visibile recycler view
         val layout = findViewById<RecyclerView>(R.id.recyclerView)
         runOnUiThread {
             layout.setVisibility(View.VISIBLE)
+
         }
     }
 
     override fun callScanError() {
         Toast.makeText(applicationContext, "Tag non riconosciuto!", Toast.LENGTH_SHORT)
             .show()
+    }
 
+    override fun callSanitizeError() {
+        Toast.makeText(applicationContext, "Igienizzazione non riuscita!", Toast.LENGTH_SHORT)
+            .show()
+    }
+
+    override fun callSanitizeOk() {
+        Toast.makeText(applicationContext, "Igienizzazione completata!", Toast.LENGTH_SHORT)
+            .show()
+
+        val igienizza = findViewById<Button>(R.id.igienizza)
+        runOnUiThread {
+            igienizza.isEnabled = true
+        }
+        val message = findViewById<TextView>(R.id.message_txt)
+        val message1 = findViewById<TextView>(R.id.message1_txt)
+        val evprenotazioni = findViewById<TextView>(R.id.evprenotazioni)
+        val stato = findViewById<TextView>(R.id.stato)
+        if (stato.text == "Libera e non Igienizzata") {
+            runOnUiThread {
+                stato.text = "Libera e Igienizzata"
+            }
+            runOnUiThread {
+                message.setVisibility(View.INVISIBLE)
+            }
+            runOnUiThread {
+                message1.setVisibility(View.VISIBLE)
+            }
+        }
+        if (stato.text == "Occupata e non Igienizzata") {
+            runOnUiThread {
+                stato.text = "Occupata e Igienizzata"
+            }
+        }
+
+        runOnUiThread {
+            igienizza.setVisibility(View.INVISIBLE)
+        }
+        runOnUiThread {
+            igienizza.isEnabled = false
+        }
+        if (stato.text == "Prenotata e non Igienizzata") {
+            runOnUiThread {
+                stato.text = "Prenotata e Igienizzata"
+            }
+            if (evprenotazioni.text == "Prenotata da te. Attenzione ci sono altre prenotazioni!" || evprenotazioni.text == "Postazione prenotata da te") {
+                runOnUiThread {
+                    message.setVisibility(View.INVISIBLE)
+                }
+                runOnUiThread {
+                    message1.setVisibility(View.VISIBLE)
+                }
+            }
+
+        }
+        if (stato.text == "Guasta e non Igienizzata") {
+            runOnUiThread {
+                stato.text = "Guasta e Igienizzata"
+            }
+        }
+
+        runOnUiThread {
+            igienizza.setVisibility(View.INVISIBLE)
+        }
+        runOnUiThread {
+            igienizza.isEnabled = false
+        }
 
     }
 }
+
+
 

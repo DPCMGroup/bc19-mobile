@@ -1,5 +1,7 @@
 package  com.example.bc19mobile.model
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.bc19mobile.contract.ScanContract
 import com.example.bc19mobile.data.DataBooking
 import com.example.bc19mobile.data.DataBookingToday
@@ -10,6 +12,8 @@ import mvp.ljb.kt.model.BaseModel
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 /**
  * @Author Kotlin MVP Plugin
@@ -20,6 +24,8 @@ class ScanModel : BaseModel(), ScanContract.IModel {
     interface ScanListener {
         fun onScanSuccess()
         fun onScanFailure()
+        fun onSanitizeSuccess()
+        fun onSanitizeFailure()
     }
 
     private var listener: ScanModel.ScanListener? = null
@@ -94,9 +100,29 @@ class ScanModel : BaseModel(), ScanContract.IModel {
             }
             listener?.onScanSuccess()
         }
+    }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun getSanitize(tag: String) {
+        val Settings = JSONObject()
+        Settings.put("idUser", user?.getId())
+        Settings.put("tag", tag)
+        val current = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+        val formatted = current.format(formatter)
 
+        Settings.put("data",formatted)
+
+        service.request(Settings, "workstation/sanitize", true, ::sanitizeHandle, ::connectionError)
+    }
+
+    fun sanitizeHandle(response: String) {
+        if (response == "4100") {
+            listener?.onSanitizeFailure()
+        } else {
+            listener?.onSanitizeFailure()
+        }
     }
 
 
-}
+    }

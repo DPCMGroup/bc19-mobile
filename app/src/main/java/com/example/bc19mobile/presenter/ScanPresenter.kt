@@ -25,6 +25,14 @@ class ScanPresenter : BaseMvpPresenter<ScanContract.IView, ScanContract.IModel>(
             override fun onScanFailure() {
                 getMvpView().callScanError()
             }
+
+            override fun onSanitizeFailure() {
+                getMvpView().callSanitizeOk()
+            }
+
+            override fun onSanitizeSuccess() {
+                getMvpView().callSanitizeError()
+            }
         })
     }
 
@@ -38,6 +46,10 @@ class ScanPresenter : BaseMvpPresenter<ScanContract.IView, ScanContract.IModel>(
 
     override fun scanTagNFC(tag: String) {
         getModel().getStatus(tag)
+    }
+
+    override fun makeSanitize(tag: String) {
+        getModel().getSanitize(tag)
     }
 
 }
