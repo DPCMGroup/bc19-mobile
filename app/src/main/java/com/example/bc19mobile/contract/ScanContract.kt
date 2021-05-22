@@ -2,8 +2,11 @@ package com.example.bc19mobile.contract
 
 import android.app.Activity
 import android.view.Menu
+import com.example.bc19mobile.data.DataBooking
 import com.example.bc19mobile.data.DataWorkstation
 import com.example.bc19mobile.data.User
+import com.example.bc19mobile.model.BookingModel
+import com.example.bc19mobile.model.ScanModel
 import mvp.ljb.kt.contract.IModelContract
 import mvp.ljb.kt.contract.IPresenterContract
 import mvp.ljb.kt.contract.IViewContract
@@ -16,7 +19,9 @@ import mvp.ljb.kt.contract.IViewContract
 interface ScanContract {
 
 
-    interface IView : IViewContract
+    interface IView : IViewContract{
+        fun updateScanView(workstation: DataWorkstation?)
+    }
 
     interface IPresenter : IPresenterContract{
         fun saveUser(user: User?)
@@ -25,6 +30,8 @@ interface ScanContract {
     }
 
     interface IModel : IModelContract{
+        fun getWorkstation(): DataWorkstation?
+        fun setWorkstationListener(listener: ScanModel.ScanListener?)
         fun setUser(user: User?)
         fun getUser(): User?
         fun getStatus(tag:String)

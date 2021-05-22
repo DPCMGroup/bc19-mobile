@@ -1,9 +1,12 @@
 package  com.example.bc19mobile.model
 
 import com.example.bc19mobile.contract.ScanContract
+import com.example.bc19mobile.data.DataBooking
+import com.example.bc19mobile.data.DataWorkstation
 import com.example.bc19mobile.data.User
 import com.example.bc19mobile.model.service.Service
 import mvp.ljb.kt.model.BaseModel
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 
@@ -13,8 +16,22 @@ import java.io.IOException
  * @Description input description
  **/
 class ScanModel : BaseModel(), ScanContract.IModel {
+    interface ScanListener {
+        fun onScanSuccess()
+    }
+
+    private var listener: ScanModel.ScanListener? = null
     private val service = Service()
     private var user: User? = null
+    private var workstation = DataWorkstation()
+
+    override fun setWorkstationListener(listener: ScanListener?) {
+        this.listener = listener
+    }
+
+    override fun getWorkstation(): DataWorkstation? {
+        return workstation
+    }
 
     override fun setUser(user: User?) {
         this.user = user
@@ -38,7 +55,18 @@ class ScanModel : BaseModel(), ScanContract.IModel {
         if (response == "4098") {
             //fare errore
         } else {
-            //risposta
+            workstation = DataWorkstation()
+            val json = JSONObject(response)
+
+            workstation._workId = json.getInt("workId")
+            workstation._workName = json.getString("workName")
+            workstation._roomName = json.getString("roomName")
+            workstation._workStatus = json.getInt("workStatus")
+            workstation._workSanitize = json.getInt("workSanitized")
+            workstation._bookedToday = json.getInt("bookedToday")
+
+
+            listener?.onScanSuccess()
         }
 
 

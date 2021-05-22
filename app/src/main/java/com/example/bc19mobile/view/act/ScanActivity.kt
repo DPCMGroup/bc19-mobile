@@ -15,21 +15,23 @@ import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
-import android.widget.Toolbar
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.example.bc19mobile.NFC.NdefMessageParser
 import com.example.bc19mobile.NFC.ParsedNdefRecord
 import com.example.bc19mobile.R
 import com.example.bc19mobile.contract.ScanContract
+import com.example.bc19mobile.data.DataBooking
+import com.example.bc19mobile.data.DataWorkstation
 import com.example.bc19mobile.data.User
 import com.example.bc19mobile.presenter.ScanPresenter
 import mvp.ljb.kt.act.BaseMvpActivity
 import mvp.ljb.kt.act.BaseMvpAppCompatActivity
 import mvp.ljb.kt.act.BaseMvpFragmentActivity
 import mvp.ljb.kt.fragment.BaseMvpFragment
+import org.json.JSONObject
+import java.util.ArrayList
 
 
 /**
@@ -49,6 +51,11 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         var username: String? = getPresenter().getUser()?.getUsername()
         Toast.makeText(applicationContext, "Benvenuto " + username + "!", Toast.LENGTH_SHORT).show()
 
+
+        val igienizza = findViewById<Button>(R.id.igienizza)
+        runOnUiThread {
+            igienizza.isEnabled = false
+        }
 
         text = findViewById<View>(R.id.text) as TextView
 
@@ -87,7 +94,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
                 return true
             }
             R.id.logout -> {
-                var moveIntent =Intent(this, LoginActivity::class.java)
+                var moveIntent = Intent(this, LoginActivity::class.java)
                 startActivity(moveIntent)
                 return true
             }
@@ -188,4 +195,108 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
 
 
     override fun registerPresenter() = ScanPresenter::class.java
+
+    override fun updateScanView(workstation: DataWorkstation?) {
+        val igienizza = findViewById<Button>(R.id.igienizza)
+        val message = findViewById<TextView>(R.id.message_txt)
+        val message1 = findViewById<TextView>(R.id.message1_txt)
+        igienizza.setVisibility(View.INVISIBLE)
+        message.setVisibility(View.INVISIBLE)
+        message1.setVisibility(View.INVISIBLE)
+
+        val nomepostazione = findViewById<TextView>(R.id.nomepostazione)
+        val stato = findViewById<TextView>(R.id.stato)
+        val evprenotazioni = findViewById<TextView>(R.id.evprenotazioni)
+        nomepostazione.text = workstation?._workName
+
+
+        if (workstation?._workStatus == 0 && workstation?._workSanitize == 1) {
+            runOnUiThread {
+                stato.text = "Libera e Igienizzata"
+            }
+            runOnUiThread {
+                message1.setVisibility(View.VISIBLE)
+            }
+
+        } else if (workstation?._workStatus == 0 && workstation?._workSanitize== 0) {
+            runOnUiThread {
+                stato.text = "Libera e non Igienizzata"
+            }
+            runOnUiThread {
+                igienizza.isEnabled = true
+            }
+
+            runOnUiThread {
+                igienizza.setVisibility(View.VISIBLE)
+            }
+
+        } else if (workstation?._workStatus == 1 && workstation?._workSanitize == 0) {
+            runOnUiThread {
+                stato.text = "Occupata e non Igienizzata"
+            }
+            runOnUiThread {
+                message.setVisibility(View.VISIBLE)
+            }
+            runOnUiThread {
+                igienizza.isEnabled = true
+            }
+
+            runOnUiThread {
+                igienizza.setVisibility(View.VISIBLE)
+            }
+        } else if (workstation?._workStatus == 1 && workstation?._workSanitize == 1) {
+            runOnUiThread {
+                stato.text = "Occupata e Igienizzata"
+            }
+            runOnUiThread {
+                message.setVisibility(View.VISIBLE)
+            }
+        } else if (workstation?._workStatus == 2 && workstation?._workSanitize == 1) {
+
+            runOnUiThread { stato.text = "Prenotata e Igienizzata" }
+            runOnUiThread { message.setVisibility(View.VISIBLE) }
+        } else if (workstation?._workStatus == 2 && workstation?._workSanitize == 0) {
+            runOnUiThread { stato.text = "Prenotata e non Igienizzata" }
+            runOnUiThread { message.setVisibility(View.VISIBLE) }
+            runOnUiThread {
+                igienizza.isEnabled = true
+            }
+
+            runOnUiThread {
+                igienizza.setVisibility(View.VISIBLE)
+            }
+        } else if (workstation?._workStatus == 3 && workstation?._workSanitize == 1) {
+            runOnUiThread { stato.text = "Guasta e Igienizzata" }
+            runOnUiThread { message.setVisibility(View.VISIBLE) }
+        } else if (workstation?._workStatus == 3 && workstation?._workSanitize == 0) {
+            runOnUiThread { stato.text = "Guasta e non Igienizzata" }
+            runOnUiThread { message.setVisibility(View.VISIBLE) }
+            runOnUiThread {
+                igienizza.isEnabled = true
+            }
+
+            runOnUiThread {
+                igienizza.setVisibility(View.VISIBLE)
+            }
+        }
+
+
+
+         nomepostazione.setVisibility(View.VISIBLE)
+         stato.setVisibility(View.VISIBLE)
+         evprenotazioni.setVisibility(View.VISIBLE)
+
+        val intro =  findViewById<TextView>(R.id.intro_txt)
+        runOnUiThread {
+            intro.setVisibility(View.VISIBLE)
+        }
+
+        // Rende visibile recycler view
+        val layout =  findViewById<RecyclerView>(R.id.recyclerView)
+        runOnUiThread {
+            layout.setVisibility(View.VISIBLE)
+        }
+    }
 }
+
+
