@@ -1,6 +1,5 @@
 package com.example.bc19mobile.contract
 
-import com.example.bc19mobile.model.LoginModel
 import com.example.bc19mobile.data.User
 import mvp.ljb.kt.contract.IPresenterContract
 import mvp.ljb.kt.contract.IViewContract
@@ -8,23 +7,24 @@ import mvp.ljb.kt.contract.IModelContract
 
 /**
  * @Author Kotlin MVP Plugin
- * @Date 2021/04/23
+ * @Date 2021/05/21
  * @Description input description
  **/
-interface LoginContract {
+interface GuideContract {
 
     interface IView : IViewContract {
-        fun callScan(user: User?)
-        fun callError()
+        fun updateGuideView(guideName: String)
     }
 
     interface IPresenter : IPresenterContract {
-        fun makeLogin(username: String, password: String)
+        fun saveUser(user: User?)
+        fun showGuide()
+        fun getUser(): User?
     }
 
     interface IModel : IModelContract {
-        fun sendLogin(username: String, password: String)
-        fun setLoginListener(listener: LoginModel.LoginListener?)
+        fun setUser(user: User?)
+        fun getGuide(): String
         fun getUser(): User?
     }
 }

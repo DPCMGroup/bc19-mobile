@@ -1,16 +1,18 @@
 package com.example.bc19mobile.view.act
 
+import android.annotation.SuppressLint
+import android.os.Bundle
 import android.util.Patterns
+import android.view.Menu
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
+import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import com.example.bc19mobile.contract.LoginContract
 import com.example.bc19mobile.presenter.LoginPresenter
-import mvp.ljb.kt.act.BaseMvpActivity
 import com.example.bc19mobile.R
+import com.example.bc19mobile.data.User
+import mvp.ljb.kt.act.BaseMvpActivity
 
 /**
  * @Author Kotlin MVP Plugin
@@ -36,6 +38,7 @@ class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract
         loginBtn = findViewById<Button>(R.id.login)
         loading = findViewById<ProgressBar>(R.id.loading)
         errore = findViewById<TextView>(R.id.errore)
+        setActionBar(findViewById<Toolbar>(R.id.toolbar))
     }
 
     override fun initData() {
@@ -75,5 +78,16 @@ class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract
         // To do : da modificare
     }
 
+    override fun callScan(user: User?) {
+        goActivity(
+            ScanActivity::class.java, bundleOf(
+                "user" to user
+            )
+        )
+    }
+
+    override fun callError() {
+        errore?.setVisibility(View.VISIBLE)
+    }
 
 }

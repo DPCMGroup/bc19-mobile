@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-package="com.example.bc19mobile">
+    package="com.example.bc19mobile">
 
-<uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.NFC" />
 
-<uses-feature android:name="android.hardware.nfc" />
+    <uses-feature android:name="android.hardware.nfc" />
 
-<uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
-<application
-    android:allowBackup="true"
-    android:icon="@drawable/logo"
-    android:label="@string/app_name"
-    android:networkSecurityConfig="@xml/network_security_config"
-    android:roundIcon="@mipmap/ic_launcher_round"
-    android:supportsRtl="true"
-    android:theme="@style/Theme.TagNFCKotlin">
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/logo"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Bc19mobile">
+        <activity
+            android:name=".view.act.LoginActivity"
+            android:label="BlockCovid">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-    <activity android:name=".MainActivity"></activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
-    <activity android:name=".view.act.LoginActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
+        </activity>
+        <activity android:name=".view.act.BookingActivity" />
+        <activity android:name=".view.act.ScanActivity" />
+        <activity android:name=".view.act.BookingFormActivity" />
+        <activity android:name=".view.act.GuideActivity" />
 
-</application>
+
+    </application>
 
 </manifest>

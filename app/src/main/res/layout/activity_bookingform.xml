@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    tools:context=".PrenotaActivity">
+    tools:context="com.example.bc19mobile.view.act.BookingFormActivity">
 
 
 
@@ -18,8 +18,7 @@
         android:textColor="@color/material_on_surface_stroke"
         android:text="Cerca Postazione"
         android:textSize="30sp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/username"
+        android:layout_marginTop="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,12 +43,13 @@
         android:text="Nome Collega:"
         android:textSize="20sp" />
 
-        <Button
+    <Button
         android:id="@+id/cerca"
         android:layout_width="140dp"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="470dp"
+        android:background="@color/purple_200"
         android:text="Cerca" />
 
     <EditText
@@ -102,16 +102,16 @@
             android:inputType="date"
             android:singleLine="true" />
 
-    <ImageButton
-        android:id="@+id/SelezionaData"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="93dp"
-        android:background="@color/purple_200"
-        app:srcCompat="@drawable/ic_calendario" />
+        <ImageButton
+            android:id="@+id/SelezionaData"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="93dp"
+            android:background="@color/purple_200"
+            android:src="@drawable/ic_calendario" />
 
     </LinearLayout>
 
@@ -142,16 +142,17 @@
             android:layout_marginTop="169dp"
             android:inputType="time"
             android:singleLine="true" />
-    <ImageButton
-        android:id="@+id/SelezionaInizio"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="165dp"
-        android:background="@color/purple_200"
-        app:srcCompat="@drawable/ic_ora" />
+
+        <ImageButton
+            android:id="@+id/SelezionaInizio"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="165dp"
+            android:background="@color/purple_200"
+            android:src="@drawable/ic_ora"/>
 
     </LinearLayout>
 
@@ -190,7 +191,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="233dp"
             android:background="@color/purple_200"
-            app:srcCompat="@drawable/ic_ora" />
+            android:src="@drawable/ic_ora"
+             />
     </LinearLayout>
 </RelativeLayout>
-

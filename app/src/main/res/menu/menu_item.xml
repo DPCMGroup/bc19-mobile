@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    app:popupTheme="@style/Theme.Bc19mobile.PopupOverlay">
 
-        <item
-            android:id="@+id/nav_prenota"
-            android:title="Prenota Postazione"
-            app:showAsAction="never"/>
+    <item
+        android:id="@+id/nav_tag"
+        android:title="Scansiona tag"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/nav_bookingForm"
+        android:title="Prenota Postazione"
+        app:showAsAction="never"/>
 
 
-        <item
-            android:id="@+id/nav_vis"
-            android:title="Visualizza Prenotazioni"
-            app:showAsAction="never"/>
-        />
+    <item
+        android:id="@+id/nav_booking"
+        android:title="Visualizza Prenotazioni"
+        app:showAsAction="never"/>
+    />
     <item
         android:id="@+id/nav_guida"
         android:title="Guida"
         app:showAsAction="never" />
-        />
+    />
     <item
         android:id="@+id/logout"
         android:title="Logout"
