@@ -4,6 +4,11 @@
     app:popupTheme="@style/Theme.Bc19mobile.PopupOverlay">
 
     <item
+        android:id="@+id/nav_tag"
+        android:title="Scansiona tag"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/nav_bookingForm"
         android:title="Prenota Postazione"
         app:showAsAction="never"/>

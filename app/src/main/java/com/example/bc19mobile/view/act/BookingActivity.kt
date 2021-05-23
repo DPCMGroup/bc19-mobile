@@ -25,7 +25,6 @@ class BookingActivity : BaseMvpActivity<BookingContract.IPresenter>(), BookingCo
         super.onCreate(savedInstanceState)
         getPresenter().saveUser(intent.extras?.get("user") as User)
         getPresenter().showBookings()
-
     }
 
     override fun initView() {

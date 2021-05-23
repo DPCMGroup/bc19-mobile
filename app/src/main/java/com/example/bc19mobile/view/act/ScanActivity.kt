@@ -82,6 +82,8 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_item, menu)
+        val itemToHide = menu?.findItem(R.id.nav_tag)
+        itemToHide?.setVisible(false)
         return true
     }
 
@@ -103,6 +105,11 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             }
             R.id.nav_guida -> {
                 var user = getPresenter().getUser()
+                goActivity(
+                    GuideActivity::class.java, bundleOf(
+                        "user" to user
+                    )
+                )
                 return true
             }
             R.id.nav_booking -> {
