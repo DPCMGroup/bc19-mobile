@@ -1,14 +1,4 @@
 package com.example.bc19mobile.data
-/*
-data class DataWorkstation(
-    val _tag: String,
-    val _workId: Int,
-    val _workName: String,
-    val _workStatus: Int,
-    val _bookedToday: Int,
-    val _workSanitize: Int
-)
-*/
 
 class DataWorkstation {
     var _workId: Int? = null
