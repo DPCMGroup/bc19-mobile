@@ -1,4 +1,4 @@
-package com.example.bc19mobile.view.act
+package com.example.bc19mobile.tools
 
 import android.content.Context
 import android.view.LayoutInflater

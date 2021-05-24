@@ -9,8 +9,7 @@ import mvp.ljb.kt.act.BaseMvpActivity
 import com.example.bc19mobile.R
 import com.example.bc19mobile.data.DataBooking
 import com.example.bc19mobile.data.User
-import org.json.JSONException
-import org.json.JSONObject
+import com.example.bc19mobile.tools.BookingAdapter
 
 
 /**
