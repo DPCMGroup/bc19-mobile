@@ -191,15 +191,4 @@
         android:visibility="invisible"
         tools:visibility="invisible" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="303dp"
-        android:layout_height="165dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="286dp"
-        android:visibility="invisible"
-        tools:visibility="invisible">
-    </androidx.recyclerview.widget.RecyclerView>
-
 </RelativeLayout>

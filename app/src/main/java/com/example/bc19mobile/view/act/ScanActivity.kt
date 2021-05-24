@@ -346,14 +346,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
 
         val intro = findViewById<TextView>(R.id.intro_txt)
         intro.setVisibility(View.VISIBLE)
-
-
-        // Rende visibile recycler view
-        val layout = findViewById<RecyclerView>(R.id.recyclerView)
-        runOnUiThread {
-            layout.setVisibility(View.VISIBLE)
-
-        }
+        
     }
 
     override fun callScanError() {
