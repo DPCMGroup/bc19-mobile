@@ -29,6 +29,7 @@ sonarqube {
         property "sonar.projectKey", "DPCMGroup_bc19-mobile"
         property "sonar.organization", "dpcmgroup"
         property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.coverageReportPaths", "reports/cobertura/coverage.xml"
     }
 }
 
