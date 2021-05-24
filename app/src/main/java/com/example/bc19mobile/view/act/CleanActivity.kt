@@ -1,5 +1,7 @@
 package com.example.bc19mobile.view.act
 
+import android.os.Bundle
+import android.widget.Button
 import android.widget.Toolbar
 import com.example.bc19mobile.contract.CleanContract
 import com.example.bc19mobile.presenter.CleanPresenter
@@ -20,5 +22,21 @@ class CleanActivity : BaseMvpActivity<CleanContract.IPresenter>() , CleanContrac
     override fun initView() {
         super.initView()
         setActionBar(findViewById<Toolbar>(R.id.toolbar))
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val bStanze= findViewById<Button>(R.id.bStanze)
+        val bPostazioni= findViewById<Button>(R.id.bPostazioni)
+
+        bStanze.setOnClickListener {
+            getPresenter().showRooms()
+        }
+
+        bPostazioni.setOnClickListener{
+            getPresenter().showWorkstations()
+
+        }
     }
 }

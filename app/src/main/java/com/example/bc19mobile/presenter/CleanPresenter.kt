@@ -13,4 +13,11 @@ class CleanPresenter : BaseMvpPresenter<CleanContract.IView, CleanContract.IMode
 
     override fun registerModel() = CleanModel::class.java
 
+    override fun showRooms() {
+        getModel().getRooms()
+    }
+
+    override fun showWorkstations() {
+        getModel().getWorkstations()
+    }
 }

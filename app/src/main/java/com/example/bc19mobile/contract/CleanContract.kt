@@ -13,7 +13,13 @@ interface CleanContract {
 
     interface IView : IViewContract
 
-    interface IPresenter : IPresenterContract
+    interface IPresenter : IPresenterContract{
+        fun showRooms()
+        fun showWorkstations()
+    }
 
-    interface IModel : IModelContract
+    interface IModel : IModelContract{
+        fun getRooms()
+        fun getWorkstations()
+    }
 }
