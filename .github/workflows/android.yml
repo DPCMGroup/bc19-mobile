@@ -30,7 +30,7 @@ jobs:
       run: ./gradlew build
       
     - name: Unit tests
-      run: ./gradlew jacocoTestReport coveralls
+      run: ./gradlew cobertura coveralls
 
   sonarcloud:
     name: sonarcloud
