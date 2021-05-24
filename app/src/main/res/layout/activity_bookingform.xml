@@ -7,7 +7,9 @@
     android:layout_gravity="center"
     tools:context="com.example.bc19mobile.view.act.BookingFormActivity">
 
-
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
     <TextView
         android:id="@+id/CercaPost"
@@ -18,7 +20,7 @@
         android:textColor="@color/material_on_surface_stroke"
         android:text="Cerca Postazione"
         android:textSize="30sp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="70dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="305dp"
+        android:layout_marginTop="335dp"
         android:text="Stanza:"
         android:textSize="20sp" />
 
@@ -39,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="380dp"
+        android:layout_marginTop="410dp"
         android:text="Nome Collega:"
         android:textSize="20sp" />
 
@@ -48,7 +50,7 @@
         android:layout_width="140dp"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="470dp"
+        android:layout_marginTop="500dp"
         android:background="@color/purple_200"
         android:text="Cerca" />
 
@@ -58,7 +60,7 @@
         android:layout_height="40dp"
         android:layout_centerHorizontal="true"
 
-        android:layout_marginTop="325dp"
+        android:layout_marginTop="355dp"
         android:singleLine="true" />
 
     <EditText
@@ -68,7 +70,7 @@
 
         android:layout_centerHorizontal="true"
 
-        android:layout_marginTop="400dp"
+        android:layout_marginTop="430dp"
         android:singleLine="true" />
 
 
@@ -88,7 +90,7 @@
             android:layout_height="wrap_content"
 
             android:layout_marginStart="1dp"
-            android:layout_marginTop="95dp"
+            android:layout_marginTop="125dp"
             android:text="Data:"
             android:textSize="20sp" />
 
@@ -98,7 +100,7 @@
             android:layout_height="40dp"
 
             android:layout_marginStart="5dp"
-            android:layout_marginTop="98dp"
+            android:layout_marginTop="128dp"
             android:inputType="date"
             android:singleLine="true" />
 
@@ -109,7 +111,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="93dp"
+            android:layout_marginTop="123dp"
             android:background="@color/purple_200"
             android:src="@drawable/ic_calendario" />
 
@@ -129,7 +131,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="1dp"
-            android:layout_marginTop="165dp"
+            android:layout_marginTop="195dp"
             android:text="Ora Inizio:"
             android:textSize="20sp" />
 
@@ -139,7 +141,7 @@
             android:layout_height="40dp"
 
             android:layout_marginStart="5dp"
-            android:layout_marginTop="169dp"
+            android:layout_marginTop="199dp"
             android:inputType="time"
             android:singleLine="true" />
 
@@ -150,7 +152,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="165dp"
+            android:layout_marginTop="195dp"
             android:background="@color/purple_200"
             android:src="@drawable/ic_ora"/>
 
@@ -158,6 +160,7 @@
 
 
     <LinearLayout
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -168,7 +171,7 @@
             android:layout_width="89dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="1dp"
-            android:layout_marginTop="235dp"
+            android:layout_marginTop="265dp"
             android:text="Ora Fine:"
             android:textSize="20sp" />
 
@@ -177,7 +180,7 @@
             android:layout_width="104dp"
             android:layout_height="40dp"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="238dp"
+            android:layout_marginTop="268dp"
             android:inputType="time"
             android:singleLine="true" />
 
@@ -189,7 +192,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="233dp"
+            android:layout_marginTop="263dp"
             android:background="@color/purple_200"
             android:src="@drawable/ic_ora"
              />

@@ -4,10 +4,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.icu.util.Calendar
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.*
 import com.example.bc19mobile.contract.BookingFormContract
 import com.example.bc19mobile.presenter.BookingFormPresenter
 import mvp.ljb.kt.act.BaseMvpActivity
@@ -109,4 +106,8 @@ class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
 
     override fun getLayoutId() = R.layout.activity_bookingform
 
+    override fun initView() {
+        super.initView()
+        setActionBar(findViewById<Toolbar>(R.id.toolbar))
+    }
 }
