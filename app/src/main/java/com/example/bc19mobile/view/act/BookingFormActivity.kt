@@ -2,9 +2,13 @@ package com.example.bc19mobile.view.act
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.*
+import androidx.core.os.bundleOf
 import com.example.bc19mobile.contract.BookingFormContract
 import com.example.bc19mobile.presenter.BookingFormPresenter
 import mvp.ljb.kt.act.BaseMvpActivity
@@ -100,6 +104,55 @@ class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
             dipTesto.text.toString()
         )
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_item, menu)
+        val itemToHide = menu?.findItem(R.id.nav_bookingForm)
+        itemToHide?.setVisible(false)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+
+            R.id.nav_tag -> {
+                val user = getPresenter().getUser()
+                goActivity(
+                    ScanActivity::class.java, bundleOf(
+                        "user" to user
+                    )
+                )
+                return true
+            }
+
+
+            R.id.nav_booking -> {
+                val user = getPresenter().getUser()
+                goActivity(
+                    BookingActivity::class.java, bundleOf(
+                        "user" to user
+                    )
+                )
+                return true
+            }
+
+            R.id.nav_guida -> {
+                val user = getPresenter().getUser()
+                goActivity(
+                    GuideActivity::class.java, bundleOf(
+                        "user" to user
+                    )
+                )
+                return true
+            }
+            R.id.logout -> {
+                var moveIntent = Intent(this, LoginActivity::class.java)
+                startActivity(moveIntent)
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun registerPresenter() = BookingFormPresenter::class.java

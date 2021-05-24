@@ -1,10 +1,14 @@
 package com.example.bc19mobile.view.act
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toolbar
+import androidx.core.os.bundleOf
 import com.example.bc19mobile.contract.BookingContract
 import com.example.bc19mobile.presenter.BookingPresenter
 import mvp.ljb.kt.act.BaseMvpActivity
@@ -27,6 +31,55 @@ class BookingActivity : BaseMvpActivity<BookingContract.IPresenter>(), BookingCo
         super.onCreate(savedInstanceState)
         getPresenter().saveUser(intent.extras?.get("user") as User)
         getPresenter().showBookings()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_item, menu)
+        val itemToHide = menu?.findItem(R.id.nav_booking)
+        itemToHide?.setVisible(false)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+
+            R.id.nav_tag -> {
+                val user = getPresenter().getUser()
+                goActivity(
+                    ScanActivity::class.java, bundleOf(
+                        "user" to user
+                    )
+                )
+                return true
+            }
+
+
+            R.id.nav_bookingForm -> {
+                val user = getPresenter().getUser()
+                goActivity(
+                    BookingFormActivity::class.java, bundleOf(
+                        "user" to user
+                    )
+                )
+                return true
+            }
+
+            R.id.nav_guida -> {
+                val user = getPresenter().getUser()
+                goActivity(
+                    GuideActivity::class.java, bundleOf(
+                        "user" to user
+                    )
+                )
+                return true
+            }
+            R.id.logout -> {
+                var moveIntent = Intent(this, LoginActivity::class.java)
+                startActivity(moveIntent)
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun initView() {

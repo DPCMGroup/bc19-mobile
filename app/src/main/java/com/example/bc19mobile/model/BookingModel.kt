@@ -48,6 +48,10 @@ class BookingModel : BaseModel(), BookingContract.IModel {
         )
     }
 
+    override fun getUser(): User? {
+        return user
+    }
+
     override fun setUser(user: User?) {
         this.user = user
     }

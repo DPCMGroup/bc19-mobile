@@ -51,7 +51,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         super.onCreate(savedInstanceState)
         getPresenter().saveUser(intent.extras?.get("user") as User)
         var username: String? = getPresenter().getUser()?.getUsername()
-        Toast.makeText(applicationContext, "Benvenuto " + username + "!", Toast.LENGTH_SHORT).show()
+
 
         val tagId = findViewById<TextView>(R.id.tagId_txt)
         val igienizza = findViewById<Button>(R.id.igienizza)

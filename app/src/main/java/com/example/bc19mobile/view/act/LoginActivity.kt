@@ -79,19 +79,22 @@ class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract
     }
 
     override fun callScan(user: User?) {
-        if(user?.getType()==1)
+        if(user?.getType()==1){
         goActivity(
             ScanActivity::class.java, bundleOf(
                 "user" to user
+
             )
+
         )
+            Toast.makeText(applicationContext, "Benvenuto " + username?.text.toString() + "!", Toast.LENGTH_SHORT).show()}
         else if(user?.getType()==2){
             goActivity(
                 CleanActivity::class.java, bundleOf(
                     "user" to user
                 )
             )
-
+            Toast.makeText(applicationContext, "Benvenuto " + username?.text.toString() + "!", Toast.LENGTH_SHORT).show()
         }
     }
 

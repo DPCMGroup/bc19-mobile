@@ -39,4 +39,8 @@ class BookingPresenter : BaseMvpPresenter<BookingContract.IView, BookingContract
         getModel().setUser(user)
     }
 
+    override fun getUser(): User? {
+        return getModel().getUser()
+    }
+
 }

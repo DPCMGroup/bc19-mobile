@@ -22,12 +22,14 @@ interface BookingContract {
     interface IPresenter : IPresenterContract {
         fun showBookings()
         fun saveUser(user: User?)
+        fun getUser(): User?
     }
 
     interface IModel : IModelContract {
         fun getBookingList(): ArrayList<DataBooking>?
         fun setBookingListener(listener: BookingModel.BookingListener?)
         fun setUser(user: User?)
+        fun getUser(): User?
         fun retriveBookingList()
     }
 }

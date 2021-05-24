@@ -1,5 +1,6 @@
 package com.example.bc19mobile.contract
 
+import com.example.bc19mobile.data.User
 import mvp.ljb.kt.contract.IPresenterContract
 import mvp.ljb.kt.contract.IViewContract
 import mvp.ljb.kt.contract.IModelContract
@@ -16,10 +17,14 @@ interface CleanContract {
     interface IPresenter : IPresenterContract{
         fun showRooms()
         fun showWorkstations()
+        fun getUser(): User?
+        fun saveUser(user: User?)
     }
 
     interface IModel : IModelContract{
         fun getRooms()
         fun getWorkstations()
+        fun setUser(user: User?)
+        fun getUser(): User?
     }
 }

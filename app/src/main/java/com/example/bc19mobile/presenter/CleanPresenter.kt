@@ -2,6 +2,7 @@ package com.example.bc19mobile.presenter
 
 import mvp.ljb.kt.presenter.BaseMvpPresenter
 import com.example.bc19mobile.contract.CleanContract
+import com.example.bc19mobile.data.User
 import com.example.bc19mobile.model.CleanModel
 
 /**
@@ -19,5 +20,13 @@ class CleanPresenter : BaseMvpPresenter<CleanContract.IView, CleanContract.IMode
 
     override fun showWorkstations() {
         getModel().getWorkstations()
+    }
+
+    override fun getUser(): User? {
+        return getModel().getUser()
+    }
+
+    override fun saveUser(user: User?) {
+        getModel().setUser(user)
     }
 }
