@@ -28,9 +28,7 @@ class BookingAdapter(var mCtx: Context, var resources: Int, var items: List<Data
         button2.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
 
-                val buttonPosition: String = "$position"
-
-                button2.text=buttonPosition
+                button2.text=mItem.bookId.toString()
             }
         })
 
