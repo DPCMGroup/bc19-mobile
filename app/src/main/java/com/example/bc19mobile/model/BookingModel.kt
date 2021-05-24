@@ -19,6 +19,7 @@ class BookingModel : BaseModel(), BookingContract.IModel {
 
     interface BookingListener{
         fun onBookingSuccess()
+        fun onBookingFailure()
     }
 
     private var listener: BookingListener? = null
@@ -56,9 +57,11 @@ class BookingModel : BaseModel(), BookingContract.IModel {
     }
 
     private fun BookingHandle(response: String) {
-        if (response == "Prenotazioni non presenti") {
 
-        } else {
+        //inserisci codice di errore corretto
+        if (response == "codice di errore") {
+            listener?.onBookingFailure()
+        } else  {
             val jsonArray = JSONArray(response)
             bookingList = ArrayList<DataBooking>()
             for (i in 0 until jsonArray.length()) {

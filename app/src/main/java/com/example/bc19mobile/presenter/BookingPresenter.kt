@@ -21,7 +21,9 @@ class BookingPresenter : BaseMvpPresenter<BookingContract.IView, BookingContract
                 //chiamo la vista cambio pannello e faccio le cose che devo fare
 
                 getMvpView().updateBookingView(getModel().getBookingList())
-
+            }
+            override fun onBookingFailure() {
+                getMvpView().callError()
             }
         })
 
