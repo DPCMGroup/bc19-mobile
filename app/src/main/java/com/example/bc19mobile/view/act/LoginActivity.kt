@@ -79,11 +79,20 @@ class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract
     }
 
     override fun callScan(user: User?) {
+        if(user?.getType()==1)
         goActivity(
             ScanActivity::class.java, bundleOf(
                 "user" to user
             )
         )
+        else if(user?.getType()==2){
+            goActivity(
+                CleanActivity::class.java, bundleOf(
+                    "user" to user
+                )
+            )
+
+        }
     }
 
     override fun callError() {
