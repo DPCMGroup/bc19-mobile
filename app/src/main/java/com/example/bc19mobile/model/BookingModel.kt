@@ -48,6 +48,12 @@ class BookingModel : BaseModel(), BookingContract.IModel {
         )
     }
 
+    override fun getBookId(bookId: Int) {
+        val jsonObject = JSONObject()
+        jsonObject.put("bookId", bookId)
+        service.request(jsonObject, "workstation/del", true, ::BookingHandle, ::connectionError)
+    }
+
     override fun getUser(): User? {
         return user
     }

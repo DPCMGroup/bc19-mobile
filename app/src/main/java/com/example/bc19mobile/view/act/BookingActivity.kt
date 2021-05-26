@@ -101,6 +101,7 @@ class BookingActivity : BaseMvpActivity<BookingContract.IPresenter>(), BookingCo
 
 
         listView.adapter = BookingAdapter(this, R.layout.row, bookings!!)
+
     }
 
 

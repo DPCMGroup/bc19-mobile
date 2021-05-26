@@ -43,4 +43,8 @@ class BookingPresenter : BaseMvpPresenter<BookingContract.IView, BookingContract
         return getModel().getUser()
     }
 
+    override fun deleteBooking(bookId: Int) {
+        getModel().getBookId(bookId)
+    }
+
 }

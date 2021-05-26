@@ -23,6 +23,7 @@ interface BookingContract {
         fun showBookings()
         fun saveUser(user: User?)
         fun getUser(): User?
+        fun deleteBooking(bookId: Int)
     }
 
     interface IModel : IModelContract {
@@ -31,5 +32,6 @@ interface BookingContract {
         fun setUser(user: User?)
         fun getUser(): User?
         fun retriveBookingList()
+        fun getBookId(bookId:Int)
     }
 }

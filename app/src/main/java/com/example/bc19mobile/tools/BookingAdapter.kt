@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import com.example.bc19mobile.R
 import com.example.bc19mobile.data.DataBooking
 
@@ -29,7 +30,13 @@ class BookingAdapter(var mCtx: Context, var resources: Int, var items: List<Data
             override fun onClick(v: View?) {
 
                 button2.text=mItem.bookId.toString()
+                val bookId : Int= mItem.bookId!!
+
+                    //BookingActivity::class.java
+                getPresenter().deleteBooking(bookId)
             }
+
+
         })
 
 
