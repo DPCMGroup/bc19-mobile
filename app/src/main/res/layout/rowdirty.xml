@@ -13,7 +13,7 @@
 
         <TextView
             android:id="@+id/testolista"
-            android:layout_width="369dp"
+            android:layout_width="346dp"
             android:layout_height="55dp"
             android:layout_marginTop="12dp"
             android:gravity="center"
