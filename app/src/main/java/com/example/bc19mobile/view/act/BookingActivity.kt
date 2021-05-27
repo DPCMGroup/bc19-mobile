@@ -2,6 +2,7 @@ package com.example.bc19mobile.view.act
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -102,13 +103,18 @@ class BookingActivity : BaseMvpActivity<BookingContract.IPresenter>(), BookingCo
         var listView = findViewById<ListView>(R.id.prenotalist)
 
         var adapter = BookingAdapter(this, R.layout.row, bookings!!)
-        listView.adapter = adapter
+        listView.adapter = BookingAdapter(this, R.layout.row, bookings!!)
 
+       // var l = adapter?.initClickListeners()
+        if (adapter?.getBookId() != -1)
+            getPresenter().deleteBooking(adapter?.getBookId())
 
+        /*
+        var bundle : Bundle? = intent.extras
+        var message = bundle!!.getString("dd")
+        Log.d("dd", "${message}")
 
-        if(adapter?.getBookId() != null)
-                getPresenter().deleteBooking(adapter?.getBookId())
-
+         */
     }
 
 
