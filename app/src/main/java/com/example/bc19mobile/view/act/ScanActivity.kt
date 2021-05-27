@@ -157,7 +157,6 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
 
         var i :Boolean= false
         var j :Boolean= false
-        var k :Int= 0
         val igienizza = findViewById<Button>(R.id.igienizza)
 
         //prenotazione automatica dopo un minuto

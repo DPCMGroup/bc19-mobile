@@ -32,7 +32,6 @@ class BookingAdapter(var mCtx: Context, var resources: Int, var items: List<Data
                 button2.text=mItem.bookId.toString()
                 val bookId : Int= mItem.bookId!!
 
-                    //BookingActivity::class.java
                 getPresenter().deleteBooking(bookId)
             }
 
