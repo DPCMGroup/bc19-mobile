@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toolbar
@@ -85,8 +86,9 @@ class BookingActivity : BaseMvpActivity<BookingContract.IPresenter>(), BookingCo
     override fun initView() {
         super.initView()
         setActionBar(findViewById<Toolbar>(R.id.toolbar))
-        bookingError= findViewById(R.id.bookingError)
+        bookingError = findViewById(R.id.bookingError)
     }
+
     override fun initData() {
         super.initData()
         bookingError?.setVisibility(View.INVISIBLE)
@@ -99,8 +101,13 @@ class BookingActivity : BaseMvpActivity<BookingContract.IPresenter>(), BookingCo
 
         var listView = findViewById<ListView>(R.id.prenotalist)
 
+        var adapter = BookingAdapter(this, R.layout.row, bookings!!)
+        listView.adapter = adapter
 
-        listView.adapter = BookingAdapter(this, R.layout.row, bookings!!)
+
+
+        if(adapter?.getBookId() != null)
+                getPresenter().deleteBooking(adapter?.getBookId())
 
     }
 
