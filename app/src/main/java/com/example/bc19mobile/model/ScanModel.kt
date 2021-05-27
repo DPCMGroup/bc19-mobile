@@ -3,13 +3,11 @@ package  com.example.bc19mobile.model
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.example.bc19mobile.contract.ScanContract
-import com.example.bc19mobile.data.DataBooking
 import com.example.bc19mobile.data.DataBookingToday
 import com.example.bc19mobile.data.DataWorkstation
 import com.example.bc19mobile.data.User
 import com.example.bc19mobile.model.service.Service
 import mvp.ljb.kt.model.BaseModel
-import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 import java.time.LocalDateTime

@@ -1,21 +1,17 @@
 package  com.example.bc19mobile.model
 
-import com.example.bc19mobile.contract.CleanContract
-import com.example.bc19mobile.data.DataBooking
-import com.example.bc19mobile.data.DataDirtyRooms
+import com.example.bc19mobile.contract.WorkstationsDirtyContract
 import com.example.bc19mobile.data.User
 import com.example.bc19mobile.model.service.Service
 import mvp.ljb.kt.model.BaseModel
-import org.json.JSONArray
-import java.io.IOException
 
 /**
  * @Author Kotlin MVP Plugin
- * @Date 2021/05/24
+ * @Date 2021/05/27
  * @Description input description
  **/
-class CleanModel : BaseModel(), CleanContract.IModel {
-
+class WorkstationsDirtyModel : BaseModel(), WorkstationsDirtyContract.IModel{
+    private val service = Service()
     private var user: User? = null
 
     override fun setUser(user: User?) {
@@ -25,5 +21,4 @@ class CleanModel : BaseModel(), CleanContract.IModel {
     override fun getUser(): User? {
         return user
     }
-
 }
