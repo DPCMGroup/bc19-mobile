@@ -4,8 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.ListView
+import android.widget.TextView
 import android.widget.Toolbar
 import androidx.core.os.bundleOf
 import com.example.bc19mobile.contract.RoomsDirtyContract
@@ -23,6 +25,8 @@ import com.example.bc19mobile.tools.RoomsDirtyAdapter
  * @Description input description
  **/
 class RoomsDirtyActivity : BaseMvpActivity<RoomsDirtyContract.IPresenter>() , RoomsDirtyContract.IView {
+
+    private var roomsError = findViewById<TextView>(R.id.roomsError)
 
     override fun registerPresenter() = RoomsDirtyPresenter::class.java
 
@@ -74,5 +78,9 @@ class RoomsDirtyActivity : BaseMvpActivity<RoomsDirtyContract.IPresenter>() , Ro
     override fun updateRoomsView(roomsDirty: ArrayList<DataDirtyRooms>?) {
         var listView = findViewById<ListView>(R.id.roomsDirtylist)
         listView.adapter = RoomsDirtyAdapter(this, R.layout.rowdirty, roomsDirty!!)
+    }
+
+    override fun callErrorRoomsDirty() {
+        roomsError?.setVisibility(View.VISIBLE)
     }
 }

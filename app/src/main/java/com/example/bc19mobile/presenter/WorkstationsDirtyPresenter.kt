@@ -25,7 +25,7 @@ class WorkstationsDirtyPresenter : BaseMvpPresenter<WorkstationsDirtyContract.IV
                 getMvpView().updateWorkstationsView(getModel().getDirtyWorkstations())
             }
             override fun onWorkstationsFailure() {
-                // getMvpView().callError()
+                getMvpView().callErrorWorkstationsDirty()
             }
         })
 

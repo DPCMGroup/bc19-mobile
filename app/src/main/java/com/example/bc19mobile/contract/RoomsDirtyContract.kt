@@ -18,6 +18,7 @@ interface RoomsDirtyContract {
 
     interface IView : IViewContract  {
         fun updateRoomsView(roomsDirty: ArrayList<DataDirtyRooms>?)
+        fun callErrorRoomsDirty()
     }
 
     interface IPresenter : IPresenterContract{

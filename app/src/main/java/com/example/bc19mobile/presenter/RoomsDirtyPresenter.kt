@@ -24,7 +24,7 @@ class RoomsDirtyPresenter : BaseMvpPresenter<RoomsDirtyContract.IView, RoomsDirt
                   getMvpView().updateRoomsView(getModel().getDirtyRooms())
             }
             override fun onRoomsFailure() {
-                // getMvpView().callError()
+                getMvpView().callErrorRoomsDirty()
             }
         })
 

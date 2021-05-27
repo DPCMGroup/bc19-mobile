@@ -18,6 +18,7 @@ interface WorkstationsDirtyContract {
 
     interface IView : IViewContract{
         fun updateWorkstationsView(workstationsDirty: ArrayList<DataDirtyWorkstations>?)
+        fun callErrorWorkstationsDirty()
     }
 
     interface IPresenter : IPresenterContract{
