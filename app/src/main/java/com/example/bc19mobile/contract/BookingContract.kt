@@ -17,6 +17,7 @@ interface BookingContract {
     interface IView : IViewContract {
         fun updateBookingView(bookings: ArrayList<DataBooking>?)
         fun callError()
+        abstract fun onSuccess(bookId: Int)
     }
 
     interface IPresenter : IPresenterContract {

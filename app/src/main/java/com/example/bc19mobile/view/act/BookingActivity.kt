@@ -2,11 +2,9 @@ package com.example.bc19mobile.view.act
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toolbar
@@ -105,9 +103,9 @@ class BookingActivity : BaseMvpActivity<BookingContract.IPresenter>(), BookingCo
         var adapter = BookingAdapter(this, R.layout.row, bookings!!)
         listView.adapter = BookingAdapter(this, R.layout.row, bookings!!)
 
-       // var l = adapter?.initClickListeners()
-        if (adapter?.getBookId() != -1)
-            getPresenter().deleteBooking(adapter?.getBookId())
+        // var l = adapter?.initClickListeners()
+        // if (adapter?.getBookId() != -1)
+
 
         /*
         var bundle : Bundle? = intent.extras
@@ -117,6 +115,9 @@ class BookingActivity : BaseMvpActivity<BookingContract.IPresenter>(), BookingCo
          */
     }
 
+    override fun onSuccess(bookId: Int) {
+        getPresenter().deleteBooking(bookId)
+    }
 
     override fun callError() {
         bookingError?.setVisibility(View.VISIBLE)

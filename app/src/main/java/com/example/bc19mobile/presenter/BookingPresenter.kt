@@ -22,6 +22,7 @@ class BookingPresenter : BaseMvpPresenter<BookingContract.IView, BookingContract
 
                 getMvpView().updateBookingView(getModel().getBookingList())
             }
+
             override fun onBookingFailure() {
                 getMvpView().callError()
             }

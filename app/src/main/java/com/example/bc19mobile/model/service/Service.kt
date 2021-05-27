@@ -9,7 +9,7 @@ import java.io.IOException
 class Service {
 
     //private val url = "http://dpcm2077.duckdns.org:8000/"
-    private val url = "http://192.168.210.35:8000/"
+    private val url = "http://192.168.179.41:8000/"
 
     private val client = OkHttpClient()
 
