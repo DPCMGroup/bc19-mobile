@@ -19,6 +19,8 @@ class BookingModel : BaseModel(), BookingContract.IModel {
     interface BookingListener{
         fun onBookingSuccess()
         fun onBookingFailure()
+        fun onDeleteSuccess()
+        fun onDeleteFailure()
     }
 
     private var listener: BookingListener? = null
@@ -50,7 +52,7 @@ class BookingModel : BaseModel(), BookingContract.IModel {
     override fun deleteBooking(bookId: Int) {
         val jsonObject = JSONObject()
         jsonObject.put("bookId", bookId)
-        service.request(jsonObject, "booking/del/" + bookId, true, ::DeleteBookingHandle, ::connectionError)
+        service.request(jsonObject, "booking/del/" + bookId, false, ::DeleteBookingHandle, ::connectionError)
     }
 
     override fun getUser(): User? {
@@ -88,8 +90,12 @@ class BookingModel : BaseModel(), BookingContract.IModel {
 
     }
 
-    private fun DeleteBookingHandle(s: String) {
-        println(s)
+    private fun DeleteBookingHandle(response: String) {
+        if(response=="32772"){
+            listener?.onDeleteSuccess()
+        }else{
+            listener?.onDeleteFailure()
+        }
     }
 
 

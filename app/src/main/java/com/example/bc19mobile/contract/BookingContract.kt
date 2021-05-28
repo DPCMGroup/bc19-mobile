@@ -16,7 +16,9 @@ interface BookingContract {
 
     interface IView : IViewContract {
         fun updateBookingView(bookings: ArrayList<DataBooking>?)
+        fun updateBookingDeleteView(bookings: ArrayList<DataBooking>?)
         fun callError()
+        fun callDeleteError()
     }
 
     interface IPresenter : IPresenterContract {

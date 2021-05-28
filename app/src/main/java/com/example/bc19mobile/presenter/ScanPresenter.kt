@@ -27,11 +27,11 @@ class ScanPresenter : BaseMvpPresenter<ScanContract.IView, ScanContract.IModel>(
             }
 
             override fun onSanitizeFailure() {
-                getMvpView().callSanitizeOk()
+                getMvpView().callSanitizeError()
             }
 
             override fun onSanitizeSuccess() {
-                getMvpView().callSanitizeError()
+                getMvpView().callSanitizeOk()
             }
         })
     }
