@@ -22,6 +22,7 @@ class BookingPresenter : BaseMvpPresenter<BookingContract.IView, BookingContract
 
                 getMvpView().updateBookingView(getModel().getBookingList())
             }
+
             override fun onBookingFailure() {
                 getMvpView().callError()
             }
@@ -41,6 +42,10 @@ class BookingPresenter : BaseMvpPresenter<BookingContract.IView, BookingContract
 
     override fun getUser(): User? {
         return getModel().getUser()
+    }
+
+    override fun deleteBooking(bookId: Int) {
+        getModel().deleteBooking(bookId)
     }
 
 }

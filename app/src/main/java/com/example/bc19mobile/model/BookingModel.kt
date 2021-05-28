@@ -47,6 +47,12 @@ class BookingModel : BaseModel(), BookingContract.IModel {
         )
     }
 
+    override fun deleteBooking(bookId: Int) {
+        val jsonObject = JSONObject()
+        jsonObject.put("bookId", bookId)
+        service.request(jsonObject, "booking/del/" + bookId, true, ::DeleteBookingHandle, ::connectionError)
+    }
+
     override fun getUser(): User? {
         return user
     }
@@ -80,6 +86,10 @@ class BookingModel : BaseModel(), BookingContract.IModel {
             listener?.onBookingSuccess()
         }
 
+    }
+
+    private fun DeleteBookingHandle(s: String) {
+        println(s)
     }
 
 

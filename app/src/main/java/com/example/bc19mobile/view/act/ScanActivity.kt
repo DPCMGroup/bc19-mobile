@@ -34,7 +34,7 @@ import mvp.ljb.kt.act.BaseMvpFragmentActivity
 import mvp.ljb.kt.fragment.BaseMvpFragment
 import org.json.JSONObject
 import java.util.ArrayList
-
+import android.os.Handler
 
 /**
  * @Author Kotlin MVP Plugin
@@ -149,10 +149,39 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         }
     }
 
+
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
         resolveIntent(intent)
+
+        var i :Boolean= false
+        var j :Boolean= false
+        val igienizza = findViewById<Button>(R.id.igienizza)
+
+        //prenotazione automatica dopo un minuto
+        if (i == false){
+        Handler().postDelayed({
+            super.onNewIntent(intent)
+            setIntent(intent)
+            resolveIntent(intent)
+            igienizza.text="ok1"
+            //}, 60000)
+        }, 10000)
+        }
+
+        //scansione automatica tag ogni 5 minuti, fino a termine prenotazione
+        if (j == false){
+            Handler().postDelayed({
+                igienizza.text="ok"
+                super.onNewIntent(intent)
+                setIntent(intent)
+                resolveIntent(intent)
+                igienizza.text="ok2"
+                //}, 300000)
+            }, 10000 + 10000)
+        }
+
     }
 
     private fun resolveIntent(intent: Intent) {

@@ -85,8 +85,9 @@ class BookingActivity : BaseMvpActivity<BookingContract.IPresenter>(), BookingCo
     override fun initView() {
         super.initView()
         setActionBar(findViewById<Toolbar>(R.id.toolbar))
-        bookingError= findViewById(R.id.bookingError)
+        bookingError = findViewById(R.id.bookingError)
     }
+
     override fun initData() {
         super.initData()
         bookingError?.setVisibility(View.INVISIBLE)
@@ -94,15 +95,31 @@ class BookingActivity : BaseMvpActivity<BookingContract.IPresenter>(), BookingCo
 
     override fun registerPresenter() = BookingPresenter::class.java
 
+    fun deleteBooking(id: Int) {
+        getPresenter().deleteBooking(id)
+    }
+
     override fun getLayoutId() = R.layout.activity_booking
     override fun updateBookingView(bookings: ArrayList<DataBooking>?) {
 
         var listView = findViewById<ListView>(R.id.prenotalist)
 
+        var adapter = BookingAdapter(this, R.layout.row, bookings!!)
+        adapter.attachDelete(::deleteBooking)
+        listView.adapter = adapter
 
-        listView.adapter = BookingAdapter(this, R.layout.row, bookings!!)
+
+        // var l = adapter?.initClickListeners()
+        // if (adapter?.getBookId() != -1)
+
+
+        /*
+        var bundle : Bundle? = intent.extras
+        var message = bundle!!.getString("dd")
+        Log.d("dd", "${message}")
+
+         */
     }
-
 
     override fun callError() {
         bookingError?.setVisibility(View.VISIBLE)
