@@ -4,25 +4,32 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
+import android.view.View
+import android.widget.ListView
+import android.widget.TextView
 import android.widget.Toolbar
 import androidx.core.os.bundleOf
-import com.example.bc19mobile.contract.CleanContract
-import com.example.bc19mobile.presenter.CleanPresenter
+import com.example.bc19mobile.contract.WorkstationsDirtyContract
+import com.example.bc19mobile.presenter.WorkstationsDirtyPresenter
 import mvp.ljb.kt.act.BaseMvpActivity
 import com.example.bc19mobile.R
+import com.example.bc19mobile.data.DataDirtyWorkstations
 import com.example.bc19mobile.data.User
+import com.example.bc19mobile.tools.RoomsDirtyAdapter
+import com.example.bc19mobile.tools.WorkstationsDirtyAdapter
 
 /**
  * @Author Kotlin MVP Plugin
- * @Date 2021/05/24
+ * @Date 2021/05/27
  * @Description input description
  **/
-class CleanActivity : BaseMvpActivity<CleanContract.IPresenter>() , CleanContract.IView {
+class WorkstationsDirtyActivity : BaseMvpActivity<WorkstationsDirtyContract.IPresenter>() , WorkstationsDirtyContract.IView {
 
-    override fun registerPresenter() = CleanPresenter::class.java
+    private var workstationError = findViewById<TextView>(R.id.workstationError)
 
-    override fun getLayoutId() = R.layout.activity_clean
+    override fun registerPresenter() = WorkstationsDirtyPresenter::class.java
+
+    override fun getLayoutId() = R.layout.activity_workstationsdirty
 
     override fun initView() {
         super.initView()
@@ -32,25 +39,7 @@ class CleanActivity : BaseMvpActivity<CleanContract.IPresenter>() , CleanContrac
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getPresenter().saveUser(intent.extras?.get("user") as User)
-        val bStanze= findViewById<Button>(R.id.bStanze)
-        val bPostazioni= findViewById<Button>(R.id.bPostazioni)
-
-        bStanze.setOnClickListener {
-            var user = getPresenter().getUser()
-            goActivity(
-                RoomsDirtyActivity::class.java, bundleOf(
-                    "user" to user
-                ))
-        }
-
-        bPostazioni.setOnClickListener{
-            var user = getPresenter().getUser()
-            goActivity(
-                WorkstationsDirtyActivity::class.java, bundleOf(
-                    "user" to user
-                ))
-
-        }
+        getPresenter().showWorkstations()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -84,4 +73,14 @@ class CleanActivity : BaseMvpActivity<CleanContract.IPresenter>() , CleanContrac
         }
         return super.onOptionsItemSelected(item)
     }
+
+    override fun updateWorkstationsView(workstationsDirty: ArrayList<DataDirtyWorkstations>?) {
+        var listView = findViewById<ListView>(R.id.workstationDirtylist)
+        listView.adapter = WorkstationsDirtyAdapter(this, R.layout.rowdirty, workstationsDirty!!)
+    }
+
+    override fun callErrorWorkstationsDirty() {
+        workstationError?.setVisibility(View.VISIBLE)
+    }
+
 }

@@ -32,6 +32,8 @@
         <activity android:name=".view.act.BookingFormActivity" />
         <activity android:name=".view.act.GuideActivity" />
         <activity android:name=".view.act.CleanActivity" />
+        <activity android:name=".view.act.RoomsDirtyActivity" />
+        <activity android:name=".view.act.WorkstationsDirtyActivity" />
 
     </application>
 

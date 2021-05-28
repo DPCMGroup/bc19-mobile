@@ -6,7 +6,6 @@ import com.example.bc19mobile.data.User
 import com.example.bc19mobile.model.service.Service
 import mvp.ljb.kt.model.BaseModel
 import org.json.JSONArray
-import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
 
