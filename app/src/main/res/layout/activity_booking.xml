@@ -28,7 +28,7 @@
         android:id="@+id/bookingError"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="120dp"
         android:gravity="center"
         android:text="Non ci sono prenotazioni effettuate"
         android:textColor="@color/black"
@@ -36,7 +36,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="invisible"
-        tools:visibility="invisible"
+
         />
 
     <ListView

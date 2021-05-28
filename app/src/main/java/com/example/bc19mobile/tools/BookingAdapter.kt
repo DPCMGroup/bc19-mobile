@@ -45,8 +45,6 @@ class BookingAdapter(var mCtx: Context, var resources: Int, var items: ArrayList
         var button2: Button = view.findViewById(R.id.button2)
         button2.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-
-                button2.text = mItem.bookId.toString()
                 val mainHandler = Handler(Looper.getMainLooper())
                 mainHandler.post(Runnable { deleteHandle(mItem.bookId!!) })
             }

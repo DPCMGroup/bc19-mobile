@@ -58,9 +58,7 @@ class WorkstationsDirtyModel : BaseModel(), WorkstationsDirtyContract.IModel{
     }
 
     private fun WorkstationsHandle(response: String) {
-        if (response == "codice di errore") {
-            listener?.onWorkstationsFailure()
-        } else {
+        if (response == "4100") {
             val jsonArray = JSONArray(response)
             workstationsDirtyList = ArrayList<DataDirtyWorkstations>()
             for (i in 0 until jsonArray.length()) {
@@ -79,6 +77,9 @@ class WorkstationsDirtyModel : BaseModel(), WorkstationsDirtyContract.IModel{
                 workstationsDirtyList.add(model)
             }
             listener?.onWorkstationsSuccess()
+        }else{
+            listener?.onWorkstationsFailure()
         }
-    }
+
+}
 }

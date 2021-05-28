@@ -91,7 +91,6 @@ class BookingActivity : BaseMvpActivity<BookingContract.IPresenter>(), BookingCo
 
     override fun initData() {
         super.initData()
-        bookingError?.setVisibility(View.INVISIBLE)
     }
 
     override fun registerPresenter() = BookingPresenter::class.java
@@ -111,7 +110,10 @@ class BookingActivity : BaseMvpActivity<BookingContract.IPresenter>(), BookingCo
     }
 
     override fun callError() {
-        bookingError?.setVisibility(View.VISIBLE)
+        val bookErr = findViewById<TextView>(R.id.bookingError)
+        runOnUiThread {
+            bookErr.setVisibility(View.VISIBLE)
+        }
     }
 
     override fun callDeleteError() {
@@ -126,6 +128,8 @@ class BookingActivity : BaseMvpActivity<BookingContract.IPresenter>(), BookingCo
                 "user" to user
             )
         )
+        Toast.makeText(applicationContext, "Eliminazione eseguita con successo!", Toast.LENGTH_SHORT)
+            .show()
     }
 
 }

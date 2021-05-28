@@ -56,9 +56,7 @@ class RoomsDirtyModel : BaseModel(), RoomsDirtyContract.IModel {
     }
 
     private fun RoomsHandle(response: String) {
-        if (response == "codice di errore") {
-            listener?.onRoomsFailure()
-        } else {
+        if (response == "8196") {
             val jsonArray = JSONArray(response)
             roomsDirtyList = ArrayList<DataDirtyRooms>()
             for (i in 0 until jsonArray.length()) {
@@ -73,6 +71,8 @@ class RoomsDirtyModel : BaseModel(), RoomsDirtyContract.IModel {
                 roomsDirtyList.add(model)
             }
             listener?.onRoomsSuccess()
+        }else{
+            listener?.onRoomsFailure()
         }
     }
 
