@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ListView
 import android.widget.TextView
+import android.widget.Toast
 import android.widget.Toolbar
 import androidx.core.os.bundleOf
 import com.example.bc19mobile.contract.BookingContract
@@ -107,22 +108,24 @@ class BookingActivity : BaseMvpActivity<BookingContract.IPresenter>(), BookingCo
         var adapter = BookingAdapter(this, R.layout.row, bookings!!)
         adapter.attachDelete(::deleteBooking)
         listView.adapter = adapter
-
-
-        // var l = adapter?.initClickListeners()
-        // if (adapter?.getBookId() != -1)
-
-
-        /*
-        var bundle : Bundle? = intent.extras
-        var message = bundle!!.getString("dd")
-        Log.d("dd", "${message}")
-
-         */
     }
 
     override fun callError() {
         bookingError?.setVisibility(View.VISIBLE)
+    }
+
+    override fun callDeleteError() {
+        Toast.makeText(applicationContext, "Eliminazione non riuscita!", Toast.LENGTH_SHORT)
+            .show()
+    }
+
+    override fun updateBookingDeleteView(bookings: ArrayList<DataBooking>?) {
+        var user= getPresenter().getUser()
+        goActivity(
+            BookingActivity::class.java, bundleOf(
+                "user" to user
+            )
+        )
     }
 
 }

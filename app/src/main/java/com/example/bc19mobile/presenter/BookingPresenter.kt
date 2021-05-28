@@ -26,6 +26,14 @@ class BookingPresenter : BaseMvpPresenter<BookingContract.IView, BookingContract
             override fun onBookingFailure() {
                 getMvpView().callError()
             }
+
+            override fun onDeleteSuccess() {
+                getMvpView().updateBookingDeleteView(getModel().getBookingList())
+            }
+
+            override fun onDeleteFailure() {
+                getMvpView().callDeleteError()
+            }
         })
 
     }
