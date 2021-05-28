@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toolbar
@@ -16,7 +15,6 @@ import mvp.ljb.kt.act.BaseMvpActivity
 import com.example.bc19mobile.R
 import com.example.bc19mobile.data.DataDirtyRooms
 import com.example.bc19mobile.data.User
-import com.example.bc19mobile.tools.BookingAdapter
 import com.example.bc19mobile.tools.RoomsDirtyAdapter
 
 /**
@@ -77,7 +75,7 @@ class RoomsDirtyActivity : BaseMvpActivity<RoomsDirtyContract.IPresenter>() , Ro
 
     override fun updateRoomsView(roomsDirty: ArrayList<DataDirtyRooms>?) {
         var listView = findViewById<ListView>(R.id.roomsDirtylist)
-        listView.adapter = RoomsDirtyAdapter(this, R.layout.rowdirty, roomsDirty!!)
+        listView.adapter = RoomsDirtyAdapter(this, R.layout.rowdirtyroom, roomsDirty!!)
     }
 
     override fun callErrorRoomsDirty() {

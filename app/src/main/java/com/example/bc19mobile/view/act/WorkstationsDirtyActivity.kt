@@ -15,7 +15,6 @@ import mvp.ljb.kt.act.BaseMvpActivity
 import com.example.bc19mobile.R
 import com.example.bc19mobile.data.DataDirtyWorkstations
 import com.example.bc19mobile.data.User
-import com.example.bc19mobile.tools.RoomsDirtyAdapter
 import com.example.bc19mobile.tools.WorkstationsDirtyAdapter
 
 /**
@@ -76,7 +75,7 @@ class WorkstationsDirtyActivity : BaseMvpActivity<WorkstationsDirtyContract.IPre
 
     override fun updateWorkstationsView(workstationsDirty: ArrayList<DataDirtyWorkstations>?) {
         var listView = findViewById<ListView>(R.id.workstationDirtylist)
-        listView.adapter = WorkstationsDirtyAdapter(this, R.layout.rowdirty, workstationsDirty!!)
+        listView.adapter = WorkstationsDirtyAdapter(this, R.layout.rowdirtyworkstation, workstationsDirty!!)
     }
 
     override fun callErrorWorkstationsDirty() {
