@@ -3,6 +3,8 @@ package com.example.bc19mobile.tools
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -21,9 +23,12 @@ class BookingAdapter(var mCtx: Context, var resources: Int, var items: ArrayList
     ArrayAdapter<DataBooking>(mCtx, resources, items) {
 
 
-
     private var listener: BookingModel.BookingListener? = null
+    private lateinit var deleteHandle: (Int) -> Unit
 
+    fun attachDelete(deleteMethod: (Int) -> Unit) {
+        this.deleteHandle = deleteMethod
+    }
 
     var bookId: Int? = -1
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -37,21 +42,18 @@ class BookingAdapter(var mCtx: Context, var resources: Int, var items: ArrayList
             mItem.bookId.toString() + " - " + mItem.workName.toString() + " - " + mItem.roomName.toString() + " - " + mItem.start.toString() + " - " + mItem.end.toString()
 
 
-            var button2: Button = view.findViewById(R.id.button2)
-            button2.setOnClickListener(object : View.OnClickListener {
-                override fun onClick(v: View?) {
+        var button2: Button = view.findViewById(R.id.button2)
+        button2.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
 
-                    button2.text = mItem.bookId.toString()
-                    bookId = mItem.bookId!!
-                    BookingActivity().onSuccess(bookId!!)
-                }
-
-
-            })
+                button2.text = mItem.bookId.toString()
+                val mainHandler = Handler(Looper.getMainLooper())
+                mainHandler.post(Runnable { deleteHandle(mItem.bookId!!) })
+            }
+        })
 
         return view
     }
-
 
 
 }

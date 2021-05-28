@@ -17,7 +17,6 @@ interface BookingContract {
     interface IView : IViewContract {
         fun updateBookingView(bookings: ArrayList<DataBooking>?)
         fun callError()
-        abstract fun onSuccess(bookId: Int)
     }
 
     interface IPresenter : IPresenterContract {
@@ -33,6 +32,6 @@ interface BookingContract {
         fun setUser(user: User?)
         fun getUser(): User?
         fun retriveBookingList()
-        fun getBookId(bookId:Int)
+        fun deleteBooking(bookId:Int)
     }
 }
