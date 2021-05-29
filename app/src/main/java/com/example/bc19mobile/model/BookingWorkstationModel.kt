@@ -24,13 +24,7 @@ class BookingWorkstationModel : BaseModel(), BookingWorkstationContract.IModel{
         return user
     }
 
-    override fun getAvailability(
-        date: String,
-        startTime: String,
-        endTime: String,
-        room: String,
-        colleague: String
-    ) {
+    override fun getAvailability() {
 
 
     }

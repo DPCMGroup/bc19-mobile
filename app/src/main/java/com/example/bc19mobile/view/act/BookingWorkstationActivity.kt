@@ -30,11 +30,6 @@ class BookingWorkstationActivity : BaseMvpActivity<BookingWorkstationContract.IP
         getPresenter().saveUser(intent.extras?.get("user") as User)
         getPresenter().saveBookingWorkstation(intent.extras?.get("bookingWorkstation") as BookingWorkstation)
             getPresenter().showAvailability(
-               "",//dataTesto.text.toString(),
-               "", //inizioTesto.text.toString(),
-                "",//fineTesto.text.toString(),
-                "", //stanzaTesto.text.toString(),
-               ""// dipTesto.text.toString()
             )
         }
 

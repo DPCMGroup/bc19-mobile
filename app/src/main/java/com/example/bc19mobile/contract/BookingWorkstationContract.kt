@@ -16,7 +16,7 @@ interface BookingWorkstationContract {
     interface IView : IViewContract
 
     interface IPresenter : IPresenterContract{
-        fun showAvailability(date: String, startTime: String, endTime: String, room: String, colleague: String)
+        fun showAvailability()
         fun saveUser(user: User?)
         fun saveBookingWorkstation(bookingWorkstation: BookingWorkstation?)
         fun getUser(): User?
@@ -28,6 +28,6 @@ interface BookingWorkstationContract {
         fun setBookingWorkstation(bookingWorkstation: BookingWorkstation?)
         fun getUser(): User?
         fun getBookingWorkstation(): BookingWorkstation?
-        fun getAvailability(date: String, startTime: String, endTime: String, room: String, colleague: String)
+        fun getAvailability()
     }
 }

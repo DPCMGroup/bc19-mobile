@@ -30,14 +30,8 @@ class BookingWorkstationPresenter : BaseMvpPresenter<BookingWorkstationContract.
         return getModel().getBookingWorkstation()
     }
 
-    override fun showAvailability(
-        date: String,
-        startTime: String,
-        endTime: String,
-        room: String,
-        colleague: String
-    ) {
-        getModel().getAvailability(date,startTime,endTime,room,colleague)
+    override fun showAvailability() {
+        getModel().getAvailability()
     }
 
 }
