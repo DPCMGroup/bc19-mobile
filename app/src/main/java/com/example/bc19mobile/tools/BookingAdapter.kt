@@ -42,8 +42,8 @@ class BookingAdapter(var mCtx: Context, var resources: Int, var items: ArrayList
             mItem.bookId.toString() + " - " + mItem.workName.toString() + " - " + mItem.roomName.toString() + " - " + mItem.start.toString() + " - " + mItem.end.toString()
 
 
-        var button2: Button = view.findViewById(R.id.button2)
-        button2.setOnClickListener(object : View.OnClickListener {
+        var elimina: Button = view.findViewById(R.id.eliminabooking)
+        elimina.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 val mainHandler = Handler(Looper.getMainLooper())
                 mainHandler.post(Runnable { deleteHandle(mItem.bookId!!) })

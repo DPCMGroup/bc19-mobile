@@ -26,6 +26,16 @@ class RoomsDirtyPresenter : BaseMvpPresenter<RoomsDirtyContract.IView, RoomsDirt
             override fun onRoomsFailure() {
                 getMvpView().callErrorRoomsDirty()
             }
+
+            override fun onSanitizeRoomSuccess() {
+                //qui siamo nel mainThread
+                //chiamo la vista cambio pannello e faccio le cose che devo fare
+
+                getMvpView().updateRoomsSanitizeView()
+            }
+            override fun onSanitizeRoomFailure() {
+                getMvpView().callErrorSanitizeRoom()
+            }
         })
 
     }
@@ -41,5 +51,10 @@ class RoomsDirtyPresenter : BaseMvpPresenter<RoomsDirtyContract.IView, RoomsDirt
     override fun saveUser(user: User?) {
         getModel().setUser(user)
     }
+
+    override fun sanitizeRoom(roomId: Int) {
+        getModel().sanitizeRoom(roomId)
+    }
+
 
 }

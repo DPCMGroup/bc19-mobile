@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ListView
 import android.widget.TextView
+import android.widget.Toast
 import android.widget.Toolbar
 import androidx.core.os.bundleOf
 import com.example.bc19mobile.contract.RoomsDirtyContract
@@ -22,9 +23,9 @@ import com.example.bc19mobile.tools.RoomsDirtyAdapter
  * @Date 2021/05/27
  * @Description input description
  **/
-class RoomsDirtyActivity : BaseMvpActivity<RoomsDirtyContract.IPresenter>() , RoomsDirtyContract.IView {
+class RoomsDirtyActivity : BaseMvpActivity<RoomsDirtyContract.IPresenter>(),
+    RoomsDirtyContract.IView {
 
-    private var roomsError = findViewById<TextView>(R.id.roomsError)
 
     override fun registerPresenter() = RoomsDirtyPresenter::class.java
 
@@ -73,12 +74,40 @@ class RoomsDirtyActivity : BaseMvpActivity<RoomsDirtyContract.IPresenter>() , Ro
         return super.onOptionsItemSelected(item)
     }
 
+    fun sanitizeRoom(id: Int) {
+        getPresenter().sanitizeRoom(id)
+    }
+
     override fun updateRoomsView(roomsDirty: ArrayList<DataDirtyRooms>?) {
         var listView = findViewById<ListView>(R.id.roomsDirtylist)
-        listView.adapter = RoomsDirtyAdapter(this, R.layout.rowdirtyroom, roomsDirty!!)
+        var adapter = RoomsDirtyAdapter(this, R.layout.rowdirtyroom, roomsDirty!!)
+        adapter.attachSanitizeRoom(::sanitizeRoom)
+        listView.adapter = adapter
     }
 
     override fun callErrorRoomsDirty() {
+        var roomsError = findViewById<TextView>(R.id.roomsError)
         roomsError?.setVisibility(View.VISIBLE)
     }
+
+    override fun callErrorSanitizeRoom() {
+        Toast.makeText(applicationContext, "Igienizzazione non riuscita!", Toast.LENGTH_SHORT)
+            .show()
+    }
+
+    override fun updateRoomsSanitizeView() {
+        var user = getPresenter().getUser()
+        goActivity(
+            RoomsDirtyActivity::class.java, bundleOf(
+                "user" to user
+            )
+        )
+        Toast.makeText(
+            applicationContext,
+            "Igienizzazione eseguita con successo!",
+            Toast.LENGTH_SHORT
+        )
+            .show()
+    }
+
 }

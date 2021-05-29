@@ -1,12 +1,17 @@
 package  com.example.bc19mobile.model
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.bc19mobile.contract.RoomsDirtyContract
 import com.example.bc19mobile.data.DataDirtyRooms
 import com.example.bc19mobile.data.User
 import com.example.bc19mobile.model.service.Service
 import mvp.ljb.kt.model.BaseModel
 import org.json.JSONArray
+import org.json.JSONObject
 import java.io.IOException
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 /**
  * @Author Kotlin MVP Plugin
@@ -17,6 +22,8 @@ class RoomsDirtyModel : BaseModel(), RoomsDirtyContract.IModel {
     interface RoomsDirtyListener {
         fun onRoomsSuccess()
         fun onRoomsFailure()
+        fun onSanitizeRoomSuccess()
+        fun onSanitizeRoomFailure()
     }
 
 
@@ -56,7 +63,7 @@ class RoomsDirtyModel : BaseModel(), RoomsDirtyContract.IModel {
     }
 
     private fun RoomsHandle(response: String) {
-        if (response == "8196") {
+        if (response !="8193" || response !="8194") {
             val jsonArray = JSONArray(response)
             roomsDirtyList = ArrayList<DataDirtyRooms>()
             for (i in 0 until jsonArray.length()) {
@@ -73,6 +80,29 @@ class RoomsDirtyModel : BaseModel(), RoomsDirtyContract.IModel {
             listener?.onRoomsSuccess()
         }else{
             listener?.onRoomsFailure()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun sanitizeRoom(roomId: Int) {
+        val Settings = JSONObject()
+        Settings.put("idUser", user?.getId())
+        Settings.put("idRoom", roomId)
+        val current = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+        val formatted = current.format(formatter)
+
+        Settings.put("data",formatted)
+
+        service.request(Settings, "workstation/sanitizeall", true, ::sanitizeRoomHandle, ::connectionError)
+    }
+
+    fun sanitizeRoomHandle(response: String) {
+        println(response)
+        if (response == "2052") {
+            listener?.onSanitizeRoomSuccess()
+        } else {
+            listener?.onSanitizeRoomFailure()
         }
     }
 

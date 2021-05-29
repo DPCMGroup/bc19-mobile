@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ListView
 import android.widget.TextView
+import android.widget.Toast
 import android.widget.Toolbar
 import androidx.core.os.bundleOf
 import com.example.bc19mobile.contract.WorkstationsDirtyContract
@@ -22,9 +23,8 @@ import com.example.bc19mobile.tools.WorkstationsDirtyAdapter
  * @Date 2021/05/27
  * @Description input description
  **/
-class WorkstationsDirtyActivity : BaseMvpActivity<WorkstationsDirtyContract.IPresenter>() , WorkstationsDirtyContract.IView {
-
-    private var workstationError = findViewById<TextView>(R.id.workstationError)
+class WorkstationsDirtyActivity : BaseMvpActivity<WorkstationsDirtyContract.IPresenter>(),
+    WorkstationsDirtyContract.IView {
 
     override fun registerPresenter() = WorkstationsDirtyPresenter::class.java
 
@@ -73,13 +73,37 @@ class WorkstationsDirtyActivity : BaseMvpActivity<WorkstationsDirtyContract.IPre
         return super.onOptionsItemSelected(item)
     }
 
+    fun sanitizeWorkstation(tag: String) {
+        getPresenter().sanitizeWorkstation(tag)
+    }
+
     override fun updateWorkstationsView(workstationsDirty: ArrayList<DataDirtyWorkstations>?) {
         var listView = findViewById<ListView>(R.id.workstationDirtylist)
-        listView.adapter = WorkstationsDirtyAdapter(this, R.layout.rowdirtyworkstation, workstationsDirty!!)
+        var adapter =
+            WorkstationsDirtyAdapter(this, R.layout.rowdirtyworkstation, workstationsDirty!!)
+        adapter.attachSanitizeWorkstation(::sanitizeWorkstation)
+        listView.adapter = adapter
     }
 
     override fun callErrorWorkstationsDirty() {
+       var workstationError =findViewById<TextView>(R.id.workstationError)
         workstationError?.setVisibility(View.VISIBLE)
+    }
+
+    override fun callSanitizeError() {
+        Toast.makeText(applicationContext, "Igienizzazione non riuscita!", Toast.LENGTH_SHORT)
+            .show()
+    }
+
+    override fun callSanitizeOk() {
+        var user = getPresenter().getUser()
+        goActivity(
+            WorkstationsDirtyActivity::class.java, bundleOf(
+                "user" to user
+            )
+        )
+        Toast.makeText(applicationContext, "Igienizzazione completata!", Toast.LENGTH_SHORT)
+            .show()
     }
 
 }

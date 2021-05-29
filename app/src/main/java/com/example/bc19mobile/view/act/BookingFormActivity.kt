@@ -96,6 +96,12 @@ class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
         val cerca= findViewById<Button>(R.id.cerca)
 
         cerca.setOnClickListener {
+    /*        var user= getPresenter().getUser()
+            goActivity(
+                BookingWorkstationActivity::class.java, bundleOf(
+                    "user" to user
+                )
+            )*/
         getPresenter().showAvailability(
             dataTesto.text.toString(),
             inizioTesto.text.toString(),

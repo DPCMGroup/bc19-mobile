@@ -34,6 +34,7 @@
         <activity android:name=".view.act.CleanActivity" />
         <activity android:name=".view.act.RoomsDirtyActivity" />
         <activity android:name=".view.act.WorkstationsDirtyActivity" />
+       // <activity android:name=".view.act.BookingWorkstationActivity" />
 
     </application>
 

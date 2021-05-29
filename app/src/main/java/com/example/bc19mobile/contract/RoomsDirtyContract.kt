@@ -19,12 +19,15 @@ interface RoomsDirtyContract {
     interface IView : IViewContract  {
         fun updateRoomsView(roomsDirty: ArrayList<DataDirtyRooms>?)
         fun callErrorRoomsDirty()
+        fun callErrorSanitizeRoom()
+        fun updateRoomsSanitizeView()
     }
 
     interface IPresenter : IPresenterContract{
         fun showRooms()
         fun getUser(): User?
         fun saveUser(user: User?)
+        fun sanitizeRoom(roomId: Int)
     }
 
     interface IModel : IModelContract{
@@ -33,5 +36,6 @@ interface RoomsDirtyContract {
         fun getDirtyRooms(): ArrayList<DataDirtyRooms>?
         fun setUser(user: User?)
         fun getUser(): User?
+        fun sanitizeRoom(roomId: Int)
     }
 }

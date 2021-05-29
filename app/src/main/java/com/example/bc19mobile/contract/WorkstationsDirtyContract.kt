@@ -19,12 +19,15 @@ interface WorkstationsDirtyContract {
     interface IView : IViewContract{
         fun updateWorkstationsView(workstationsDirty: ArrayList<DataDirtyWorkstations>?)
         fun callErrorWorkstationsDirty()
+        fun callSanitizeError()
+        fun callSanitizeOk()
     }
 
     interface IPresenter : IPresenterContract{
         fun showWorkstations()
         fun getUser(): User?
         fun saveUser(user: User?)
+        fun sanitizeWorkstation(tag: String)
     }
 
     interface IModel : IModelContract{
@@ -33,5 +36,6 @@ interface WorkstationsDirtyContract {
         fun getDirtyWorkstations(): ArrayList<DataDirtyWorkstations>?
         fun setUser(user: User?)
         fun getUser(): User?
+        fun sanitizeWorkstation(tag: String)
     }
 }

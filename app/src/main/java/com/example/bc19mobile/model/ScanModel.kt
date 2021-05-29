@@ -115,7 +115,7 @@ class ScanModel : BaseModel(), ScanContract.IModel {
     }
 
     fun sanitizeHandle(response: String) {
-        if (response == "4100") {
+        if (response == "2052") {
             listener?.onSanitizeSuccess()
         } else {
             listener?.onSanitizeFailure()
