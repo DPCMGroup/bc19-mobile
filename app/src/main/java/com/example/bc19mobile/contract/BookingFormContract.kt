@@ -1,5 +1,6 @@
 package com.example.bc19mobile.contract
 
+import com.example.bc19mobile.data.BookingWorkstation
 import com.example.bc19mobile.data.User
 import mvp.ljb.kt.contract.IPresenterContract
 import mvp.ljb.kt.contract.IViewContract
@@ -15,15 +16,29 @@ interface BookingFormContract {
     interface IView : IViewContract
 
     interface IPresenter : IPresenterContract{
-        fun showAvailability(date: String, startTime: String, endTime: String, room: String, colleague: String)
         fun saveUser(user: User?)
         fun getUser(): User?
+        fun saveBookingWorkstation(
+            dataTesto: String,
+            inizioTesto: String,
+            fineTesto: String,
+            stanzaTesto: String,
+            dipTesto: String
+        )
+        fun getBookingWorkstation(): BookingWorkstation?
     }
 
     interface IModel : IModelContract{
         fun setUser(user: User?)
         fun getUser(): User?
-        fun getAvailability(date: String, startTime: String, endTime: String, room: String, colleague: String)
-
+        fun saveBookingWorkstation(
+            dataTesto: String,
+            inizioTesto: String,
+            fineTesto: String,
+            stanzaTesto: String,
+            dipTesto: String
+        )
+        fun setBookingWorkstation(bookingWorkstation: BookingWorkstation?)
+        fun getBookingWorkstation(): BookingWorkstation?
     }
 }

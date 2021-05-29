@@ -15,7 +15,6 @@ import mvp.ljb.kt.act.BaseMvpActivity
 import com.example.bc19mobile.R
 import com.example.bc19mobile.data.User
 import java.text.SimpleDateFormat
-import java.util.*
 
 /**
  * @Author Kotlin MVP Plugin
@@ -93,22 +92,18 @@ class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
         }
         val stanzaTesto = findViewById<EditText>(R.id.stanzaTesto)
         val dipTesto = findViewById<EditText>(R.id.dipTesto)
-        val cerca= findViewById<Button>(R.id.cerca)
+        val cerca = findViewById<Button>(R.id.cerca)
 
         cerca.setOnClickListener {
-    /*        var user= getPresenter().getUser()
+            var bookingWorkstationSave =getPresenter().saveBookingWorkstation(dataTesto.text.toString(),inizioTesto.text.toString(),fineTesto.text.toString(),stanzaTesto.text.toString(),dipTesto.text.toString())
+            var bookingWorkstation =getPresenter().getBookingWorkstation()
+            var user = getPresenter().getUser()
             goActivity(
                 BookingWorkstationActivity::class.java, bundleOf(
-                    "user" to user
+                    "user" to user, "bookingWorkstation" to bookingWorkstation
                 )
-            )*/
-        getPresenter().showAvailability(
-            dataTesto.text.toString(),
-            inizioTesto.text.toString(),
-            fineTesto.text.toString(),
-            stanzaTesto.text.toString(),
-            dipTesto.text.toString()
-        )
+            )
+
         }
     }
 

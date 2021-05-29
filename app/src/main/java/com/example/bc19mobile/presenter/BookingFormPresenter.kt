@@ -2,6 +2,7 @@ package com.example.bc19mobile.presenter
 
 import mvp.ljb.kt.presenter.BaseMvpPresenter
 import com.example.bc19mobile.contract.BookingFormContract
+import com.example.bc19mobile.data.BookingWorkstation
 import com.example.bc19mobile.data.User
 import com.example.bc19mobile.model.BookingFormModel
 
@@ -22,14 +23,18 @@ class BookingFormPresenter : BaseMvpPresenter<BookingFormContract.IView, Booking
         return getModel().getUser()
     }
 
-    override fun showAvailability(
-        date: String,
-        startTime: String,
-        endTime: String,
-        room: String,
-        colleague: String
+    override fun saveBookingWorkstation(
+        dataTesto: String,
+        inizioTesto: String,
+        fineTesto: String,
+        stanzaTesto: String,
+        dipTesto: String
     ) {
-        getModel().getAvailability(date,startTime,endTime,room,colleague)
+        getModel().saveBookingWorkstation(dataTesto,inizioTesto,fineTesto,stanzaTesto,dipTesto)
+    }
+
+    override fun getBookingWorkstation(): BookingWorkstation? {
+        return getModel().getBookingWorkstation()
     }
 
 }

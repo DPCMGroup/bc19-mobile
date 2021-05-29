@@ -1,8 +1,8 @@
 package  com.example.bc19mobile.model
 
 import com.example.bc19mobile.contract.BookingFormContract
+import com.example.bc19mobile.data.BookingWorkstation
 import com.example.bc19mobile.data.User
-import com.example.bc19mobile.model.service.Service
 import mvp.ljb.kt.model.BaseModel
 
 /**
@@ -11,8 +11,8 @@ import mvp.ljb.kt.model.BaseModel
  * @Description input description
  **/
 class BookingFormModel : BaseModel(), BookingFormContract.IModel{
-    private val service = Service()
     private var user: User? = null
+    private var bookingWorkstation: BookingWorkstation? = null
 
     override fun setUser(user: User?) {
         this.user = user
@@ -22,13 +22,28 @@ class BookingFormModel : BaseModel(), BookingFormContract.IModel{
         return user
     }
 
-    override fun getAvailability(
-        date: String,
-        startTime: String,
-        endTime: String,
-        room: String,
-        colleague: String
-    ) {
-
+    override fun setBookingWorkstation(bookingWorkstation: BookingWorkstation?) {
+        this.bookingWorkstation = bookingWorkstation
     }
+
+    override fun getBookingWorkstation(): BookingWorkstation? {
+        return bookingWorkstation
+    }
+
+    override fun saveBookingWorkstation(
+        dataTesto: String,
+        inizioTesto: String,
+        fineTesto: String,
+        stanzaTesto: String,
+        dipTesto: String
+    ) {
+        bookingWorkstation = BookingWorkstation(
+            dataTesto,
+            inizioTesto,
+            fineTesto,
+            stanzaTesto,
+            dipTesto
+        )
+    }
+
 }
