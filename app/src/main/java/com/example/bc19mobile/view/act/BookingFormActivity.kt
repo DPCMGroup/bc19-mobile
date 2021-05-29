@@ -98,7 +98,7 @@ class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
         val cerca = findViewById<Button>(R.id.cerca)
 
         cerca.setOnClickListener {
-            var bookingWorkstationSave =getPresenter().saveBookingWorkstation(dataTesto.text.toString(),inizioTesto.text.toString(),fineTesto.text.toString(),stanzaTesto.text.toString(),dipTesto.text.toString())
+            getPresenter().saveBookingWorkstation(dataTesto.text.toString(),inizioTesto.text.toString(),fineTesto.text.toString(),stanzaTesto.text.toString(),dipTesto.text.toString())
             var bookingWorkstation =getPresenter().getBookingWorkstation()
             var user = getPresenter().getUser()
             goActivity(

@@ -94,15 +94,12 @@ class BookingWorkstationActivity : BaseMvpActivity<BookingWorkstationContract.IP
         setActionBar(findViewById<Toolbar>(R.id.toolbar))
     }
 
-    fun bookingWorkstation(idWorkstation: Int){
 
-    }
 
     override fun updateWorkstationsBookableView(workstationsBookable: ArrayList<DataBookableWorkstation>?) {
         var listView = findViewById<ListView>(R.id.bookingWorkstationlist)
         var adapter =
             BookableWorkstationAdapter(this, R.layout.rowbookingworkstation, workstationsBookable!!)
-        adapter.attachBooking(::bookingWorkstation)
         listView.adapter = adapter
     }
 

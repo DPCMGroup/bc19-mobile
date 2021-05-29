@@ -45,7 +45,7 @@ class BookingWorkstationModel : BaseModel(), BookingWorkstationContract.IModel{
     }
 
     override fun getAvailability() {
-        var bookingWorkstationRoom= bookingWorkstation?.getstanzaTesto()
+        var bookingWorkstationRoom= bookingWorkstation?.getstanzaTesto()?.toInt()
         var bookingWorkstationStart= bookingWorkstation?.getinizioTesto()
         var bookingWorkstationEnd= bookingWorkstation?.getfineTesto()
         var bookingWorkstationDate= bookingWorkstation?.getdataTesto()
@@ -54,15 +54,14 @@ class BookingWorkstationModel : BaseModel(), BookingWorkstationContract.IModel{
         jsonObject.put("idRoom", bookingWorkstationRoom)
         jsonObject.put("startTime", bookingWorkstationDate +" " +bookingWorkstationStart )
         jsonObject.put("endTime", bookingWorkstationDate +" " +bookingWorkstationEnd )
-        service.request(jsonObject, "workstation/bookable/list", true, ::availabilityHandle, ::connectionError)
-
+        service.request(jsonObject, "workstation/bookable/list", true, ::bookableHandle, ::connectionError)
     }
 
     fun connectionError(e: IOException) {
         //gestisto gli errori con connessione
     }
 
-    fun availabilityHandle(response: String) {
+    fun bookableHandle(response: String) {
         if (response == "[]") {
             listener?.onBookingWorkstationFailure()
         } else {
