@@ -7,13 +7,16 @@ import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.*
 import androidx.core.os.bundleOf
 import com.example.bc19mobile.contract.BookingFormContract
 import com.example.bc19mobile.presenter.BookingFormPresenter
 import mvp.ljb.kt.act.BaseMvpActivity
 import com.example.bc19mobile.R
+import com.example.bc19mobile.data.DataDirtyWorkstations
 import com.example.bc19mobile.data.User
+import com.example.bc19mobile.tools.WorkstationsDirtyAdapter
 import java.text.SimpleDateFormat
 
 /**
@@ -42,7 +45,7 @@ class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                     val monthOfYear = monthOfYear + 1
                     // Display Selected date in textbox
-                    dataTesto.setText("" + dayOfMonth + "/" + monthOfYear + "/" + year)
+                    dataTesto.setText("" + year  + "-" + monthOfYear + "-" + dayOfMonth)
 
                 },
                 year,
@@ -164,4 +167,6 @@ class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
         super.initView()
         setActionBar(findViewById<Toolbar>(R.id.toolbar))
     }
+
+
 }

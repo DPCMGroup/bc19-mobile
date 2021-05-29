@@ -15,6 +15,22 @@ class BookingWorkstationPresenter : BaseMvpPresenter<BookingWorkstationContract.
 
     override fun registerModel() = BookingWorkstationModel::class.java
 
+    override fun onCreate() {
+        super.onCreate()
+        getModel().setBookingWorkstationListener(object : BookingWorkstationModel.BookingWorkstationListener {
+            override fun onBookingWorkstationSuccess() {
+                //qui siamo nel mainThread
+                //chiamo la vista cambio pannello e faccio le cose che devo fare
+
+                getMvpView().updateWorkstationsBookableView(getModel().getBookableWorkstations())
+            }
+
+            override fun onBookingWorkstationFailure() {
+                getMvpView().callErrorBookableWorkstation()
+            }
+        })
+    }
+
     override fun saveUser(user: User?) {
         getModel().setUser(user)
     }
@@ -35,3 +51,4 @@ class BookingWorkstationPresenter : BaseMvpPresenter<BookingWorkstationContract.
     }
 
 }
+

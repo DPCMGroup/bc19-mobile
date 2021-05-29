@@ -1,7 +1,10 @@
 package com.example.bc19mobile.contract
 
 import com.example.bc19mobile.data.BookingWorkstation
+import com.example.bc19mobile.data.DataBookableWorkstation
+import com.example.bc19mobile.data.DataDirtyWorkstations
 import com.example.bc19mobile.data.User
+import com.example.bc19mobile.model.BookingWorkstationModel
 import mvp.ljb.kt.contract.IPresenterContract
 import mvp.ljb.kt.contract.IViewContract
 import mvp.ljb.kt.contract.IModelContract
@@ -13,7 +16,10 @@ import mvp.ljb.kt.contract.IModelContract
  **/
 interface BookingWorkstationContract {
 
-    interface IView : IViewContract
+    interface IView : IViewContract{
+        fun updateWorkstationsBookableView(workstationsDirty: ArrayList<DataBookableWorkstation>?)
+        fun callErrorBookableWorkstation()
+    }
 
     interface IPresenter : IPresenterContract{
         fun showAvailability()
@@ -29,5 +35,7 @@ interface BookingWorkstationContract {
         fun getUser(): User?
         fun getBookingWorkstation(): BookingWorkstation?
         fun getAvailability()
+        fun setBookingWorkstationListener(listener: BookingWorkstationModel.BookingWorkstationListener?)
+        fun getBookableWorkstations(): ArrayList<DataBookableWorkstation>?
     }
 }
