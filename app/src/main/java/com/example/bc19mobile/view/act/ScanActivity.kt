@@ -63,6 +63,14 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             tagId?.text?.toString()?.let { it1 -> getPresenter().makeSanitize(it1) }
         }
 
+        val inizioOccupazione = findViewById<Button>(R.id.inizioOccupazione)
+        runOnUiThread {
+            inizioOccupazione.isEnabled = false
+        }
+        inizioOccupazione.setOnClickListener {
+           // getPresenter().startOccupation()
+        }
+
 
 
         text = findViewById<View>(R.id.text) as TextView
@@ -154,34 +162,6 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         super.onNewIntent(intent)
         setIntent(intent)
         resolveIntent(intent)
-
-        var i :Boolean= false
-        var j :Boolean= false
-        val igienizza = findViewById<Button>(R.id.igienizza)
-
-        //prenotazione automatica dopo un minuto
-        if (i == false){
-        Handler().postDelayed({
-            super.onNewIntent(intent)
-            setIntent(intent)
-            resolveIntent(intent)
-            igienizza.text="ok1"
-            //}, 60000)
-        }, 10000)
-        }
-
-        //scansione automatica tag ogni 5 minuti, fino a termine prenotazione
-        if (j == false){
-            Handler().postDelayed({
-                igienizza.text="ok"
-                super.onNewIntent(intent)
-                setIntent(intent)
-                resolveIntent(intent)
-                igienizza.text="ok2"
-                //}, 300000)
-            }, 10000 + 10000)
-        }
-
     }
 
     private fun resolveIntent(intent: Intent) {
@@ -260,9 +240,12 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         bookings: ArrayList<DataBookingToday>?
     ) {
         val igienizza = findViewById<Button>(R.id.igienizza)
+        val inizioOccupazione = findViewById<Button>(R.id.inizioOccupazione)
+        val fineOccupazione = findViewById<Button>(R.id.fineOccupazione)
         val message = findViewById<TextView>(R.id.message_txt)
         val message1 = findViewById<TextView>(R.id.message1_txt)
         igienizza.setVisibility(View.INVISIBLE)
+        inizioOccupazione.setVisibility(View.INVISIBLE)
         message.setVisibility(View.INVISIBLE)
         message1.setVisibility(View.INVISIBLE)
 
@@ -278,6 +261,13 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             }
             runOnUiThread {
                 message1.setVisibility(View.VISIBLE)
+            }
+            runOnUiThread {
+                inizioOccupazione.isEnabled = true
+            }
+
+            runOnUiThread {
+                inizioOccupazione.setVisibility(View.VISIBLE)
             }
 
         } else if (workstation?._workStatus == 0 && workstation?._workSanitize == 0) {
@@ -393,6 +383,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             .show()
 
         val igienizza = findViewById<Button>(R.id.igienizza)
+        val inizioOccupazione = findViewById<Button>(R.id.inizioOccupazione)
         runOnUiThread {
             igienizza.isEnabled = true
         }
@@ -448,6 +439,12 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         }
         runOnUiThread {
             igienizza.isEnabled = false
+        }
+        runOnUiThread {
+            inizioOccupazione.isEnabled = true
+        }
+        runOnUiThread {
+            inizioOccupazione.setVisibility(View.VISIBLE)
         }
 
     }
