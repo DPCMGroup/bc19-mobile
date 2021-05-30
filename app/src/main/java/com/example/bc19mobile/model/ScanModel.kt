@@ -24,6 +24,10 @@ class ScanModel : BaseModel(), ScanContract.IModel {
         fun onScanFailure()
         fun onSanitizeSuccess()
         fun onSanitizeFailure()
+        fun onStartOccupationSuccess()
+        fun onStartOccupationFailure()
+        fun onEndOccupationSuccess()
+        fun onEndOccupationFailure()
     }
 
     private var listener: ScanModel.ScanListener? = null
@@ -121,6 +125,54 @@ class ScanModel : BaseModel(), ScanContract.IModel {
             listener?.onSanitizeFailure()
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun getStartOccupation(tag: String) {
+        val Settings = JSONObject()
+        Settings.put("idworkstation", tag)
+        Settings.put("iduser", user?.getId())
+        val current = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+        val time = current.format(formatter)
+
+        Settings.put("time",time)
+
+        service.request(Settings, "attendences/insert", true, ::startOccupationHandle, ::connectionError)
+    }
+
+    fun startOccupationHandle(response: String) {
+        if (response == "1028") {
+            listener?.onStartOccupationSuccess()
+        } else {
+            listener?.onStartOccupationFailure()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun getEndOccupation(tag: String) {
+
+        //devo passare id attendence?
+
+        val Settings = JSONObject()
+        Settings.put("idworkstation", tag)
+        //Settings.put("iduser", user?.getId())
+        val current = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+        val time = current.format(formatter)
+
+        Settings.put("time",time)
+
+        service.request(Settings, "attendences/end", true, ::endOccupationHandle, ::connectionError)
+    }
+
+    fun endOccupationHandle(response: String) {
+        if (response == "1028") {
+            listener?.onEndOccupationSuccess()
+        } else {
+            listener?.onEndOccupationFailure()
+        }
+    }
+
 
 
     }

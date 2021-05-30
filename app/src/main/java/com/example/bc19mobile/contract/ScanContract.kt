@@ -25,6 +25,10 @@ interface ScanContract {
         fun callScanError()
         fun callSanitizeError()
         fun callSanitizeOk()
+        fun callStartOccupationError()
+        fun callStartOccupationOk()
+        fun callEndOccupationError()
+        fun callEndOccupationOk()
     }
 
     interface IPresenter : IPresenterContract{
@@ -32,6 +36,8 @@ interface ScanContract {
         fun getUser(): User?
         fun scanTagNFC(tag: String)
         fun makeSanitize(tag: String)
+        fun startOccupation(tag: String)
+        fun endOccupation(tag: String)
     }
 
     interface IModel : IModelContract{
@@ -41,6 +47,8 @@ interface ScanContract {
         fun getUser(): User?
         fun getStatus(tag:String)
         fun getSanitize(tag: String)
+        fun getStartOccupation(tag: String)
+        fun getEndOccupation(tag: String)
         fun getBookingListToday(): ArrayList<DataBookingToday>?
         fun setBookingListener(listener: ScanModel.ScanListener?)
     }
