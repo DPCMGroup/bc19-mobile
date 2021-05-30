@@ -45,10 +45,10 @@ class BookingWorkstationModel : BaseModel(), BookingWorkstationContract.IModel{
     }
 
     override fun getAvailability() {
-        var bookingWorkstationRoom= bookingWorkstation?.getstanzaTesto()?.toInt()
-        var bookingWorkstationStart= bookingWorkstation?.getinizioTesto()
-        var bookingWorkstationEnd= bookingWorkstation?.getfineTesto()
-        var bookingWorkstationDate= bookingWorkstation?.getdataTesto()
+        var bookingWorkstationRoom: Int?= bookingWorkstation?.getstanzaTesto()?.toInt()
+        var bookingWorkstationStart: String? = bookingWorkstation?.getinizioTesto()
+        var bookingWorkstationEnd: String?= bookingWorkstation?.getfineTesto()
+        var bookingWorkstationDate: String?= bookingWorkstation?.getdataTesto()
 
         val jsonObject = JSONObject()
         jsonObject.put("idRoom", bookingWorkstationRoom)
@@ -62,7 +62,7 @@ class BookingWorkstationModel : BaseModel(), BookingWorkstationContract.IModel{
     }
 
     fun bookableHandle(response: String) {
-        if (response == "[]") {
+        if (response == "[]" || response =="4098" || response =="4097") {
             listener?.onBookingWorkstationFailure()
         } else {
             val jsonArray = JSONArray(response)

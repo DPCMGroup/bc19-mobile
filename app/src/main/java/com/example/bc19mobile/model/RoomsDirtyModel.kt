@@ -63,7 +63,7 @@ class RoomsDirtyModel : BaseModel(), RoomsDirtyContract.IModel {
     }
 
     private fun RoomsHandle(response: String) {
-        if (response !="8193" || response !="8194") {
+        if (response !="8193" && response !="8194" && response!="[]") {
             val jsonArray = JSONArray(response)
             roomsDirtyList = ArrayList<DataDirtyRooms>()
             for (i in 0 until jsonArray.length()) {
@@ -86,19 +86,18 @@ class RoomsDirtyModel : BaseModel(), RoomsDirtyContract.IModel {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun sanitizeRoom(roomId: Int) {
         val Settings = JSONObject()
-        Settings.put("idUser", user?.getId())
-        Settings.put("idRoom", roomId)
+        Settings.put("iduser", user?.getId())
+        Settings.put("idroom", roomId)
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
         val formatted = current.format(formatter)
 
-        Settings.put("data",formatted)
+        Settings.put("time",formatted)
 
         service.request(Settings, "workstation/sanitizeall", true, ::sanitizeRoomHandle, ::connectionError)
     }
 
     fun sanitizeRoomHandle(response: String) {
-        println(response)
         if (response == "2052") {
             listener?.onSanitizeRoomSuccess()
         } else {

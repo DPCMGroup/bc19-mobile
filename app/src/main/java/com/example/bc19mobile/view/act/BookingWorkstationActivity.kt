@@ -106,7 +106,7 @@ class BookingWorkstationActivity : BaseMvpActivity<BookingWorkstationContract.IP
 
 
     override fun callErrorBookableWorkstation() {
-        var workstationError =findViewById<TextView>(R.id.workstationError)
+        var workstationError =findViewById<TextView>(R.id.bookingWorkstationError)
         workstationError?.setVisibility(View.VISIBLE)
     }
 

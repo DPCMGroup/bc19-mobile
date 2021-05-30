@@ -65,7 +65,7 @@ class WorkstationsDirtyModel : BaseModel(), WorkstationsDirtyContract.IModel {
     }
 
     private fun WorkstationsHandle(response: String) {
-        if (response != "4098" || response !="4099") {
+        if (response != "4098" && response !="4099" && response!="[]") {
             val jsonArray = JSONArray(response)
             workstationsDirtyList = ArrayList<DataDirtyWorkstations>()
             for (i in 0 until jsonArray.length()) {

@@ -86,7 +86,7 @@ class WorkstationsDirtyActivity : BaseMvpActivity<WorkstationsDirtyContract.IPre
     }
 
     override fun callErrorWorkstationsDirty() {
-       var workstationError =findViewById<TextView>(R.id.workstationError)
+       var workstationError =findViewById<TextView>(R.id.workstationDirtyError)
         workstationError?.setVisibility(View.VISIBLE)
     }
 

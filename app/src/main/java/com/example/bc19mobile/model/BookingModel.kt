@@ -68,9 +68,8 @@ class BookingModel : BaseModel(), BookingContract.IModel {
     }
 
     private fun BookingHandle(response: String) {
-println(response)
         //inserisci codice di errore corretto
-        if (response != "32772") {
+        if (response == "[]") {
             listener?.onBookingFailure()
         } else  {
             val jsonArray = JSONArray(response)

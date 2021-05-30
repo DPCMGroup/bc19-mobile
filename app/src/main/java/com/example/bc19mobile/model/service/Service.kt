@@ -53,7 +53,8 @@ class Service {
             }
 
             override fun onResponse(call: Call, response: Response): Unit {
-                mainHandler.post(Runnable { okThen(response.body()!!.string()) })
+                var str=response.body()!!.string()
+                mainHandler.post(Runnable { okThen(str) })
             }
         })
     }
