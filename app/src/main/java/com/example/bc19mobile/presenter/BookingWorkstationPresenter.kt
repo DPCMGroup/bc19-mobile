@@ -28,6 +28,14 @@ class BookingWorkstationPresenter : BaseMvpPresenter<BookingWorkstationContract.
             override fun onBookingWorkstationFailure() {
                 getMvpView().callErrorBookableWorkstation()
             }
+
+            override fun onBookFailure() {
+                getMvpView().callBookableFailure()
+            }
+
+            override fun onBookSuccess() {
+                getMvpView().callBookableSuccess()
+            }
         })
     }
 
@@ -48,6 +56,10 @@ class BookingWorkstationPresenter : BaseMvpPresenter<BookingWorkstationContract.
 
     override fun showAvailability() {
         getModel().getAvailability()
+    }
+
+    override fun bookWorkstation(idWorkstation: Int) {
+        getModel().bookWorkstation(idWorkstation)
     }
 
 }

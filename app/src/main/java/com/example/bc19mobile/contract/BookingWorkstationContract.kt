@@ -19,6 +19,8 @@ interface BookingWorkstationContract {
     interface IView : IViewContract{
         fun updateWorkstationsBookableView(workstationsDirty: ArrayList<DataBookableWorkstation>?)
         fun callErrorBookableWorkstation()
+        fun callBookableFailure()
+        fun callBookableSuccess()
     }
 
     interface IPresenter : IPresenterContract{
@@ -27,6 +29,7 @@ interface BookingWorkstationContract {
         fun saveBookingWorkstation(bookingWorkstation: BookingWorkstation?)
         fun getUser(): User?
         fun getBookingWorkstation(): BookingWorkstation?
+        fun bookWorkstation(idWorkstation: Int)
     }
 
     interface IModel : IModelContract{
@@ -37,5 +40,6 @@ interface BookingWorkstationContract {
         fun getAvailability()
         fun setBookingWorkstationListener(listener: BookingWorkstationModel.BookingWorkstationListener?)
         fun getBookableWorkstations(): ArrayList<DataBookableWorkstation>?
+        fun bookWorkstation(idWorkstation: Int)
     }
 }

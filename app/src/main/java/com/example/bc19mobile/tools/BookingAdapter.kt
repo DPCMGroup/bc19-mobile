@@ -39,7 +39,7 @@ class BookingAdapter(var mCtx: Context, var resources: Int, var items: ArrayList
 
         var mItem: DataBooking = items[position]
         testolista.text =
-            mItem.bookId.toString() + " - " + mItem.workName.toString() + " - " + mItem.roomName.toString() + " - " + mItem.start.toString() + " - " + mItem.end.toString()
+            mItem.workName.toString() + " - " + mItem.roomName.toString() + " - " + mItem.start.toString() + " - " + mItem.end.toString()
 
 
         var elimina: Button = view.findViewById(R.id.eliminabooking)

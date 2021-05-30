@@ -10,6 +10,8 @@ import mvp.ljb.kt.model.BaseModel
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 /**
  * @Author Kotlin MVP Plugin
@@ -20,6 +22,8 @@ class BookingWorkstationModel : BaseModel(), BookingWorkstationContract.IModel{
     interface BookingWorkstationListener {
         fun onBookingWorkstationSuccess()
         fun onBookingWorkstationFailure()
+        fun onBookSuccess()
+        fun onBookFailure()
     }
 
     private var listener: BookingWorkstationListener? = null
@@ -93,5 +97,27 @@ class BookingWorkstationModel : BaseModel(), BookingWorkstationContract.IModel{
 
     override fun getBookingWorkstation(): BookingWorkstation? {
         return bookingWorkstation
+    }
+
+    override fun bookWorkstation(idWorkstation: Int) {
+        val Settings = JSONObject()
+
+        Settings.put("idworkstation", idWorkstation)
+        Settings.put("iduser", user?.getId())
+        var bookingWorkstationStart: String? = bookingWorkstation?.getinizioTesto()
+        var bookingWorkstationEnd: String?= bookingWorkstation?.getfineTesto()
+        var bookingWorkstationDate: String?= bookingWorkstation?.getdataTesto()
+        Settings.put("starttime", bookingWorkstationDate +" " +bookingWorkstationStart )
+        Settings.put("endtime", bookingWorkstationDate +" " +bookingWorkstationEnd )
+        service.request(Settings, "booking/insert", true, ::BookingWorkstationHandle, ::connectionError)
+    }
+
+    fun BookingWorkstationHandle(response: String){
+        if(response=="32772"){
+            listener?.onBookSuccess()
+        }
+        else{
+            listener?.onBookFailure()
+        }
     }
 }

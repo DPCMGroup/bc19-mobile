@@ -5,10 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.ListView
-import android.widget.TextView
-import android.widget.Toolbar
+import android.widget.*
 import androidx.core.os.bundleOf
 import com.example.bc19mobile.contract.BookingWorkstationContract
 import com.example.bc19mobile.presenter.BookingWorkstationPresenter
@@ -94,12 +91,15 @@ class BookingWorkstationActivity : BaseMvpActivity<BookingWorkstationContract.IP
         setActionBar(findViewById<Toolbar>(R.id.toolbar))
     }
 
-
+    fun bookWorkstation(idWorkstation: Int){
+        getPresenter().bookWorkstation(idWorkstation)
+    }
 
     override fun updateWorkstationsBookableView(workstationsBookable: ArrayList<DataBookableWorkstation>?) {
         var listView = findViewById<ListView>(R.id.bookingWorkstationlist)
         var adapter =
             BookableWorkstationAdapter(this, R.layout.rowbookingworkstation, workstationsBookable!!)
+        adapter.attachBooking(::bookWorkstation)
         listView.adapter = adapter
     }
 
@@ -108,6 +108,22 @@ class BookingWorkstationActivity : BaseMvpActivity<BookingWorkstationContract.IP
     override fun callErrorBookableWorkstation() {
         var workstationError =findViewById<TextView>(R.id.bookingWorkstationError)
         workstationError?.setVisibility(View.VISIBLE)
+    }
+
+    override fun callBookableFailure() {
+        Toast.makeText(applicationContext, "Prenotazione non riuscita!", Toast.LENGTH_SHORT)
+            .show()
+    }
+
+    override fun callBookableSuccess() {
+        val user = getPresenter().getUser()
+        goActivity(
+            BookingActivity::class.java, bundleOf(
+                "user" to user
+            )
+        )
+        Toast.makeText(applicationContext, "Prenotazione eseguita con successo!", Toast.LENGTH_SHORT)
+            .show()
     }
 
 }
