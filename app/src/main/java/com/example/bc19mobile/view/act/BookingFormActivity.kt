@@ -112,8 +112,9 @@ class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_item, menu)
-        val itemToHide = menu?.findItem(R.id.nav_bookingForm)
-        itemToHide?.setVisible(false)
+        menu?.findItem(R.id.nav_bookingForm)?.setVisible(false)
+        menu?.findItem(R.id.nav_sanitize)?.setVisible(false)
+
         return true
     }
 

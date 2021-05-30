@@ -18,16 +18,21 @@
         android:id="@+id/nav_booking"
         android:title="Visualizza Prenotazioni"
         app:showAsAction="never"/>
-    />
+
     <item
         android:id="@+id/nav_guida"
         android:title="Guida"
         app:showAsAction="never" />
-    />
+
+    <item
+        android:id="@+id/nav_sanitize"
+        android:title="Igienizza"
+        app:showAsAction="never" />
+
     <item
         android:id="@+id/logout"
         android:title="Logout"
         app:showAsAction="never" />
-    />
+
 
 </menu>

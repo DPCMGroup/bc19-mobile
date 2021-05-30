@@ -35,7 +35,7 @@
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/igienizza"
+        android:id="@+id/nav_sanitize"
         android:layout_width="140dp"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"

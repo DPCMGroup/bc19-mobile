@@ -43,12 +43,9 @@ class WorkstationsDirtyActivity : BaseMvpActivity<WorkstationsDirtyContract.IPre
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_item, menu)
-        val itemToHide = menu?.findItem(R.id.nav_tag)
-        itemToHide?.setVisible(false)
-        val itemToHide2 = menu?.findItem(R.id.nav_booking)
-        itemToHide2?.setVisible(false)
-        val itemToHide3 = menu?.findItem(R.id.nav_bookingForm)
-        itemToHide3?.setVisible(false)
+        menu?.findItem(R.id.nav_tag)?.setVisible(false)
+        menu?.findItem(R.id.nav_booking)?.setVisible(false)
+        menu?.findItem(R.id.nav_bookingForm)?.setVisible(false)
         return true
     }
 

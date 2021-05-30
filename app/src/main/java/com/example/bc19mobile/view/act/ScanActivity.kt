@@ -11,28 +11,20 @@ import android.nfc.Tag
 import android.os.Bundle
 import android.os.Parcelable
 import android.provider.Settings
-import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
-import androidx.recyclerview.widget.RecyclerView
 import com.example.bc19mobile.NFC.NdefMessageParser
 import com.example.bc19mobile.NFC.ParsedNdefRecord
 import com.example.bc19mobile.R
 import com.example.bc19mobile.contract.ScanContract
-import com.example.bc19mobile.data.DataBooking
 import com.example.bc19mobile.data.DataBookingToday
 import com.example.bc19mobile.data.DataWorkstation
 import com.example.bc19mobile.data.User
 import com.example.bc19mobile.presenter.ScanPresenter
 import mvp.ljb.kt.act.BaseMvpActivity
-import mvp.ljb.kt.act.BaseMvpAppCompatActivity
-import mvp.ljb.kt.act.BaseMvpFragmentActivity
-import mvp.ljb.kt.fragment.BaseMvpFragment
-import org.json.JSONObject
 import java.util.ArrayList
 import android.os.Handler
 
@@ -54,7 +46,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
 
 
         val tagId = findViewById<TextView>(R.id.tagId_txt)
-        val igienizza = findViewById<Button>(R.id.igienizza)
+        val igienizza = findViewById<Button>(R.id.nav_sanitize)
         runOnUiThread {
             igienizza.isEnabled = false
         }
@@ -81,9 +73,12 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
         menuInflater.inflate(R.menu.menu_item, menu)
-        val itemToHide = menu?.findItem(R.id.nav_tag)
-        itemToHide?.setVisible(false)
+
+        menu?.findItem(R.id.nav_tag)?.setVisible(false)
+        menu?.findItem(R.id.nav_sanitize)?.setVisible(false)
+
         return true
     }
 
@@ -155,29 +150,29 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         setIntent(intent)
         resolveIntent(intent)
 
-        var i :Boolean= false
-        var j :Boolean= false
-        val igienizza = findViewById<Button>(R.id.igienizza)
+        var i: Boolean = false
+        var j: Boolean = false
+        val igienizza = findViewById<Button>(R.id.nav_sanitize)
 
         //prenotazione automatica dopo un minuto
-        if (i == false){
-        Handler().postDelayed({
-            super.onNewIntent(intent)
-            setIntent(intent)
-            resolveIntent(intent)
-            igienizza.text="ok1"
-            //}, 60000)
-        }, 10000)
-        }
-
-        //scansione automatica tag ogni 5 minuti, fino a termine prenotazione
-        if (j == false){
+        if (i == false) {
             Handler().postDelayed({
-                igienizza.text="ok"
                 super.onNewIntent(intent)
                 setIntent(intent)
                 resolveIntent(intent)
-                igienizza.text="ok2"
+                igienizza.text = "ok1"
+                //}, 60000)
+            }, 10000)
+        }
+
+        //scansione automatica tag ogni 5 minuti, fino a termine prenotazione
+        if (j == false) {
+            Handler().postDelayed({
+                igienizza.text = "ok"
+                super.onNewIntent(intent)
+                setIntent(intent)
+                resolveIntent(intent)
+                igienizza.text = "ok2"
                 //}, 300000)
             }, 10000 + 10000)
         }
@@ -259,7 +254,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         workstation: DataWorkstation?,
         bookings: ArrayList<DataBookingToday>?
     ) {
-        val igienizza = findViewById<Button>(R.id.igienizza)
+        val igienizza = findViewById<Button>(R.id.nav_sanitize)
         val message = findViewById<TextView>(R.id.message_txt)
         val message1 = findViewById<TextView>(R.id.message1_txt)
         igienizza.setVisibility(View.INVISIBLE)
@@ -375,7 +370,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
 
         val intro = findViewById<TextView>(R.id.intro_txt)
         intro.setVisibility(View.VISIBLE)
-        
+
     }
 
     override fun callScanError() {
@@ -392,7 +387,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         Toast.makeText(applicationContext, "Igienizzazione completata!", Toast.LENGTH_SHORT)
             .show()
 
-        val igienizza = findViewById<Button>(R.id.igienizza)
+        val igienizza = findViewById<Button>(R.id.nav_sanitize)
         runOnUiThread {
             igienizza.isEnabled = true
         }
