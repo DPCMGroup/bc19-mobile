@@ -129,7 +129,7 @@ class ScanModel : BaseModel(), ScanContract.IModel {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun getStartOccupation(tag: String) {
         val Settings = JSONObject()
-        Settings.put("idworkstation", tag)
+        Settings.put("idworkstation", workstation._workId)
         Settings.put("iduser", user?.getId())
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
@@ -141,10 +141,10 @@ class ScanModel : BaseModel(), ScanContract.IModel {
     }
 
     fun startOccupationHandle(response: String) {
-        if (response == "1028") {
-            listener?.onStartOccupationSuccess()
-        } else {
+        if (response == "1025" || response == "1026") {
             listener?.onStartOccupationFailure()
+        } else {
+            listener?.onStartOccupationSuccess()
         }
     }
 
@@ -166,10 +166,10 @@ class ScanModel : BaseModel(), ScanContract.IModel {
     }
 
     fun endOccupationHandle(response: String) {
-        if (response == "1028") {
-            listener?.onEndOccupationSuccess()
-        } else {
+        if (response == "1025" || response == "1026") {
             listener?.onEndOccupationFailure()
+        } else {
+            listener?.onEndOccupationSuccess()
         }
     }
 
