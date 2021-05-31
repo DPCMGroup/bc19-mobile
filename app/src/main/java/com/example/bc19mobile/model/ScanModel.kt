@@ -3,6 +3,7 @@ package  com.example.bc19mobile.model
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.example.bc19mobile.contract.ScanContract
+import com.example.bc19mobile.data.DataAttendance
 import com.example.bc19mobile.data.DataBookingToday
 import com.example.bc19mobile.data.DataWorkstation
 import com.example.bc19mobile.data.User
@@ -34,6 +35,7 @@ class ScanModel : BaseModel(), ScanContract.IModel {
     private val service = Service()
     private var user: User? = null
     private var workstation = DataWorkstation()
+    private var attendance = DataAttendance()
     private var bookingListToday = ArrayList<DataBookingToday>()
 
     override fun setWorkstationListener(listener: ScanListener?) {
@@ -85,7 +87,7 @@ class ScanModel : BaseModel(), ScanContract.IModel {
             workstation._bookedToday = json.getInt("bookedToday")
 
 
-            if(workstation._bookedToday==1) {
+            if (workstation._bookedToday == 1) {
                 val jsonBookingToday = json.getJSONArray("bookings")
                 bookingListToday = ArrayList<DataBookingToday>()
                 for (i in 0 until jsonBookingToday.length()) {
@@ -96,7 +98,7 @@ class ScanModel : BaseModel(), ScanContract.IModel {
                     model.bookerUsername = book.getString("bookerUsername")
                     model.bookerSurname = book.getString("bookerSurname")
                     model.from = book.getString("from")
-                    model.to= book.getString("to")
+                    model.to = book.getString("to")
                     bookingListToday.add(model)
                 }
             }
@@ -113,7 +115,7 @@ class ScanModel : BaseModel(), ScanContract.IModel {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
         val formatted = current.format(formatter)
 
-        Settings.put("data",formatted)
+        Settings.put("data", formatted)
 
         service.request(Settings, "workstation/sanitize", true, ::sanitizeHandle, ::connectionError)
     }
@@ -135,15 +137,25 @@ class ScanModel : BaseModel(), ScanContract.IModel {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
         val time = current.format(formatter)
 
-        Settings.put("time",time)
 
-        service.request(Settings, "attendences/insert", true, ::startOccupationHandle, ::connectionError)
+        Settings.put("time", time)
+
+        service.request(
+            Settings,
+            "attendences/insert",
+            true,
+            ::startOccupationHandle,
+            ::connectionError
+        )
     }
 
     fun startOccupationHandle(response: String) {
         if (response == "1025" || response == "1026") {
             listener?.onStartOccupationFailure()
         } else {
+            val json=JSONObject(response)
+            attendance.idAttendance= json.getInt("idattendence")
+            attendance.upperBoundTimeAttendance= json.getString("endtime")
             listener?.onStartOccupationSuccess()
         }
     }
@@ -154,13 +166,12 @@ class ScanModel : BaseModel(), ScanContract.IModel {
         //devo passare id attendence?
 
         val Settings = JSONObject()
-        Settings.put("idworkstation", tag)
-        //Settings.put("iduser", user?.getId())
+        Settings.put("idattendence", attendance.idAttendance)
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
         val time = current.format(formatter)
 
-        Settings.put("time",time)
+        Settings.put("time", time)
 
         service.request(Settings, "attendences/end", true, ::endOccupationHandle, ::connectionError)
     }
@@ -174,5 +185,4 @@ class ScanModel : BaseModel(), ScanContract.IModel {
     }
 
 
-
-    }
+}

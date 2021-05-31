@@ -240,12 +240,12 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         bookings: ArrayList<DataBookingToday>?
     ) {
         val igienizza = findViewById<Button>(R.id.igienizza)
-        val inizioOccupazione = findViewById<Button>(R.id.startOccupation)
+        val startOccupation = findViewById<Button>(R.id.startOccupation)
         val endOccupation = findViewById<Button>(R.id.endOccupation)
         val message = findViewById<TextView>(R.id.message_txt)
         val message1 = findViewById<TextView>(R.id.message1_txt)
         igienizza.setVisibility(View.INVISIBLE)
-        inizioOccupazione.setVisibility(View.INVISIBLE)
+        startOccupation.setVisibility(View.INVISIBLE)
         endOccupation.setVisibility(View.INVISIBLE)
         message.setVisibility(View.INVISIBLE)
         message1.setVisibility(View.INVISIBLE)
@@ -264,11 +264,11 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
                 message1.setVisibility(View.VISIBLE)
             }
             runOnUiThread {
-                inizioOccupazione.isEnabled = true
+                startOccupation.isEnabled = true
             }
 
             runOnUiThread {
-                inizioOccupazione.setVisibility(View.VISIBLE)
+                startOccupation.setVisibility(View.VISIBLE)
             }
 
         } else if (workstation?._workStatus == 0 && workstation?._workSanitize == 0) {
@@ -291,18 +291,24 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
                 message.setVisibility(View.VISIBLE)
             }
             runOnUiThread {
-                igienizza.isEnabled = true
+                startOccupation.setVisibility(View.INVISIBLE)
+            }
+            runOnUiThread {
+                startOccupation.isEnabled = false
             }
 
-            runOnUiThread {
-                igienizza.setVisibility(View.VISIBLE)
-            }
         } else if (workstation?._workStatus == 1 && workstation?._workSanitize == 1) {
             runOnUiThread {
                 stato.text = "Occupata e Igienizzata"
             }
             runOnUiThread {
                 message.setVisibility(View.VISIBLE)
+            }
+            runOnUiThread {
+                startOccupation.setVisibility(View.INVISIBLE)
+            }
+            runOnUiThread {
+                startOccupation.isEnabled = false
             }
         } else if (workstation?._workStatus == 2 && workstation?._workSanitize == 1) {
 
@@ -351,11 +357,11 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
                     }
                 }
                 runOnUiThread {
-                    inizioOccupazione.isEnabled = true
+                    startOccupation.isEnabled = true
                 }
 
                 runOnUiThread {
-                    inizioOccupazione.setVisibility(View.VISIBLE)
+                    startOccupation.setVisibility(View.VISIBLE)
                 }
             } else {
                 evprenotazioni.text =
@@ -479,7 +485,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         val stato = findViewById<TextView>(R.id.stato)
         if (stato.text == "Libera e Igienizzata") {
             runOnUiThread {
-                stato.text = "Occupata e non Igienizzata"
+                stato.text = "Occupata"
             }
             runOnUiThread {
                 messageEndOccupation.setVisibility(View.INVISIBLE)
@@ -548,7 +554,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
 
         val evprenotazioni = findViewById<TextView>(R.id.evprenotazioni)
         val stato = findViewById<TextView>(R.id.stato)
-        if (stato.text == "Occupata e non Igienizzata") {
+        if (stato.text == "Occupata") {
             runOnUiThread {
                 stato.text = "Libera e non Igienizzata"
             }
