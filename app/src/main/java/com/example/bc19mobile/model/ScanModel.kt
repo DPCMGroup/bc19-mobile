@@ -3,10 +3,7 @@ package  com.example.bc19mobile.model
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.example.bc19mobile.contract.ScanContract
-import com.example.bc19mobile.data.DataAttendance
-import com.example.bc19mobile.data.DataBookingToday
-import com.example.bc19mobile.data.DataWorkstation
-import com.example.bc19mobile.data.User
+import com.example.bc19mobile.data.*
 import com.example.bc19mobile.model.service.Service
 import mvp.ljb.kt.model.BaseModel
 import org.json.JSONObject
@@ -35,7 +32,7 @@ class ScanModel : BaseModel(), ScanContract.IModel {
     private val service = Service()
     private var user: User? = null
     private var workstation = DataWorkstation()
-    private var attendance = DataAttendance()
+    private var attendence = DataAttendence()
     private var bookingListToday = ArrayList<DataBookingToday>()
 
     override fun setWorkstationListener(listener: ScanListener?) {
@@ -154,8 +151,8 @@ class ScanModel : BaseModel(), ScanContract.IModel {
             listener?.onStartOccupationFailure()
         } else {
             val json=JSONObject(response)
-            attendance.idAttendance= json.getInt("idattendence")
-            attendance.upperBoundTimeAttendance= json.getString("endtime")
+            attendence.idAttendence= json.getInt("idattendence")
+            attendence.upperBoundTimeAttendence= json.getString("endtime")
             listener?.onStartOccupationSuccess()
         }
     }
@@ -166,7 +163,7 @@ class ScanModel : BaseModel(), ScanContract.IModel {
         //devo passare id attendence?
 
         val Settings = JSONObject()
-        Settings.put("idattendence", attendance.idAttendance)
+        Settings.put("idattendence", attendence.idAttendence)
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
         val time = current.format(formatter)
