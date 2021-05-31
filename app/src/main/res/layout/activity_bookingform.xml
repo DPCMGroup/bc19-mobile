@@ -43,14 +43,15 @@
         android:layout_marginStart="1dp"
         android:layout_marginTop="410dp"
         android:text="Nome Collega:"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:visibility="invisible"/>
 
     <Button
         android:id="@+id/cerca"
         android:layout_width="140dp"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="500dp"
+        android:layout_marginTop="450dp"
         android:background="@color/purple_200"
         android:text="Cerca" />
 
@@ -71,7 +72,8 @@
         android:layout_centerHorizontal="true"
 
         android:layout_marginTop="430dp"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:visibility="invisible"/>
 
 
 

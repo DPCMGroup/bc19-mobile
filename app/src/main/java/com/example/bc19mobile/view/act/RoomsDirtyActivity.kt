@@ -52,6 +52,15 @@ class RoomsDirtyActivity : BaseMvpActivity<RoomsDirtyContract.IPresenter>(),
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.nav_sanitize -> {
+                var user = getPresenter().getUser()
+                goActivity(
+                    CleanActivity::class.java, bundleOf(
+                        "user" to user
+                    )
+                )
+                return true
+            }
 
             R.id.nav_guida -> {
                 var user = getPresenter().getUser()

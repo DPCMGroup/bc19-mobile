@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:popupTheme="@style/Theme.Bc19mobile.PopupOverlay">
 
+
     <item
         android:id="@+id/nav_tag"
         android:title="Scansiona tag"
