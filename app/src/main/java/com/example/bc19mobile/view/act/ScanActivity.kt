@@ -290,7 +290,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
 
         } else if (workstation?._workStatus == 1 && workstation?._workSanitize == 0) {
             runOnUiThread {
-                stato.text = "Occupata e non Igienizzata"
+                stato.text = "Occupata"
             }
             runOnUiThread {
                 message.setVisibility(View.VISIBLE)
@@ -302,9 +302,18 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
                 startOccupation.isEnabled = false
             }
 
+            runOnUiThread {
+                endOccupation.setVisibility(View.VISIBLE)
+            }
+            runOnUiThread {
+                endOccupation.isEnabled = true
+            }
+
+
+
         } else if (workstation?._workStatus == 1 && workstation?._workSanitize == 1) {
             runOnUiThread {
-                stato.text = "Occupata e Igienizzata"
+                stato.text = "Occupata"
             }
             runOnUiThread {
                 message.setVisibility(View.VISIBLE)
@@ -315,6 +324,14 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             runOnUiThread {
                 startOccupation.isEnabled = false
             }
+
+            runOnUiThread {
+                endOccupation.setVisibility(View.VISIBLE)
+            }
+            runOnUiThread {
+                endOccupation.isEnabled = true
+            }
+
         } else if (workstation?._workStatus == 2 && workstation?._workSanitize == 1) {
 
             runOnUiThread { stato.text = "Prenotata e Igienizzata" }
@@ -360,13 +377,6 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
                                 1
                             )?.from
                     }
-                }
-                runOnUiThread {
-                    startOccupation.isEnabled = true
-                }
-
-                runOnUiThread {
-                    startOccupation.setVisibility(View.VISIBLE)
                 }
             } else {
                 evprenotazioni.text =
@@ -422,11 +432,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
                 message1.setVisibility(View.VISIBLE)
             }
         }
-        if (stato.text == "Occupata e non Igienizzata") {
-            runOnUiThread {
-                stato.text = "Occupata e Igienizzata"
-            }
-        }
+
 
         runOnUiThread {
             igienizza.setVisibility(View.INVISIBLE)
@@ -514,7 +520,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         }
         if (stato.text == "Prenotata e Igienizzata") {
             runOnUiThread {
-                stato.text = "Occupata e non Igienizzata"
+                stato.text = "Occupata"
             }
             if (evprenotazioni.text == "Prenotata da te. Attenzione ci sono altre prenotazioni!" || evprenotazioni.text == "Postazione prenotata da te") {
                 runOnUiThread {
@@ -580,7 +586,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         runOnUiThread {
             endOccupation.isEnabled = false
         }
-        if (stato.text == "Occupata e Igienizzata") {
+        if (stato.text == "Occupata") {
             runOnUiThread {
                 stato.text = "Libera e Igienizzata"
             }
