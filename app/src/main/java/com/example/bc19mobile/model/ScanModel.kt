@@ -3,9 +3,7 @@ package  com.example.bc19mobile.model
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.example.bc19mobile.contract.ScanContract
-import com.example.bc19mobile.data.DataBookingToday
-import com.example.bc19mobile.data.DataWorkstation
-import com.example.bc19mobile.data.User
+import com.example.bc19mobile.data.*
 import com.example.bc19mobile.model.service.Service
 import mvp.ljb.kt.model.BaseModel
 import org.json.JSONObject
@@ -24,12 +22,17 @@ class ScanModel : BaseModel(), ScanContract.IModel {
         fun onScanFailure()
         fun onSanitizeSuccess()
         fun onSanitizeFailure()
+        fun onStartOccupationSuccess()
+        fun onStartOccupationFailure()
+        fun onEndOccupationSuccess()
+        fun onEndOccupationFailure()
     }
 
     private var listener: ScanModel.ScanListener? = null
     private val service = Service()
     private var user: User? = null
     private var workstation = DataWorkstation()
+    private var attendence = DataAttendence()
     private var bookingListToday = ArrayList<DataBookingToday>()
 
     override fun setWorkstationListener(listener: ScanListener?) {
@@ -81,7 +84,7 @@ class ScanModel : BaseModel(), ScanContract.IModel {
             workstation._bookedToday = json.getInt("bookedToday")
 
 
-            if(workstation._bookedToday==1) {
+            if (workstation._bookedToday == 1) {
                 val jsonBookingToday = json.getJSONArray("bookings")
                 bookingListToday = ArrayList<DataBookingToday>()
                 for (i in 0 until jsonBookingToday.length()) {
@@ -92,7 +95,7 @@ class ScanModel : BaseModel(), ScanContract.IModel {
                     model.bookerUsername = book.getString("bookerUsername")
                     model.bookerSurname = book.getString("bookerSurname")
                     model.from = book.getString("from")
-                    model.to= book.getString("to")
+                    model.to = book.getString("to")
                     bookingListToday.add(model)
                 }
             }
@@ -109,7 +112,7 @@ class ScanModel : BaseModel(), ScanContract.IModel {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
         val formatted = current.format(formatter)
 
-        Settings.put("data",formatted)
+        Settings.put("data", formatted)
 
         service.request(Settings, "workstation/sanitize", true, ::sanitizeHandle, ::connectionError)
     }
@@ -122,5 +125,61 @@ class ScanModel : BaseModel(), ScanContract.IModel {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun getStartOccupation(tag: String) {
+        val Settings = JSONObject()
+        Settings.put("idworkstation", workstation._workId)
+        Settings.put("iduser", user?.getId())
+        val current = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+        val time = current.format(formatter)
 
+
+        Settings.put("time", time)
+
+        service.request(
+            Settings,
+            "attendences/insert",
+            true,
+            ::startOccupationHandle,
+            ::connectionError
+        )
     }
+
+    fun startOccupationHandle(response: String) {
+        if (response == "1025" || response == "1026") {
+            listener?.onStartOccupationFailure()
+        } else {
+            val json=JSONObject(response)
+            attendence.idAttendence= json.getInt("idattendence")
+            attendence.upperBoundTimeAttendence= json.getString("endtime")
+            listener?.onStartOccupationSuccess()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun getEndOccupation(tag: String) {
+
+        //devo passare id attendence?
+
+        val Settings = JSONObject()
+        Settings.put("idattendence", attendence.idAttendence)
+        val current = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+        val time = current.format(formatter)
+
+        Settings.put("time", time)
+
+        service.request(Settings, "attendences/end", true, ::endOccupationHandle, ::connectionError)
+    }
+
+    fun endOccupationHandle(response: String) {
+        if (response == "1025" || response == "1026") {
+            listener?.onEndOccupationFailure()
+        } else {
+            listener?.onEndOccupationSuccess()
+        }
+    }
+
+
+}
