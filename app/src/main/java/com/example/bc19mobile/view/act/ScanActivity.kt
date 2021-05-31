@@ -28,6 +28,7 @@ import com.example.bc19mobile.presenter.ScanPresenter
 import mvp.ljb.kt.act.BaseMvpActivity
 import java.util.ArrayList
 import androidx.annotation.RequiresApi
+
 /**
  * @Author Kotlin MVP Plugin
  * @Date 2021/05/18
@@ -248,12 +249,10 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         val endOccupation = findViewById<Button>(R.id.endOccupation)
 
         val message = findViewById<TextView>(R.id.message_txt)
-        val message1 = findViewById<TextView>(R.id.message1_txt)
         igienizza.setVisibility(View.INVISIBLE)
         startOccupation.setVisibility(View.INVISIBLE)
         endOccupation.setVisibility(View.INVISIBLE)
         message.setVisibility(View.INVISIBLE)
-        message1.setVisibility(View.INVISIBLE)
 
         val nomepostazione = findViewById<TextView>(R.id.nomepostazione)
         val stato = findViewById<TextView>(R.id.stato)
@@ -265,9 +264,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             runOnUiThread {
                 stato.text = "Libera e Igienizzata"
             }
-            runOnUiThread {
-                message1.setVisibility(View.VISIBLE)
-            }
+
             runOnUiThread {
                 startOccupation.isEnabled = true
             }
@@ -290,10 +287,10 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
 
         } else if (workstation?._workStatus == 1 && workstation?._workSanitize == 0) {
             runOnUiThread {
-                stato.text = "Occupata e non Igienizzata"
+                stato.text = "Occupata"
             }
             runOnUiThread {
-                message.setVisibility(View.VISIBLE)
+                message.setVisibility(View.INVISIBLE)
             }
             runOnUiThread {
                 startOccupation.setVisibility(View.INVISIBLE)
@@ -302,12 +299,20 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
                 startOccupation.isEnabled = false
             }
 
-        } else if (workstation?._workStatus == 1 && workstation?._workSanitize == 1) {
             runOnUiThread {
-                stato.text = "Occupata e Igienizzata"
+                endOccupation.setVisibility(View.VISIBLE)
             }
             runOnUiThread {
-                message.setVisibility(View.VISIBLE)
+                endOccupation.isEnabled = true
+            }
+
+
+        } else if (workstation?._workStatus == 1 && workstation?._workSanitize == 1) {
+            runOnUiThread {
+                stato.text = "Occupata"
+            }
+            runOnUiThread {
+                message.setVisibility(View.INVISIBLE)
             }
             runOnUiThread {
                 startOccupation.setVisibility(View.INVISIBLE)
@@ -315,6 +320,14 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             runOnUiThread {
                 startOccupation.isEnabled = false
             }
+
+            runOnUiThread {
+                endOccupation.setVisibility(View.VISIBLE)
+            }
+            runOnUiThread {
+                endOccupation.isEnabled = true
+            }
+
         } else if (workstation?._workStatus == 2 && workstation?._workSanitize == 1) {
 
             runOnUiThread { stato.text = "Prenotata e Igienizzata" }
@@ -346,33 +359,30 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
 
         if (workstation?._bookedToday == 1) {
             var username: String? = getPresenter().getUser()?.getUsername()
-            if (bookings?.get(0)?.bookerUsername == username) {
+            if (bookings?.get(bookings?.size!! - 1)?.bookerUsername == username) {
                 runOnUiThread {
                     evprenotazioni.text =
-                        "Postazione prenotata da te dalle " + bookings?.get(0)?.from + " fino alle " + bookings?.get(
-                            0
+                        "Postazione prenotata da te dalle " + bookings?.get(
+                            bookings?.size!! - 1
+                        )?.from + " fino alle " + bookings?.get(
+                            bookings?.size!! - 1
                         )?.to
                 }
-                if (bookings?.size!! > 1) {
+                if (bookings?.size!! > 1 && bookings?.get(bookings?.size!! - 2)?.bookerUsername != username) {
                     runOnUiThread {
                         evprenotazioni.text =
                             "Prenotata da te. Attenzione ci sono altre prenotazioni dalle " + bookings?.get(
-                                1
+                                bookings?.size!! - 2
                             )?.from
                     }
                 }
-                runOnUiThread {
-                    startOccupation.isEnabled = true
-                }
-
-                runOnUiThread {
-                    startOccupation.setVisibility(View.VISIBLE)
-                }
             } else {
                 evprenotazioni.text =
-                    "Prenotata da " + bookings?.get(0)?.bookerName + " " + bookings?.get(0)?.bookerSurname + " dalle " + bookings?.get(
-                        0
-                    )?.from + " alle " + bookings?.get(0)?.to
+                    "Prenotata da " + bookings?.get(bookings?.size!! - 1)?.bookerName + " " + bookings?.get(
+                        bookings?.size!! - 1
+                    )?.bookerSurname + " dalle " + bookings?.get(bookings?.size!! - 1)?.from + " alle " + bookings?.get(
+                        bookings?.size!! - 1
+                    )?.to
             }
         }
 
@@ -408,7 +418,6 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             igienizza.isEnabled = true
         }
         val message = findViewById<TextView>(R.id.message_txt)
-        val message1 = findViewById<TextView>(R.id.message1_txt)
         val evprenotazioni = findViewById<TextView>(R.id.evprenotazioni)
         val stato = findViewById<TextView>(R.id.stato)
         if (stato.text == "Libera e non Igienizzata") {
@@ -418,15 +427,9 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             runOnUiThread {
                 message.setVisibility(View.INVISIBLE)
             }
-            runOnUiThread {
-                message1.setVisibility(View.VISIBLE)
-            }
+
         }
-        if (stato.text == "Occupata e non Igienizzata") {
-            runOnUiThread {
-                stato.text = "Occupata e Igienizzata"
-            }
-        }
+
 
         runOnUiThread {
             igienizza.setVisibility(View.INVISIBLE)
@@ -442,9 +445,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
                 runOnUiThread {
                     message.setVisibility(View.INVISIBLE)
                 }
-                runOnUiThread {
-                    message1.setVisibility(View.VISIBLE)
-                }
+
             }
 
         }
@@ -514,7 +515,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         }
         if (stato.text == "Prenotata e Igienizzata") {
             runOnUiThread {
-                stato.text = "Occupata e non Igienizzata"
+                stato.text = "Occupata"
             }
             if (evprenotazioni.text == "Prenotata da te. Attenzione ci sono altre prenotazioni!" || evprenotazioni.text == "Postazione prenotata da te") {
                 runOnUiThread {
@@ -545,13 +546,16 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
     }
 
     override fun callEndOccupationOk() {
-        Toast.makeText(applicationContext, "Fine occupazione, si prega di allontanarsi!", Toast.LENGTH_SHORT)
+        Toast.makeText(
+            applicationContext,
+            "Fine occupazione, si prega di allontanarsi!",
+            Toast.LENGTH_SHORT
+        )
             .show()
 
         val endOccupation = findViewById<Button>(R.id.endOccupation)
         val igienizza = findViewById<Button>(R.id.nav_sanitize)
         val message = findViewById<TextView>(R.id.message_txt)
-        val message1 = findViewById<TextView>(R.id.message1_txt)
 
 
         runOnUiThread {
@@ -580,7 +584,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         runOnUiThread {
             endOccupation.isEnabled = false
         }
-        if (stato.text == "Occupata e Igienizzata") {
+        if (stato.text == "Occupata") {
             runOnUiThread {
                 stato.text = "Libera e Igienizzata"
             }
@@ -588,9 +592,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
                 runOnUiThread {
                     message.setVisibility(View.INVISIBLE)
                 }
-                runOnUiThread {
-                    message1.setVisibility(View.VISIBLE)
-                }
+
             }
 
         }

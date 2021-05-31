@@ -10,7 +10,7 @@ import mvp.ljb.kt.model.BaseModel
  * @Date 2021/05/20
  * @Description input description
  **/
-class BookingFormModel : BaseModel(), BookingFormContract.IModel{
+class BookingFormModel : BaseModel(), BookingFormContract.IModel {
     private var user: User? = null
     private var bookingWorkstation: BookingWorkstation? = null
 
@@ -37,12 +37,14 @@ class BookingFormModel : BaseModel(), BookingFormContract.IModel{
         stanzaTesto: String,
         dipTesto: String
     ) {
-        bookingWorkstation = BookingWorkstation(
-            dataTesto,
-            inizioTesto,
-            fineTesto,
-            stanzaTesto,
-            dipTesto
+        setBookingWorkstation(
+            BookingWorkstation(
+                dataTesto,
+                inizioTesto,
+                fineTesto,
+                stanzaTesto,
+                dipTesto
+            )
         )
     }
 
