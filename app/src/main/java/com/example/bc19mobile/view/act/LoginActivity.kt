@@ -74,7 +74,7 @@ class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract
 
     // A placeholder password validation check
     private fun isPasswordValid(password: String): Boolean {
-        return password.length > 2
+        return password.length > 7
         // To do : da modificare
     }
 
