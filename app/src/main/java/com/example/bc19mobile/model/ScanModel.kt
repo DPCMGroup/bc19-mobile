@@ -163,11 +163,12 @@ class ScanModel : BaseModel(), ScanContract.IModel {
         //devo passare id attendence?
 
         val Settings = JSONObject()
-        Settings.put("idattendence", attendence.idAttendence)
+
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
         val time = current.format(formatter)
-
+        
+        Settings.put("idattendence", attendence.idAttendence)
         Settings.put("time", time)
 
         service.request(Settings, "attendences/end", true, ::endOccupationHandle, ::connectionError)
