@@ -33,7 +33,7 @@ class RoomsDirtyAdapter(var mCtx: Context, var resources: Int, var items: List<D
 
         var mItem: DataDirtyRooms = items[position]
         testolista.text =
-            mItem.roomName.toString() + ": dimensione X: " + mItem.xRoom.toString() + ", dimensione Y: " + mItem.yRoom.toString()
+            mItem.roomName.toString()
 
 
         var igienizzaStanza: Button = view.findViewById(R.id.igienizzastanza)

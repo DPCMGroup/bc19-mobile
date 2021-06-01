@@ -37,7 +37,7 @@ class BookableWorkstationAdapter(
 
         var mItem: DataBookableWorkstation = items[position]
         testolista.text =
-            mItem.workstationName.toString() + " della stanza " + mItem.idRoom.toString() + " di dimensione X: " + mItem.xWorkstation.toString() + " e Y: " + mItem.yWorkstation.toString()
+            "Postazione: " + mItem.workstationName.toString() + "\n Stanza: " + mItem.idRoom.toString()
 
         var prenota: Button = view.findViewById(R.id.prenotapostazione)
         prenota.setOnClickListener(object : View.OnClickListener {
