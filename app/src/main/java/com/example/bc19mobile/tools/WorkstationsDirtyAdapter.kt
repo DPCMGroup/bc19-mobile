@@ -34,7 +34,7 @@ class WorkstationsDirtyAdapter(var mCtx: Context, var resources: Int, var items:
             var mItem: DataDirtyWorkstations = items[position]
             testolista.text =
                 "Postazione: " + mItem.workstationName.toString() + "\n" +
-                        "Stanza: " + mItem.idRoom.toString()
+                        "Stanza: " + mItem.workstationName.toString()
 
             var igienizzaPostazione: Button = view.findViewById(R.id.igienizzapostazione)
             igienizzaPostazione.setOnClickListener(object : View.OnClickListener {
