@@ -384,13 +384,17 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
                         bookings?.size!! - 1
                     )?.to
             }
+            evprenotazioni.setVisibility(View.VISIBLE)
+        }
+        else{
+            evprenotazioni.setVisibility(View.INVISIBLE)
         }
 
 
 
         nomepostazione.setVisibility(View.VISIBLE)
         stato.setVisibility(View.VISIBLE)
-        evprenotazioni.setVisibility(View.VISIBLE)
+
 
         val intro = findViewById<TextView>(R.id.intro_txt)
         intro.setVisibility(View.VISIBLE)
