@@ -26,6 +26,8 @@ class ScanModel : BaseModel(), ScanContract.IModel {
         fun onStartOccupationFailure()
         fun onEndOccupationSuccess()
         fun onEndOccupationFailure()
+        fun onGetTimeToNextSuccess(s: String)
+
     }
 
     private var listener: ScanModel.ScanListener? = null
@@ -125,17 +127,33 @@ class ScanModel : BaseModel(), ScanContract.IModel {
         }
     }
 
+    override fun getTimeToNext(){
+        val Settings = JSONObject()
+        Settings.put("idworkstation", workstation._workId)
+        Settings.put("iduser", user?.getId())
+        service.request(
+            Settings,
+            "booking/gettimetonext",
+            true,
+            ::getTimeToNextHandle,
+            ::connectionError
+        )
+    }
+
+    fun getTimeToNextHandle(response: String) {
+            listener?.onGetTimeToNextSuccess(response)
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun getStartOccupation(tag: String) {
+    override fun getStartOccupation(tag: String, ora: Int) {
         val Settings = JSONObject()
         Settings.put("idworkstation", workstation._workId)
         Settings.put("iduser", user?.getId())
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
         val time = current.format(formatter)
-
-
         Settings.put("time", time)
+        Settings.put("hour",ora)
 
         service.request(
             Settings,
