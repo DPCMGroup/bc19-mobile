@@ -8,7 +8,6 @@ import android.nfc.NdefMessage
 import android.nfc.NdefRecord
 import android.nfc.NfcAdapter
 import android.nfc.Tag
-import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.provider.Settings
@@ -27,7 +26,6 @@ import com.example.bc19mobile.data.User
 import com.example.bc19mobile.presenter.ScanPresenter
 import mvp.ljb.kt.act.BaseMvpActivity
 import java.util.ArrayList
-import androidx.annotation.RequiresApi
 
 /**
  * @Author Kotlin MVP Plugin
@@ -58,11 +56,13 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         }
 
         val startOccupation = findViewById<Button>(R.id.startOccupation)
+        val oraEdit = findViewById<EditText>(R.id.OraEdit)
+
         runOnUiThread {
             startOccupation.isEnabled = false
         }
         startOccupation.setOnClickListener {
-            tagId?.text?.toString()?.let { it2 -> getPresenter().startOccupation(it2) }
+            getPresenter().startOccupation(tagId.text.toString(), oraEdit.text.toString().toInt())
         }
         val endOccupation = findViewById<Button>(R.id.endOccupation)
         runOnUiThread {
@@ -247,10 +247,14 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         val igienizza = findViewById<Button>(R.id.nav_sanitize)
         val startOccupation = findViewById<Button>(R.id.startOccupation)
         val endOccupation = findViewById<Button>(R.id.endOccupation)
+        val oraText = findViewById<TextView>(R.id.OraText)
+        val oraEdit = findViewById<EditText>(R.id.OraEdit)
 
         val message = findViewById<TextView>(R.id.message_txt)
         igienizza.setVisibility(View.INVISIBLE)
         startOccupation.setVisibility(View.INVISIBLE)
+        oraText.setVisibility(View.INVISIBLE)
+        oraEdit.setVisibility(View.INVISIBLE)
         endOccupation.setVisibility(View.INVISIBLE)
         message.setVisibility(View.INVISIBLE)
 
@@ -272,7 +276,12 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             runOnUiThread {
                 startOccupation.setVisibility(View.VISIBLE)
             }
-
+            runOnUiThread {
+                oraEdit.setVisibility(View.VISIBLE)
+            }
+            runOnUiThread {
+                oraText.setVisibility(View.VISIBLE)
+            }
         } else if (workstation?._workStatus == 0 && workstation?._workSanitize == 0) {
             runOnUiThread {
                 stato.text = "Libera e non Igienizzata"
@@ -298,6 +307,12 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             runOnUiThread {
                 startOccupation.isEnabled = false
             }
+            runOnUiThread {
+                oraEdit.setVisibility(View.INVISIBLE)
+            }
+            runOnUiThread {
+                oraText.setVisibility(View.INVISIBLE)
+            }
 
             runOnUiThread {
                 endOccupation.setVisibility(View.VISIBLE)
@@ -320,6 +335,12 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             }
             runOnUiThread {
                 startOccupation.isEnabled = false
+            }
+            runOnUiThread {
+                oraEdit.setVisibility(View.INVISIBLE)
+            }
+            runOnUiThread {
+                oraText.setVisibility(View.INVISIBLE)
             }
 
             runOnUiThread {
@@ -378,6 +399,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
                 runOnUiThread {
                     startOccupation.isEnabled = true
                 }
+
                 if (bookings?.size!! > 1 && bookings?.get(bookings?.size!! - 2)?.bookerUsername != username) {
                     runOnUiThread {
                         evprenotazioni.text =
@@ -427,6 +449,8 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
 
         val igienizza = findViewById<Button>(R.id.nav_sanitize)
         val startOccupation = findViewById<Button>(R.id.startOccupation)
+        val oraText = findViewById<TextView>(R.id.OraText)
+        val oraEdit = findViewById<EditText>(R.id.OraEdit)
 
         runOnUiThread {
             igienizza.isEnabled = true
@@ -481,6 +505,12 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         runOnUiThread {
             startOccupation.setVisibility(View.VISIBLE)
         }
+        runOnUiThread {
+            oraEdit.setVisibility(View.VISIBLE)
+        }
+        runOnUiThread {
+            oraText.setVisibility(View.VISIBLE)
+        }
 
     }
 
@@ -496,6 +526,8 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
 
         val startOccupation = findViewById<Button>(R.id.startOccupation)
         val endOccupation = findViewById<Button>(R.id.endOccupation)
+        val oraText = findViewById<TextView>(R.id.OraText)
+        val oraEdit = findViewById<EditText>(R.id.OraEdit)
 
         runOnUiThread {
             startOccupation.isEnabled = true
@@ -527,6 +559,12 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         runOnUiThread {
             startOccupation.isEnabled = false
         }
+        runOnUiThread {
+            oraEdit.setVisibility(View.INVISIBLE)
+        }
+        runOnUiThread {
+            oraText.setVisibility(View.INVISIBLE)
+        }
         if (stato.text == "Prenotata e Igienizzata") {
             runOnUiThread {
                 stato.text = "Occupata"
@@ -544,6 +582,12 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         }
         runOnUiThread {
             startOccupation.isEnabled = false
+        }
+        runOnUiThread {
+            oraEdit.setVisibility(View.INVISIBLE)
+        }
+        runOnUiThread {
+            oraText.setVisibility(View.INVISIBLE)
         }
         runOnUiThread {
             endOccupation.isEnabled = true

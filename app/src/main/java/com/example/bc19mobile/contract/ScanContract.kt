@@ -1,12 +1,8 @@
 package com.example.bc19mobile.contract
 
-import android.app.Activity
-import android.view.Menu
-import com.example.bc19mobile.data.DataBooking
 import com.example.bc19mobile.data.DataBookingToday
 import com.example.bc19mobile.data.DataWorkstation
 import com.example.bc19mobile.data.User
-import com.example.bc19mobile.model.BookingModel
 import com.example.bc19mobile.model.ScanModel
 import mvp.ljb.kt.contract.IModelContract
 import mvp.ljb.kt.contract.IPresenterContract
@@ -36,7 +32,7 @@ interface ScanContract {
         fun getUser(): User?
         fun scanTagNFC(tag: String)
         fun makeSanitize(tag: String)
-        fun startOccupation(tag: String)
+        fun startOccupation(tag: String, ora: Int)
         fun endOccupation(tag: String)
     }
 
@@ -47,7 +43,7 @@ interface ScanContract {
         fun getUser(): User?
         fun getStatus(tag:String)
         fun getSanitize(tag: String)
-        fun getStartOccupation(tag: String)
+        fun getStartOccupation(tag: String, ora:Int)
         fun getEndOccupation(tag: String)
         fun getBookingListToday(): ArrayList<DataBookingToday>?
         fun setBookingListener(listener: ScanModel.ScanListener?)

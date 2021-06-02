@@ -126,16 +126,15 @@ class ScanModel : BaseModel(), ScanContract.IModel {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun getStartOccupation(tag: String) {
+    override fun getStartOccupation(tag: String, ora: Int) {
         val Settings = JSONObject()
         Settings.put("idworkstation", workstation._workId)
         Settings.put("iduser", user?.getId())
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
         val time = current.format(formatter)
-
-
         Settings.put("time", time)
+        Settings.put("hour",ora)
 
         service.request(
             Settings,

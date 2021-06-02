@@ -3,9 +3,7 @@ package com.example.bc19mobile.presenter
 import mvp.ljb.kt.presenter.BaseMvpPresenter
 import com.example.bc19mobile.contract.ScanContract
 import com.example.bc19mobile.data.User
-import com.example.bc19mobile.model.BookingModel
 import com.example.bc19mobile.model.ScanModel
-import java.time.LocalDateTime
 
 /**
  * @Author Kotlin MVP Plugin
@@ -67,8 +65,8 @@ class ScanPresenter : BaseMvpPresenter<ScanContract.IView, ScanContract.IModel>(
         getModel().getSanitize(tag)
     }
 
-    override fun startOccupation(tag: String) {
-        getModel().getStartOccupation(tag)
+    override fun startOccupation(tag: String, ora: Int) {
+        getModel().getStartOccupation(tag, ora)
     }
 
     override fun endOccupation(tag: String) {
