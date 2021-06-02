@@ -308,6 +308,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
 
 
         } else if (workstation?._workStatus == 1 && workstation?._workSanitize == 1) {
+            var username: String? = getPresenter().getUser()?.getUsername()
             runOnUiThread {
                 stato.text = "Occupata"
             }
@@ -367,6 +368,15 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
                         )?.from + " fino alle " + bookings?.get(
                             bookings?.size!! - 1
                         )?.to
+                }
+                runOnUiThread {
+                    message.setVisibility(View.INVISIBLE)
+                }
+                runOnUiThread {
+                    startOccupation.setVisibility(View.VISIBLE)
+                }
+                runOnUiThread {
+                    startOccupation.isEnabled = true
                 }
                 if (bookings?.size!! > 1 && bookings?.get(bookings?.size!! - 2)?.bookerUsername != username) {
                     runOnUiThread {
