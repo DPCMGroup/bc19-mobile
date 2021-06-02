@@ -46,6 +46,10 @@ class ScanPresenter : BaseMvpPresenter<ScanContract.IView, ScanContract.IModel>(
             override fun onEndOccupationFailure() {
                 getMvpView().callEndOccupationError()
             }
+
+            override fun onGetTimeToNextSuccess(s: String) {
+                getMvpView().CallGetTimeToNextUpdate(s)
+            }
         })
     }
 
@@ -73,4 +77,7 @@ class ScanPresenter : BaseMvpPresenter<ScanContract.IView, ScanContract.IModel>(
         getModel().getEndOccupation(tag)
     }
 
+    override fun getTimetoNext() {
+        getModel().getTimeToNext()
+    }
 }

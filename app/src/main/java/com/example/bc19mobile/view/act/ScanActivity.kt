@@ -8,6 +8,7 @@ import android.nfc.NdefMessage
 import android.nfc.NdefRecord
 import android.nfc.NfcAdapter
 import android.nfc.Tag
+import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.provider.Settings
@@ -15,6 +16,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import com.example.bc19mobile.NFC.NdefMessageParser
 import com.example.bc19mobile.NFC.ParsedNdefRecord
@@ -25,6 +27,8 @@ import com.example.bc19mobile.data.DataWorkstation
 import com.example.bc19mobile.data.User
 import com.example.bc19mobile.presenter.ScanPresenter
 import mvp.ljb.kt.act.BaseMvpActivity
+import java.time.LocalDateTime
+import java.time.LocalTime
 import java.util.ArrayList
 
 /**
@@ -46,6 +50,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
 
 
         val tagId = findViewById<TextView>(R.id.tagId_txt)
+        val oraEdit = findViewById<EditText>(R.id.OraEdit)
         val igienizza = findViewById<Button>(R.id.nav_sanitize)
         runOnUiThread {
             igienizza.isEnabled = false
@@ -56,13 +61,13 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         }
 
         val startOccupation = findViewById<Button>(R.id.startOccupation)
-        val oraEdit = findViewById<EditText>(R.id.OraEdit)
+
 
         runOnUiThread {
             startOccupation.isEnabled = false
         }
         startOccupation.setOnClickListener {
-            getPresenter().startOccupation(tagId.text.toString(), oraEdit.text.toString().toInt())
+            getPresenter().getTimetoNext()
         }
         val endOccupation = findViewById<Button>(R.id.endOccupation)
         runOnUiThread {
@@ -668,6 +673,28 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             igienizza.setVisibility(View.VISIBLE)
         }
 
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun CallGetTimeToNextUpdate(s: String) {
+        val tagId = findViewById<TextView>(R.id.tagId_txt)
+        val oraEdit = findViewById<EditText>(R.id.OraEdit)
+        var hours: Int = 0
+        if(s.toInt()==-1){
+            val current = LocalDateTime.now()
+            hours=23-(current.hour+1)
+        }
+        else if(s.toInt()>0){
+            hours=s.toInt()
+        }
+        if(oraEdit.text.toString().toInt()<=hours) {
+            getPresenter().startOccupation(tagId.text.toString(), oraEdit.text.toString().toInt())
+        }
+        else{
+            Toast.makeText(applicationContext, "Puoi inserire massimo "+hours +" ore!", Toast.LENGTH_SHORT)
+                .show()
+
+        }
     }
 }
 

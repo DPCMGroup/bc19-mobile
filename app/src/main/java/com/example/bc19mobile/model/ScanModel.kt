@@ -26,6 +26,8 @@ class ScanModel : BaseModel(), ScanContract.IModel {
         fun onStartOccupationFailure()
         fun onEndOccupationSuccess()
         fun onEndOccupationFailure()
+        fun onGetTimeToNextSuccess(s: String)
+
     }
 
     private var listener: ScanModel.ScanListener? = null
@@ -123,6 +125,23 @@ class ScanModel : BaseModel(), ScanContract.IModel {
         } else {
             listener?.onSanitizeFailure()
         }
+    }
+
+    override fun getTimeToNext(){
+        val Settings = JSONObject()
+        Settings.put("idworkstation", workstation._workId)
+        Settings.put("iduser", user?.getId())
+        service.request(
+            Settings,
+            "booking/gettimetonext",
+            true,
+            ::getTimeToNextHandle,
+            ::connectionError
+        )
+    }
+
+    fun getTimeToNextHandle(response: String) {
+            listener?.onGetTimeToNextSuccess(response)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

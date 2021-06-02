@@ -25,6 +25,7 @@ interface ScanContract {
         fun callStartOccupationOk()
         fun callEndOccupationError()
         fun callEndOccupationOk()
+        fun CallGetTimeToNextUpdate(s: String)
     }
 
     interface IPresenter : IPresenterContract{
@@ -34,6 +35,7 @@ interface ScanContract {
         fun makeSanitize(tag: String)
         fun startOccupation(tag: String, ora: Int)
         fun endOccupation(tag: String)
+        fun getTimetoNext()
     }
 
     interface IModel : IModelContract{
@@ -47,6 +49,7 @@ interface ScanContract {
         fun getEndOccupation(tag: String)
         fun getBookingListToday(): ArrayList<DataBookingToday>?
         fun setBookingListener(listener: ScanModel.ScanListener?)
+        fun getTimeToNext()
     }
 
 
