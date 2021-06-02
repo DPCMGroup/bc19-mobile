@@ -358,10 +358,10 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         } else if (workstation?._workStatus == 2 && workstation?._workSanitize == 1) {
 
             runOnUiThread { stato.text = "Prenotata e Igienizzata" }
-            runOnUiThread { message.setVisibility(View.VISIBLE) }
+            runOnUiThread { message.setVisibility(View.INVISIBLE) }
         } else if (workstation?._workStatus == 2 && workstation?._workSanitize == 0) {
             runOnUiThread { stato.text = "Prenotata e non Igienizzata" }
-            runOnUiThread { message.setVisibility(View.VISIBLE) }
+            runOnUiThread { message.setVisibility(View.INVISIBLE) }
             runOnUiThread {
                 igienizza.isEnabled = true
             }
@@ -677,15 +677,16 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun CallGetTimeToNextUpdate(s: String) {
+        val s2= s.replace(".0","")
         val tagId = findViewById<TextView>(R.id.tagId_txt)
         val oraEdit = findViewById<EditText>(R.id.OraEdit)
         var hours: Int = 0
-        if(s.toInt()==-1){
+        if(s2.toInt()==-1){
             val current = LocalDateTime.now()
             hours=23-(current.hour+1)
         }
-        else if(s.toInt()>0){
-            hours=s.toInt()
+        else if(s2.toInt()>0){
+            hours=s2.toInt()
         }
         if(oraEdit.text.toString().toInt()<=hours) {
             getPresenter().startOccupation(tagId.text.toString(), oraEdit.text.toString().toInt())
