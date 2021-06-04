@@ -281,6 +281,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             runOnUiThread {
                 startOccupation.setVisibility(View.VISIBLE)
             }
+
             runOnUiThread {
                 oraEdit.setVisibility(View.VISIBLE)
             }
@@ -394,12 +395,6 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
                         )?.from + " fino alle " + bookings?.get(
                             bookings?.size!! - 1
                         )?.to
-                }
-                runOnUiThread {
-                    oraEdit.setVisibility(View.VISIBLE)
-                }
-                runOnUiThread {
-                    oraText.setVisibility(View.VISIBLE)
                 }
                 runOnUiThread {
                     message.setVisibility(View.INVISIBLE)
@@ -692,12 +687,29 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         } else if (s2.toInt() > 0) {
             hours = s2.toInt()
         }
-        if (oraEdit.text.toString().toInt() <= hours) {
-            getPresenter().startOccupation(tagId.text.toString(), oraEdit.text.toString().toInt())
-        } else {
+        else if(s2.toInt()== -3){
+            getPresenter().startOccupation(tagId.text.toString(), 0)
+        }
+        if(oraEdit.text.toString() != "") {
+            if (oraEdit.text.toString().toInt() <= hours && s2.toInt() != -3) {
+                getPresenter().startOccupation(
+                    tagId.text.toString(),
+                    oraEdit.text.toString().toInt()
+                )
+            } else {
+                Toast.makeText(
+                    applicationContext,
+                    "Puoi inserire massimo " + hours + " ore!",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+
+            }
+        }
+        else {
             Toast.makeText(
                 applicationContext,
-                "Puoi inserire massimo " + hours + " ore!",
+                "Non hai inserito nessun valore!",
                 Toast.LENGTH_SHORT
             )
                 .show()
