@@ -41,7 +41,7 @@ class LoginModel : BaseModel(), LoginContract.IModel {
     }
 
     fun connectionError(e: IOException) {
-        //gestisto gli errori con connessione
+        //manage connection error
     }
 
     fun loginHandle(response: String) {

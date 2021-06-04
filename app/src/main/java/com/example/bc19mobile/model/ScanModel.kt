@@ -68,7 +68,7 @@ class ScanModel : BaseModel(), ScanContract.IModel {
     }
 
     fun connectionError(ioException: IOException) {
-        //gestisco gli errori con connessione
+        //manage connection error
     }
 
     fun scanHandle(response: String) {
@@ -177,9 +177,6 @@ class ScanModel : BaseModel(), ScanContract.IModel {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun getEndOccupation(tag: String) {
-
-        //devo passare id attendence?
-
         val Settings = JSONObject()
 
         val current = LocalDateTime.now()

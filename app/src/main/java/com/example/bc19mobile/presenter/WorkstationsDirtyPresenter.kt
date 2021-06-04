@@ -22,9 +22,6 @@ class WorkstationsDirtyPresenter :
         getModel().setWorkstationsDirtyListener(object :
             WorkstationsDirtyModel.WorkstationsDirtyListener {
             override fun onWorkstationsSuccess() {
-                //qui siamo nel mainThread
-                //chiamo la vista cambio pannello e faccio le cose che devo fare
-
                 getMvpView().updateWorkstationsView(getModel().getDirtyWorkstations())
             }
 

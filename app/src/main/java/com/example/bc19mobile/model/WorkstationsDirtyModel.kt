@@ -61,7 +61,7 @@ class WorkstationsDirtyModel : BaseModel(), WorkstationsDirtyContract.IModel {
     }
 
     private fun connectionError(ioException: IOException) {
-        //gestisco gli errori con connessione
+        //manage connection error
     }
 
     private fun WorkstationsHandle(response: String) {

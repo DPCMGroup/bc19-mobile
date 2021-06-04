@@ -62,7 +62,7 @@ class BookingWorkstationModel : BaseModel(), BookingWorkstationContract.IModel{
     }
 
     fun connectionError(e: IOException) {
-        //gestisto gli errori con connessione
+        //manage connection error
     }
 
     fun bookableHandle(response: String) {

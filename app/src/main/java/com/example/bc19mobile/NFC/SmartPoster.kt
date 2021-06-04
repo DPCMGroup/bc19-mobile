@@ -1,10 +1,5 @@
 package com.example.bc19mobile.NFC
 
-//import com.google.common.collect.ImmutableMap
-//import com.google.common.collect.Iterables
-//class com.example.bc19mobile.SmartPoster {
-//}
-
 import android.nfc.FormatException
 import android.nfc.NdefMessage
 import android.nfc.NdefRecord

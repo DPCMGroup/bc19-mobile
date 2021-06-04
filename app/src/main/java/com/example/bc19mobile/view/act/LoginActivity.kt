@@ -66,7 +66,6 @@ class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract
     private fun isUserNameValid(username: String): Boolean {
         return if (username.contains('@')) {
             Patterns.EMAIL_ADDRESS.matcher(username).matches()
-            // To do : da verificare
         } else {
             username.isNotBlank()
         }
@@ -75,7 +74,6 @@ class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract
     // A placeholder password validation check
     private fun isPasswordValid(password: String): Boolean {
         return password.length > 7
-        // To do : da modificare
     }
 
     override fun callScan(user: User?) {

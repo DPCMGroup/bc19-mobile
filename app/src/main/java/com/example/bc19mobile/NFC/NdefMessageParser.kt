@@ -7,7 +7,6 @@ import java.util.*
 
 object NdefMessageParser {
     fun parse(message: NdefMessage): List<ParsedNdefRecord> {
-        //return com.example.tagnfckotlin.parser.NdefMessageParser.getRecords(message.records)
         return getRecords(message.records)
 
     }

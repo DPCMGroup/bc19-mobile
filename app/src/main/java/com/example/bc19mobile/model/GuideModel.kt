@@ -21,7 +21,6 @@ class GuideModel : BaseModel(), GuideContract.IModel {
         val userType : Int = user?.getType() ?: -1
         var guideName = String()
 
-        //TO DO differenziare le guide a seconda della tipologia utente
         if (userType == 1) {
             guideName = "guida_utente.pdf"
         }

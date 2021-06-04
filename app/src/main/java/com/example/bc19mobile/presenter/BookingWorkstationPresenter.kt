@@ -19,9 +19,6 @@ class BookingWorkstationPresenter : BaseMvpPresenter<BookingWorkstationContract.
         super.onCreate()
         getModel().setBookingWorkstationListener(object : BookingWorkstationModel.BookingWorkstationListener {
             override fun onBookingWorkstationSuccess() {
-                //qui siamo nel mainThread
-                //chiamo la vista cambio pannello e faccio le cose che devo fare
-
                 getMvpView().updateWorkstationsBookableView(getModel().getBookableWorkstations())
             }
 

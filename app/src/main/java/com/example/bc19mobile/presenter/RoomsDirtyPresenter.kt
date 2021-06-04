@@ -18,9 +18,6 @@ class RoomsDirtyPresenter : BaseMvpPresenter<RoomsDirtyContract.IView, RoomsDirt
         super.onCreate()
         getModel().setRoomsDirtyListener(object : RoomsDirtyModel.RoomsDirtyListener {
             override fun onRoomsSuccess() {
-                //qui siamo nel mainThread
-                //chiamo la vista cambio pannello e faccio le cose che devo fare
-
                   getMvpView().updateRoomsView(getModel().getDirtyRooms())
             }
             override fun onRoomsFailure() {
@@ -28,9 +25,6 @@ class RoomsDirtyPresenter : BaseMvpPresenter<RoomsDirtyContract.IView, RoomsDirt
             }
 
             override fun onSanitizeRoomSuccess() {
-                //qui siamo nel mainThread
-                //chiamo la vista cambio pannello e faccio le cose che devo fare
-
                 getMvpView().updateRoomsSanitizeView()
             }
             override fun onSanitizeRoomFailure() {

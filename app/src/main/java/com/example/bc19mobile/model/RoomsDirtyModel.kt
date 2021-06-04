@@ -59,7 +59,7 @@ class RoomsDirtyModel : BaseModel(), RoomsDirtyContract.IModel {
     }
 
     private fun connectionError(ioException: IOException) {
-        //gestisco gli errori con connessione
+        //manage connection error
     }
 
     private fun RoomsHandle(response: String) {

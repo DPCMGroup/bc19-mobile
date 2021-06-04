@@ -1,6 +1,5 @@
 package com.example.bc19mobile.NFC
 
-//import ParsedNdefRecord
 import android.annotation.SuppressLint
 import android.nfc.NdefRecord
 import com.google.common.base.Preconditions
