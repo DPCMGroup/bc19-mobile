@@ -396,6 +396,12 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
                         )?.to
                 }
                 runOnUiThread {
+                    oraEdit.setVisibility(View.VISIBLE)
+                }
+                runOnUiThread {
+                    oraText.setVisibility(View.VISIBLE)
+                }
+                runOnUiThread {
                     message.setVisibility(View.INVISIBLE)
                 }
                 runOnUiThread {
@@ -422,8 +428,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
                     )?.to
             }
             evprenotazioni.setVisibility(View.VISIBLE)
-        }
-        else{
+        } else {
             evprenotazioni.setVisibility(View.INVISIBLE)
         }
 
@@ -677,22 +682,24 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun CallGetTimeToNextUpdate(s: String) {
-        val s2= s.replace(".0","")
+        val s2 = s.replace(".0", "")
         val tagId = findViewById<TextView>(R.id.tagId_txt)
         val oraEdit = findViewById<EditText>(R.id.OraEdit)
         var hours: Int = 0
-        if(s2.toInt()==-1){
+        if (s2.toInt() == -1) {
             val current = LocalDateTime.now()
-            hours=23-(current.hour+1)
+            hours = 23 - (current.hour + 1)
+        } else if (s2.toInt() > 0) {
+            hours = s2.toInt()
         }
-        else if(s2.toInt()>0){
-            hours=s2.toInt()
-        }
-        if(oraEdit.text.toString().toInt()<=hours) {
+        if (oraEdit.text.toString().toInt() <= hours) {
             getPresenter().startOccupation(tagId.text.toString(), oraEdit.text.toString().toInt())
-        }
-        else{
-            Toast.makeText(applicationContext, "Puoi inserire massimo "+hours +" ore!", Toast.LENGTH_SHORT)
+        } else {
+            Toast.makeText(
+                applicationContext,
+                "Puoi inserire massimo " + hours + " ore!",
+                Toast.LENGTH_SHORT
+            )
                 .show()
 
         }
