@@ -399,7 +399,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
                     oraEdit.setVisibility(View.VISIBLE)
                 }
                 runOnUiThread {
-                    oraEdit.isEnabled = true
+                    oraText.setVisibility(View.VISIBLE)
                 }
                 runOnUiThread {
                     message.setVisibility(View.INVISIBLE)
