@@ -8,13 +8,15 @@ import java.io.IOException
 
 class Service {
 
-    private val url = "http://192.168.210.35:8000/"
+
+    private val url = "http://dpcm2077.duckdns.org:8000/"
+
 
     private val client = OkHttpClient()
 
 
     fun request(
-        json: JSONObject,
+        json: JSONObject?,
         path: String,
         isPost: Boolean,
         okThen: (String) -> Unit,
@@ -51,7 +53,8 @@ class Service {
             }
 
             override fun onResponse(call: Call, response: Response): Unit {
-                mainHandler.post(Runnable { okThen(response.body()!!.string()) })
+                var str=response.body()!!.string()
+                mainHandler.post(Runnable { okThen(str) })
             }
         })
     }

@@ -1,1 +1,2 @@
 # bc19-mobile
+[![Android CI](https://github.com/DPCMGroup/bc19-mobile/actions/workflows/android.yml/badge.svg)](https://github.com/DPCMGroup/bc19-mobile/actions/workflows/android.yml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DPCMGroup_bc19-mobile&metric=alert_status)](https://sonarcloud.io/dashboard?id=DPCMGroup_bc19-mobile) [![Coverage Status](https://coveralls.io/repos/github/DPCMGroup/bc19-mobile/badge.svg)](https://coveralls.io/github/DPCMGroup/bc19-mobile)

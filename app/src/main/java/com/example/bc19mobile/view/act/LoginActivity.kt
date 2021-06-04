@@ -1,16 +1,18 @@
 package com.example.bc19mobile.view.act
 
+import android.annotation.SuppressLint
+import android.os.Bundle
 import android.util.Patterns
+import android.view.Menu
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
+import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import com.example.bc19mobile.contract.LoginContract
 import com.example.bc19mobile.presenter.LoginPresenter
-import mvp.ljb.kt.act.BaseMvpActivity
 import com.example.bc19mobile.R
+import com.example.bc19mobile.data.User
+import mvp.ljb.kt.act.BaseMvpActivity
 
 /**
  * @Author Kotlin MVP Plugin
@@ -36,6 +38,7 @@ class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract
         loginBtn = findViewById<Button>(R.id.login)
         loading = findViewById<ProgressBar>(R.id.loading)
         errore = findViewById<TextView>(R.id.errore)
+        setActionBar(findViewById<Toolbar>(R.id.toolbar))
     }
 
     override fun initData() {
@@ -63,7 +66,6 @@ class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract
     private fun isUserNameValid(username: String): Boolean {
         return if (username.contains('@')) {
             Patterns.EMAIL_ADDRESS.matcher(username).matches()
-            // To do : da verificare
         } else {
             username.isNotBlank()
         }
@@ -71,9 +73,31 @@ class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract
 
     // A placeholder password validation check
     private fun isPasswordValid(password: String): Boolean {
-        return password.length > 2
-        // To do : da modificare
+        return password.length > 7
     }
 
+    override fun callScan(user: User?) {
+        if(user?.getType()==1){
+        goActivity(
+            ScanActivity::class.java, bundleOf(
+                "user" to user
+
+            )
+
+        )
+            Toast.makeText(applicationContext, "Benvenuto " + username?.text.toString() + "!", Toast.LENGTH_SHORT).show()}
+        else if(user?.getType()==2){
+            goActivity(
+                CleanActivity::class.java, bundleOf(
+                    "user" to user
+                )
+            )
+            Toast.makeText(applicationContext, "Benvenuto " + username?.text.toString() + "!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun callError() {
+        errore?.setVisibility(View.VISIBLE)
+    }
 
 }

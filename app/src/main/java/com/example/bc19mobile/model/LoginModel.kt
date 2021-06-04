@@ -16,7 +16,8 @@ import java.io.IOException
 class LoginModel : BaseModel(), LoginContract.IModel {
 
     interface LoginListener {
-        fun onLoginSuccess(): Void
+        fun onLoginSuccess()
+        fun onLoginFailure()
     }
 
     private var listener: LoginListener? = null
@@ -40,12 +41,12 @@ class LoginModel : BaseModel(), LoginContract.IModel {
     }
 
     fun connectionError(e: IOException) {
-        //gestisto gli errori con connessione
+        //manage connection error
     }
 
     fun loginHandle(response: String) {
-        if (response == "\"No user found\"") {
-
+        if (response == "16386") {
+            listener?.onLoginFailure()
         } else {
             val restJson = JSONObject(response)
 
