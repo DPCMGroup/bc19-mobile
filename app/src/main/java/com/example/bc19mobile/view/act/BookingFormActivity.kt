@@ -7,16 +7,15 @@ import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.*
 import androidx.core.os.bundleOf
 import com.example.bc19mobile.contract.BookingFormContract
 import com.example.bc19mobile.presenter.BookingFormPresenter
 import mvp.ljb.kt.act.BaseMvpActivity
 import com.example.bc19mobile.R
-import com.example.bc19mobile.data.DataDirtyWorkstations
+import com.example.bc19mobile.data.DataDirtyRooms
 import com.example.bc19mobile.data.User
-import com.example.bc19mobile.tools.WorkstationsDirtyAdapter
+
 import java.text.SimpleDateFormat
 
 /**
@@ -24,12 +23,16 @@ import java.text.SimpleDateFormat
  * @Date 2021/05/20
  * @Description input description
  **/
+@Suppress("DEPRECATION")
 class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
     BookingFormContract.IView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getPresenter().saveUser(intent.extras?.get("user") as User)
+
+        getPresenter().getRooms()
+
         val SelezionaData = findViewById<ImageButton>(R.id.SelezionaData)
         val dataTesto = findViewById<TextView>(R.id.dataTesto)
 
@@ -45,7 +48,7 @@ class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                     val monthOfYear = monthOfYear + 1
                     // Display Selected date in textbox
-                    dataTesto.setText("" + year  + "-" + monthOfYear + "-" + dayOfMonth)
+                    dataTesto.setText("" + year + "-" + monthOfYear + "-" + dayOfMonth)
 
                 },
                 year,
@@ -93,13 +96,21 @@ class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
                 true
             ).show()
         }
-        val stanzaTesto = findViewById<EditText>(R.id.stanzaTesto)
+        val spinner = findViewById<Spinner>(R.id.spinner)
         val dipTesto = findViewById<EditText>(R.id.dipTesto)
         val cerca = findViewById<Button>(R.id.cerca)
 
+
         cerca.setOnClickListener {
-            getPresenter().saveBookingWorkstation(dataTesto.text.toString(),inizioTesto.text.toString(),fineTesto.text.toString(),stanzaTesto.text.toString(),dipTesto.text.toString())
-            var bookingWorkstation =getPresenter().getBookingWorkstation()
+            val stanzaTesto: String= spinner.getSelectedItem().toString()
+            getPresenter().saveBookingWorkstation(
+                dataTesto.text.toString(),
+                inizioTesto.text.toString(),
+                fineTesto.text.toString(),
+                stanzaTesto,
+                dipTesto.text.toString()
+            )
+            var bookingWorkstation = getPresenter().getBookingWorkstation()
             var user = getPresenter().getUser()
             goActivity(
                 BookingWorkstationActivity::class.java, bundleOf(
@@ -168,5 +179,36 @@ class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
         setActionBar(findViewById<Toolbar>(R.id.toolbar))
     }
 
+    override fun callErrorRooms() {
+        Toast.makeText(
+            applicationContext,
+            "Errore!",
+            Toast.LENGTH_SHORT
+        )
+            .show()
+    }
+    fun append(arr: Array<String?>, element: String): Array<String?> {
+        val list: MutableList<String?> = arr.toMutableList()
+        list.add(element)
+        return list.toTypedArray()
+    }
 
+    override fun updateRoomsView(rooms: ArrayList<DataDirtyRooms>?) {
+        val size: Int? = rooms?.size
+                var languages = arrayOf(rooms?.get(0)?.roomName)
+                for (i in 1..size!!-1) {
+                    languages = rooms.get(i).roomName?.let { append(languages, it) }!!
+                }
+
+
+        val spinner = findViewById<Spinner>(R.id.spinner)
+        if (spinner != null) {
+            val adapter = ArrayAdapter(
+                this,
+                android.R.layout.simple_spinner_item, languages
+            )
+            spinner.adapter = adapter
+        }
+
+    }
 }

@@ -5,6 +5,7 @@ import com.example.bc19mobile.contract.BookingFormContract
 import com.example.bc19mobile.data.BookingWorkstation
 import com.example.bc19mobile.data.User
 import com.example.bc19mobile.model.BookingFormModel
+import com.example.bc19mobile.model.RoomsDirtyModel
 
 /**
  * @Author Kotlin MVP Plugin
@@ -14,6 +15,18 @@ import com.example.bc19mobile.model.BookingFormModel
 class BookingFormPresenter : BaseMvpPresenter<BookingFormContract.IView, BookingFormContract.IModel>(), BookingFormContract.IPresenter{
 
     override fun registerModel() = BookingFormModel::class.java
+    override fun onCreate() {
+        super.onCreate()
+        getModel().setRoomsListener(object : BookingFormModel.RoomsListener {
+            override fun onRoomsSuccess() {
+                getMvpView().updateRoomsView(getModel().getRoomsList())
+            }
+
+            override fun onRoomsFailure() {
+                getMvpView().callErrorRooms()
+            }
+        })
+    }
 
     override fun saveUser(user: User?) {
         getModel().setUser(user)
@@ -35,6 +48,10 @@ class BookingFormPresenter : BaseMvpPresenter<BookingFormContract.IView, Booking
 
     override fun getBookingWorkstation(): BookingWorkstation? {
         return getModel().getBookingWorkstation()
+    }
+
+    override fun getRooms() {
+        getModel().getRooms()
     }
 
 }

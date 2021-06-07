@@ -55,14 +55,13 @@
         android:background="@color/purple_200"
         android:text="Cerca" />
 
-    <EditText
-        android:id="@+id/stanzaTesto"
+
+    <Spinner
+        android:id="@+id/spinner"
         android:layout_width="238dp"
         android:layout_height="40dp"
         android:layout_centerHorizontal="true"
-
-        android:layout_marginTop="355dp"
-        android:singleLine="true" />
+        android:layout_marginTop="355dp"/>
 
     <EditText
         android:id="@+id/dipTesto"
@@ -177,6 +176,8 @@
             android:text="Ora Fine:"
             android:textSize="20sp" />
 
+
+
         <EditText
             android:id="@+id/fineTesto"
             android:layout_width="104dp"
@@ -198,5 +199,6 @@
             android:background="@color/purple_200"
             android:src="@drawable/ic_ora"
              />
+
     </LinearLayout>
 </RelativeLayout>
