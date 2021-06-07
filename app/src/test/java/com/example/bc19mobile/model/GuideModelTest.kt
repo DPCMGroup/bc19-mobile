@@ -9,8 +9,8 @@ class GuideModelTest {
 
 
     val guideModel = GuideModel()
-    var employee = User(0, "employee", "employee", 1)
-    var cleanWorker = User(0, "cleanWorker", "cleanWorker", 2)
+    var employee = User(0, "employee", "employee", 1,-1)
+    var cleanWorker = User(0, "cleanWorker", "cleanWorker", 2,-1)
 
     @Test
     fun getEmployeeGuide() {

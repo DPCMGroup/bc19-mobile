@@ -6,7 +6,7 @@ import org.junit.Assert.*
 
 class UserTest {
 
-    var employee = User(0, "employee", "employee", 1)
+    var employee = User(0, "employee", "employee", 1,-1)
 
     @Test
     fun getIdUser() {
