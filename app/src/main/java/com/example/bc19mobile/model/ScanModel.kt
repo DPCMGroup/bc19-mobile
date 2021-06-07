@@ -170,6 +170,7 @@ class ScanModel : BaseModel(), ScanContract.IModel {
         } else {
             val json=JSONObject(response)
             attendence.idAttendence= json.getInt("idattendence")
+            user?.setOccupation(json.getInt("idattendence"))
             attendence.upperBoundTimeAttendence= json.getString("endtime")
             listener?.onStartOccupationSuccess()
         }
@@ -183,9 +184,9 @@ class ScanModel : BaseModel(), ScanContract.IModel {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
         val time = current.format(formatter)
         
-        Settings.put("idattendence", attendence.idAttendence)
+        Settings.put("idattendence", user?.getOccupation())
         Settings.put("time", time)
-
+        user?.setOccupation(-1)
         service.request(Settings, "attendences/end", true, ::endOccupationHandle, ::connectionError)
     }
 

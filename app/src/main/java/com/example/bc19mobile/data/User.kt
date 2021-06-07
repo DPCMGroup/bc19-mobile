@@ -9,19 +9,22 @@ class User() : Parcelable {
     private var username: String = ""
     private var password: String = ""
     private var type: Int = -1
+    private var occupation: Int = -1
 
     constructor(parcel: Parcel) : this() {
         id = parcel.readInt()
         username = parcel.readString()!!
         password = parcel.readString()!!
         type = parcel.readInt()
+        occupation = parcel.readInt()
     }
 
-    constructor(id: Int, username: String, password: String, type: Int) : this(){
+    constructor(id: Int, username: String, password: String, type: Int, occupation: Int) : this() {
         this.id = id
         this.username = username
         this.password = password
         this.type = type
+        this.occupation = occupation
     }
 
     fun getId(): Int {
@@ -40,11 +43,20 @@ class User() : Parcelable {
         return type
     }
 
+    fun getOccupation(): Int {
+        return occupation
+    }
+
+    fun setOccupation(id: Int){
+        this.occupation = id
+    }
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
         parcel.writeString(username)
         parcel.writeString(password)
         parcel.writeInt(type)
+        parcel.writeInt(occupation)
     }
 
     override fun describeContents(): Int {

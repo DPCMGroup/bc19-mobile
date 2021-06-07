@@ -54,7 +54,8 @@ class LoginModel : BaseModel(), LoginContract.IModel {
                 restJson.getInt("id"),
                 restJson.getString("username"),
                 restJson.getString("password"),
-                restJson.getInt("type")
+                restJson.getInt("type"),
+                -1
             )
 
             listener?.onLoginSuccess()
