@@ -348,7 +348,6 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             runOnUiThread {
                 oraText.setVisibility(View.INVISIBLE)
             }
-
             runOnUiThread {
                 endOccupation.setVisibility(View.VISIBLE)
             }
@@ -373,6 +372,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         } else if (workstation?._workStatus == 3 && workstation?._workSanitize == 1) {
             runOnUiThread { stato.text = "Guasta e Igienizzata" }
             runOnUiThread { message.setVisibility(View.VISIBLE) }
+            runOnUiThread { startOccupation.setVisibility(View.INVISIBLE) }
         } else if (workstation?._workStatus == 3 && workstation?._workSanitize == 0) {
             runOnUiThread { stato.text = "Guasta e non Igienizzata" }
             runOnUiThread { message.setVisibility(View.VISIBLE) }
@@ -399,11 +399,13 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
                 runOnUiThread {
                     message.setVisibility(View.INVISIBLE)
                 }
-                runOnUiThread {
-                    startOccupation.setVisibility(View.VISIBLE)
-                }
-                runOnUiThread {
-                    startOccupation.isEnabled = true
+                if(workstation?._workSanitize == 1) {
+                    runOnUiThread {
+                        startOccupation.setVisibility(View.VISIBLE)
+                    }
+                    runOnUiThread {
+                        startOccupation.isEnabled = true
+                    }
                 }
 
                 if (bookings?.size!! > 1 && bookings?.get(bookings?.size!! - 2)?.bookerUsername != username) {
@@ -415,6 +417,12 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
                     }
                 }
             } else {
+                runOnUiThread {
+                    endOccupation.setVisibility(View.INVISIBLE)
+                }
+                runOnUiThread {
+                    endOccupation.isEnabled = false
+                }
                 evprenotazioni.text =
                     "Prenotata da " + bookings?.get(bookings?.size!! - 1)?.bookerName + " " + bookings?.get(
                         bookings?.size!! - 1
@@ -470,6 +478,18 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             runOnUiThread {
                 message.setVisibility(View.INVISIBLE)
             }
+            runOnUiThread {
+                oraEdit.setVisibility(View.VISIBLE)
+            }
+            runOnUiThread {
+                oraText.setVisibility(View.VISIBLE)
+            }
+            runOnUiThread {
+                startOccupation.isEnabled = true
+            }
+            runOnUiThread {
+                startOccupation.setVisibility(View.VISIBLE)
+            }
 
         }
 
@@ -484,17 +504,35 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             runOnUiThread {
                 stato.text = "Prenotata e Igienizzata"
             }
+            runOnUiThread {
+                oraEdit.setVisibility(View.INVISIBLE)
+            }
+            runOnUiThread {
+                oraText.setVisibility(View.INVISIBLE)
+            }
             if (evprenotazioni.text == "Prenotata da te. Attenzione ci sono altre prenotazioni!" || evprenotazioni.text == "Postazione prenotata da te") {
                 runOnUiThread {
                     message.setVisibility(View.INVISIBLE)
                 }
 
             }
+            runOnUiThread {
+                startOccupation.isEnabled = true
+            }
+            runOnUiThread {
+                startOccupation.setVisibility(View.VISIBLE)
+            }
 
         }
         if (stato.text == "Guasta e non Igienizzata") {
             runOnUiThread {
                 stato.text = "Guasta e Igienizzata"
+            }
+            runOnUiThread {
+                startOccupation.isEnabled = false
+            }
+            runOnUiThread {
+                startOccupation.setVisibility(View.INVISIBLE)
             }
         }
 
@@ -504,18 +542,8 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         runOnUiThread {
             igienizza.isEnabled = false
         }
-        runOnUiThread {
-            startOccupation.isEnabled = true
-        }
-        runOnUiThread {
-            startOccupation.setVisibility(View.VISIBLE)
-        }
-        runOnUiThread {
-            oraEdit.setVisibility(View.VISIBLE)
-        }
-        runOnUiThread {
-            oraText.setVisibility(View.VISIBLE)
-        }
+
+
 
     }
 
@@ -671,6 +699,9 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         }
         runOnUiThread {
             igienizza.setVisibility(View.VISIBLE)
+        }
+        runOnUiThread {
+            evprenotazioni.setVisibility(View.INVISIBLE)
         }
 
     }
