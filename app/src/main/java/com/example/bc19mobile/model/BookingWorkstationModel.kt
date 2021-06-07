@@ -49,13 +49,13 @@ class BookingWorkstationModel : BaseModel(), BookingWorkstationContract.IModel{
     }
 
     override fun getAvailability() {
-        var bookingWorkstationRoom: Int?= bookingWorkstation?.getstanzaTesto()?.toInt()
+        var bookingWorkstationRoom: String?= bookingWorkstation?.getstanzaTesto()
         var bookingWorkstationStart: String? = bookingWorkstation?.getinizioTesto()
         var bookingWorkstationEnd: String?= bookingWorkstation?.getfineTesto()
         var bookingWorkstationDate: String?= bookingWorkstation?.getdataTesto()
 
         val jsonObject = JSONObject()
-        jsonObject.put("idRoom", bookingWorkstationRoom)
+        jsonObject.put("roomName", bookingWorkstationRoom)
         jsonObject.put("startTime", bookingWorkstationDate +" " +bookingWorkstationStart )
         jsonObject.put("endTime", bookingWorkstationDate +" " +bookingWorkstationEnd )
         service.request(jsonObject, "workstation/bookable/list", true, ::bookableHandle, ::connectionError)
