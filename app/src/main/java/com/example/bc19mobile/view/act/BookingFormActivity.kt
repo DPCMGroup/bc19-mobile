@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.icu.util.Calendar
+import android.icu.util.LocaleData
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -12,16 +13,17 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
-import com.example.bc19mobile.contract.BookingFormContract
-import com.example.bc19mobile.presenter.BookingFormPresenter
-import mvp.ljb.kt.act.BaseMvpActivity
 import com.example.bc19mobile.R
+import com.example.bc19mobile.contract.BookingFormContract
 import com.example.bc19mobile.data.DataDirtyRooms
 import com.example.bc19mobile.data.User
-import java.sql.Timestamp
-
+import com.example.bc19mobile.presenter.BookingFormPresenter
+import mvp.ljb.kt.act.BaseMvpActivity
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 /**
  * @Author Kotlin MVP Plugin
@@ -114,12 +116,12 @@ class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
 
         inizioTesto.doOnTextChanged() { charSequence: CharSequence?, i: Int, i1: Int, i2: Int ->
             enableBtnSearch()
-            showError()
+            showErrorTime()
         }
 
         fineTesto.doOnTextChanged() { charSequence: CharSequence?, i: Int, i1: Int, i2: Int ->
             enableBtnSearch()
-            showError()
+            showErrorTime()
         }
 
         cerca.setOnClickListener {
@@ -240,29 +242,46 @@ class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
         val date = findViewById<EditText>(R.id.dataTesto).text.isNotBlank()
 
         val searchBtn = findViewById<Button>(R.id.cerca)
-        searchBtn?.isEnabled = start && end && date
+        searchBtn?.isEnabled = start && end && date && checkTime()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun checkTime(): Boolean {
         val start = findViewById<EditText>(R.id.inizioTesto).text
         val end = findViewById<EditText>(R.id.fineTesto).text
-        return Timestamp.parse(start.toString()) < Timestamp.parse(end.toString())
+        return LocalTime.parse(start) <= LocalTime.parse(end)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun showError() {
+    private fun checkDateTime(): Boolean {
+        val date = findViewById<EditText>(R.id.dataTesto).text
+        val start = findViewById<EditText>(R.id.inizioTesto).text
+        return LocalDate.now() < LocalDate.parse(date) || (LocalDate.now() == LocalDate.parse(date) && LocalTime.now() < LocalTime.parse(start))
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun showErrorTime() {
         val start = findViewById<EditText>(R.id.inizioTesto).text
         val end = findViewById<EditText>(R.id.fineTesto).text
-        /*
         if (start.isNotBlank() && end.isNotBlank() && !checkTime())
             Toast.makeText(
                 applicationContext,
-                "L'ora di inizio non può essere superiore all'ora di fine",
+                "L'ora di inizio non può essere posteriore all'ora di fine",
                 Toast.LENGTH_SHORT
             ).show()
-         */
-        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun showErrorDateTime() {
+        val start = findViewById<EditText>(R.id.inizioTesto).text
+        val date = findViewById<EditText>(R.id.dataTesto).text
+        if (start.isNotBlank() && date.isNotBlank() && !checkDateTime())
+            Toast.makeText(
+                applicationContext,
+                "Non è possibile effettuare prentazioni nel passato",
+                Toast.LENGTH_SHORT
+            ).show()
+    }
 
 
 }
