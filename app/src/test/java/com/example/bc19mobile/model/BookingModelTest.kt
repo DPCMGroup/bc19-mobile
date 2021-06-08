@@ -9,7 +9,7 @@ import org.junit.Assert.*
 class BookingModelTest {
 
     val bookingModel = BookingModel()
-    val employee = User(0, "employee", "employee", 1)
+    val employee = User(0, "employee", "employee", 1,-1)
 
     @Test
     fun getBookingList() {

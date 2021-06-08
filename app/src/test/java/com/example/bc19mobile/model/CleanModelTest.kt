@@ -8,7 +8,7 @@ import org.junit.Assert.*
 class CleanModelTest {
 
     val cleanModel = CleanModel()
-    val employee = User(0, "employee", "employee", 1)
+    val employee = User(0, "employee", "employee", 1,-1)
 
     @Test
     fun getSetUserTest() {
