@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
 import androidx.core.os.bundleOf
+import androidx.core.widget.doOnTextChanged
 import com.example.bc19mobile.contract.BookingFormContract
 import com.example.bc19mobile.presenter.BookingFormPresenter
 import mvp.ljb.kt.act.BaseMvpActivity
@@ -40,6 +41,7 @@ class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
         var day = now.get(java.util.Calendar.DAY_OF_MONTH)
         var month = now.get(Calendar.MONTH)
         var year = now.get(java.util.Calendar.YEAR)
+        enableBtnSearch()
 
         SelezionaData.setOnClickListener {
 
@@ -76,6 +78,7 @@ class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
                 cal.get(java.util.Calendar.MINUTE),
                 true
             ).show()
+
         }
 
         val SelezionaFine = findViewById<ImageButton>(R.id.SelezionaFine)
@@ -100,6 +103,17 @@ class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
         val dipTesto = findViewById<EditText>(R.id.dipTesto)
         val cerca = findViewById<Button>(R.id.cerca)
 
+        dataTesto.doOnTextChanged(){ charSequence: CharSequence?, i: Int, i1: Int, i2: Int ->
+            enableBtnSearch()
+        }
+
+        inizioTesto.doOnTextChanged(){ charSequence: CharSequence?, i: Int, i1: Int, i2: Int ->
+            enableBtnSearch()
+        }
+
+        fineTesto.doOnTextChanged(){ charSequence: CharSequence?, i: Int, i1: Int, i2: Int ->
+            enableBtnSearch()
+        }
 
         cerca.setOnClickListener {
             val stanzaTesto: String= spinner.getSelectedItem().toString()
@@ -117,7 +131,6 @@ class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
                     "user" to user, "bookingWorkstation" to bookingWorkstation
                 )
             )
-
         }
     }
 
@@ -210,5 +223,14 @@ class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
             spinner.adapter = adapter
         }
 
+    }
+
+    private fun enableBtnSearch() {
+        val start = findViewById<EditText>(R.id.inizioTesto).text.isNotBlank()
+        val end = findViewById<EditText>(R.id.fineTesto).text.isNotBlank()
+        val date = findViewById<EditText>(R.id.dataTesto).text.isNotBlank()
+
+        val searchBtn = findViewById<Button>(R.id.cerca)
+        searchBtn?.isEnabled = start && end && date
     }
 }
