@@ -4,10 +4,12 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.icu.util.Calendar
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import com.example.bc19mobile.contract.BookingFormContract
@@ -16,8 +18,10 @@ import mvp.ljb.kt.act.BaseMvpActivity
 import com.example.bc19mobile.R
 import com.example.bc19mobile.data.DataDirtyRooms
 import com.example.bc19mobile.data.User
+import java.sql.Timestamp
 
 import java.text.SimpleDateFormat
+import java.time.LocalTime
 
 /**
  * @Author Kotlin MVP Plugin
@@ -28,6 +32,7 @@ import java.text.SimpleDateFormat
 class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
     BookingFormContract.IView {
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getPresenter().saveUser(intent.extras?.get("user") as User)
@@ -103,20 +108,22 @@ class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
         val dipTesto = findViewById<EditText>(R.id.dipTesto)
         val cerca = findViewById<Button>(R.id.cerca)
 
-        dataTesto.doOnTextChanged(){ charSequence: CharSequence?, i: Int, i1: Int, i2: Int ->
+        dataTesto.doOnTextChanged() { charSequence: CharSequence?, i: Int, i1: Int, i2: Int ->
             enableBtnSearch()
         }
 
-        inizioTesto.doOnTextChanged(){ charSequence: CharSequence?, i: Int, i1: Int, i2: Int ->
+        inizioTesto.doOnTextChanged() { charSequence: CharSequence?, i: Int, i1: Int, i2: Int ->
             enableBtnSearch()
+            showError()
         }
 
-        fineTesto.doOnTextChanged(){ charSequence: CharSequence?, i: Int, i1: Int, i2: Int ->
+        fineTesto.doOnTextChanged() { charSequence: CharSequence?, i: Int, i1: Int, i2: Int ->
             enableBtnSearch()
+            showError()
         }
 
         cerca.setOnClickListener {
-            val stanzaTesto: String= spinner.getSelectedItem().toString()
+            val stanzaTesto: String = spinner.getSelectedItem().toString()
             getPresenter().saveBookingWorkstation(
                 dataTesto.text.toString(),
                 inizioTesto.text.toString(),
@@ -200,6 +207,7 @@ class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
         )
             .show()
     }
+
     fun append(arr: Array<String?>, element: String): Array<String?> {
         val list: MutableList<String?> = arr.toMutableList()
         list.add(element)
@@ -208,10 +216,10 @@ class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
 
     override fun updateRoomsView(rooms: ArrayList<DataDirtyRooms>?) {
         val size: Int? = rooms?.size
-                var languages = arrayOf(rooms?.get(0)?.roomName)
-                for (i in 1..size!!-1) {
-                    languages = rooms.get(i).roomName?.let { append(languages, it) }!!
-                }
+        var languages = arrayOf(rooms?.get(0)?.roomName)
+        for (i in 1..size!! - 1) {
+            languages = rooms.get(i).roomName?.let { append(languages, it) }!!
+        }
 
 
         val spinner = findViewById<Spinner>(R.id.spinner)
@@ -225,6 +233,7 @@ class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun enableBtnSearch() {
         val start = findViewById<EditText>(R.id.inizioTesto).text.isNotBlank()
         val end = findViewById<EditText>(R.id.fineTesto).text.isNotBlank()
@@ -233,4 +242,27 @@ class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
         val searchBtn = findViewById<Button>(R.id.cerca)
         searchBtn?.isEnabled = start && end && date
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun checkTime(): Boolean {
+        val start = findViewById<EditText>(R.id.inizioTesto).text
+        val end = findViewById<EditText>(R.id.fineTesto).text
+        return Timestamp.parse(start.toString()) < Timestamp.parse(end.toString())
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun showError() {
+        val start = findViewById<EditText>(R.id.inizioTesto).text
+        val end = findViewById<EditText>(R.id.fineTesto).text
+        /*
+        if (start.isNotBlank() && end.isNotBlank() && !checkTime())
+            Toast.makeText(
+                applicationContext,
+                "L'ora di inizio non può essere superiore all'ora di fine",
+                Toast.LENGTH_SHORT
+            ).show()
+         */
+        }
+
+
 }

@@ -33,7 +33,7 @@ class LoginModel : BaseModel(), LoginContract.IModel {
         val jsonObject = JSONObject()
         jsonObject.put("username", username)
         jsonObject.put("password", password)
-        service.request(jsonObject, "user/login", true, ::loginHandle, ::connectionError)
+        service.request(jsonObject, "user/login/mobile", true, ::loginHandle, ::connectionError)
     }
 
     override fun getUser(): User? {
@@ -54,7 +54,7 @@ class LoginModel : BaseModel(), LoginContract.IModel {
                 restJson.getInt("id"),
                 restJson.getString("username"),
                 restJson.getString("password"),
-                restJson.getInt("type")
+                restJson.getInt("type"),
             )
 
             listener?.onLoginSuccess()
