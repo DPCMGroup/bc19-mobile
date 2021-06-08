@@ -372,6 +372,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         } else if (workstation?._workStatus == 3 && workstation?._workSanitize == 1) {
             runOnUiThread { stato.text = "Guasta e Igienizzata" }
             runOnUiThread { message.setVisibility(View.VISIBLE) }
+            evprenotazioni.setVisibility(View.INVISIBLE)
             runOnUiThread { startOccupation.setVisibility(View.INVISIBLE) }
         } else if (workstation?._workStatus == 3 && workstation?._workSanitize == 0) {
             runOnUiThread { stato.text = "Guasta e non Igienizzata" }
@@ -379,13 +380,14 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             runOnUiThread {
                 igienizza.isEnabled = true
             }
+            evprenotazioni.setVisibility(View.INVISIBLE)
 
             runOnUiThread {
                 igienizza.setVisibility(View.VISIBLE)
             }
         }
 
-        if (workstation?._bookedToday == 1) {
+        if (workstation?._bookedToday == 1 && workstation?._workStatus != 3) {
             var username: String? = getPresenter().getUser()?.getUsername()
             if (bookings?.get(bookings?.size!! - 1)?.bookerUsername == username) {
                 runOnUiThread {

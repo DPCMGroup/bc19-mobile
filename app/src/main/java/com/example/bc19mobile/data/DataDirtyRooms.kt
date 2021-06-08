@@ -18,5 +18,14 @@ class DataDirtyRooms {
         this.unavailable =unavailable
     }
 
+
+    fun getIdRoom(): Int? {
+        return id
+    }
+
+    fun getroomName(): String? {
+        return roomName
+    }
+
     constructor() {}
 }
