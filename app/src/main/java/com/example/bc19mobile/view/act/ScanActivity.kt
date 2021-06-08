@@ -254,11 +254,13 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         val endOccupation = findViewById<Button>(R.id.endOccupation)
         val oraText = findViewById<TextView>(R.id.OraText)
         val oraEdit = findViewById<EditText>(R.id.OraEdit)
+        val checkBox = findViewById<CheckBox>(R.id.checkBox)
 
         val message = findViewById<TextView>(R.id.message_txt)
         igienizza.setVisibility(View.INVISIBLE)
         startOccupation.setVisibility(View.INVISIBLE)
         oraText.setVisibility(View.INVISIBLE)
+        checkBox.setVisibility(View.INVISIBLE)
         oraEdit.setVisibility(View.INVISIBLE)
         endOccupation.setVisibility(View.INVISIBLE)
         message.setVisibility(View.INVISIBLE)
@@ -287,6 +289,9 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             }
             runOnUiThread {
                 oraText.setVisibility(View.VISIBLE)
+            }
+            runOnUiThread {
+                checkBox.setVisibility(View.VISIBLE)
             }
         } else if (workstation?._workStatus == 0 && workstation?._workSanitize == 0) {
             runOnUiThread {
@@ -317,6 +322,9 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
                 oraEdit.setVisibility(View.INVISIBLE)
             }
             runOnUiThread {
+                checkBox.setVisibility(View.INVISIBLE)
+            }
+            runOnUiThread {
                 oraText.setVisibility(View.INVISIBLE)
             }
 
@@ -344,6 +352,9 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             }
             runOnUiThread {
                 oraEdit.setVisibility(View.INVISIBLE)
+            }
+            runOnUiThread {
+                checkBox.setVisibility(View.INVISIBLE)
             }
             runOnUiThread {
                 oraText.setVisibility(View.INVISIBLE)
@@ -401,7 +412,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
                 runOnUiThread {
                     message.setVisibility(View.INVISIBLE)
                 }
-                if(workstation?._workSanitize == 1) {
+                if (workstation?._workSanitize == 1) {
                     runOnUiThread {
                         startOccupation.setVisibility(View.VISIBLE)
                     }
@@ -466,6 +477,8 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         val startOccupation = findViewById<Button>(R.id.startOccupation)
         val oraText = findViewById<TextView>(R.id.OraText)
         val oraEdit = findViewById<EditText>(R.id.OraEdit)
+        val checkBox = findViewById<CheckBox>(R.id.checkBox)
+
 
         runOnUiThread {
             igienizza.isEnabled = true
@@ -482,6 +495,9 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             }
             runOnUiThread {
                 oraEdit.setVisibility(View.VISIBLE)
+            }
+            runOnUiThread {
+                checkBox.setVisibility(View.VISIBLE)
             }
             runOnUiThread {
                 oraText.setVisibility(View.VISIBLE)
@@ -508,6 +524,9 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             }
             runOnUiThread {
                 oraEdit.setVisibility(View.INVISIBLE)
+            }
+            runOnUiThread {
+                checkBox.setVisibility(View.INVISIBLE)
             }
             runOnUiThread {
                 oraText.setVisibility(View.INVISIBLE)
@@ -546,7 +565,6 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         }
 
 
-
     }
 
 
@@ -563,6 +581,7 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         val endOccupation = findViewById<Button>(R.id.endOccupation)
         val oraText = findViewById<TextView>(R.id.OraText)
         val oraEdit = findViewById<EditText>(R.id.OraEdit)
+        val checkBox = findViewById<CheckBox>(R.id.checkBox)
 
         runOnUiThread {
             startOccupation.isEnabled = true
@@ -598,6 +617,9 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
             oraEdit.setVisibility(View.INVISIBLE)
         }
         runOnUiThread {
+            checkBox.setVisibility(View.INVISIBLE)
+        }
+        runOnUiThread {
             oraText.setVisibility(View.INVISIBLE)
         }
         if (stato.text == "Prenotata e Igienizzata") {
@@ -620,6 +642,9 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         }
         runOnUiThread {
             oraEdit.setVisibility(View.INVISIBLE)
+        }
+        runOnUiThread {
+            checkBox.setVisibility(View.INVISIBLE)
         }
         runOnUiThread {
             oraText.setVisibility(View.INVISIBLE)
@@ -713,40 +738,45 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         val s2 = s.replace(".0", "")
         val tagId = findViewById<TextView>(R.id.tagId_txt)
         val oraEdit = findViewById<EditText>(R.id.OraEdit)
+        val checkBox = findViewById<CheckBox>(R.id.checkBox)
+
         var hours: Int = 0
         if (s2.toInt() == -1) {
             val current = LocalDateTime.now()
             hours = 23 - (current.hour + 1)
         } else if (s2.toInt() > 0) {
             hours = s2.toInt()
-        }
-        else if(s2.toInt()== -3){
+        } else if (s2.toInt() == -3) {
             getPresenter().startOccupation(tagId.text.toString(), 0)
         }
-        if(oraEdit.text.toString() != "") {
-            if (oraEdit.text.toString().toInt() <= hours && s2.toInt() != -3) {
-                getPresenter().startOccupation(
-                    tagId.text.toString(),
-                    oraEdit.text.toString().toInt()
-                )
+
+        if (checkBox.isChecked) {
+            getPresenter().startOccupation(tagId.text.toString(), 0)
+        } else {
+            if (oraEdit.text.toString() != "") {
+                if (oraEdit.text.toString().toInt() <= hours && s2.toInt() != -3) {
+                    getPresenter().startOccupation(
+                        tagId.text.toString(),
+                        oraEdit.text.toString().toInt()
+                    )
+                } else {
+                    Toast.makeText(
+                        applicationContext,
+                        "Puoi inserire massimo " + hours + " ore!",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+
+                }
             } else {
                 Toast.makeText(
                     applicationContext,
-                    "Puoi inserire massimo " + hours + " ore!",
+                    "Non hai inserito nessun valore!",
                     Toast.LENGTH_SHORT
                 )
                     .show()
 
             }
-        }
-        else {
-            Toast.makeText(
-                applicationContext,
-                "Non hai inserito nessun valore!",
-                Toast.LENGTH_SHORT
-            )
-                .show()
-
         }
     }
 }
