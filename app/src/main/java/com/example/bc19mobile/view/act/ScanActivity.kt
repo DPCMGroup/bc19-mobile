@@ -28,8 +28,7 @@ import com.example.bc19mobile.data.User
 import com.example.bc19mobile.presenter.ScanPresenter
 import mvp.ljb.kt.act.BaseMvpActivity
 import java.time.LocalDateTime
-import java.time.LocalTime
-import java.util.ArrayList
+import java.util.*
 
 /**
  * @Author Kotlin MVP Plugin
@@ -76,6 +75,19 @@ class ScanActivity : BaseMvpActivity<ScanContract.IPresenter>(), ScanContract.IV
         endOccupation.setOnClickListener {
             tagId?.text?.toString()?.let { it2 -> getPresenter().endOccupation(it2) }
         }
+
+        val checkBox = findViewById<CheckBox>(R.id.checkBox)
+        checkBox.setOnClickListener(View.OnClickListener {
+            if (checkBox.isChecked) {
+                runOnUiThread {
+                    oraEdit.setVisibility(View.INVISIBLE)
+                }
+            } else if (!checkBox.isChecked()) {
+                runOnUiThread {
+                    oraEdit.setVisibility(View.VISIBLE)
+                }
+            }
+        })
 
 
 
