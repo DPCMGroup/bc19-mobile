@@ -281,7 +281,7 @@ class BookingFormActivity : BaseMvpActivity<BookingFormContract.IPresenter>(),
             val dateRequest = LocalDate.parse(date.toString(), formatter)
             if (start.isNotBlank() && date.isNotBlank()) {
                 val timeRequest = LocalTime.parse(start)
-                result = dateNow < dateRequest || dateNow == dateRequest && timeNow <= timeRequest
+                result = dateNow <= dateRequest || dateNow == dateRequest && timeNow <= timeRequest
             } else if (start.isBlank() && date.isNotBlank()) {
                 result = dateNow <= dateRequest
             }
