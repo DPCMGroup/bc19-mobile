@@ -15,13 +15,13 @@ class GuideModelTest {
     @Test
     fun getEmployeeGuide() {
         guideModel.setUser(employee)
-        assertEquals(guideModel.getGuide(),"guida_utente.pdf")
+        assertEquals(guideModel.getGuide(),"guida_dipendente.pdf")
     }
 
     @Test
     fun getCleanWorkerGuide() {
         guideModel.setUser(cleanWorker)
-        assertEquals(guideModel.getGuide(),"guida_utente.pdf")
+        assertEquals(guideModel.getGuide(),"guida_addetto.pdf")
     }
 
     @Test
