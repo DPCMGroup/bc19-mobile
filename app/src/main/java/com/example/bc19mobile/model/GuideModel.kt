@@ -22,10 +22,10 @@ class GuideModel : BaseModel(), GuideContract.IModel {
         var guideName = String()
 
         if (userType == 1) {
-            guideName = "guida_utente.pdf"
+            guideName = "guida_dipendente.pdf"
         }
         else {
-            guideName = "guida_utente.pdf"
+            guideName = "guida_addetto.pdf"
         }
         return guideName
     }
